@@ -1,5 +1,5 @@
 before_install:
- - cd fRequent
+ - cd RDaisy
 
 language: r
 r:
