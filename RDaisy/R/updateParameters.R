@@ -19,7 +19,7 @@
 #read parameter settings
 updateParameters<- function(p, p.config,v,f,t) {
   #   params <- fread(param.file)
-  p.config[,default==p]
+  p.config$default=p
   p.config[, f.update(p,v,f,t), by=c(f, t)]
 
   return("Done")
