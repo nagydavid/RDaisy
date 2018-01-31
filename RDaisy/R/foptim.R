@@ -4,11 +4,11 @@
 #'
 #'@description This function updates the parameters, rund the model with the new parameters and calculates the cost/fit.
 #'
-#'@param p The parameter
-#'@param p.config The new parameter value
+#'@param p Name of the parameter
+#'@param p.config The parameter file
 #'@param obs Observation against which the simulation needs to be tested.
-#'@param sim.file simulation against which the measured data needs to be tested.
-#'@param f.cost Is the cost function. The used cost funciton is user defined.
+#'@param sim.file Simulation against which the measured data needs to be tested.
+#'@param f.cost Is the cost function. The used cost function is user defined and has to be defined as: f.cost(obs,sim.file)
 #'
 #'
 #'@examples

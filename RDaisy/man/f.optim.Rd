@@ -7,15 +7,15 @@
 f.optim(p, p.config, obs, sim.file, f.cost)
 }
 \arguments{
-\item{p}{The parameter}
+\item{p}{Name of the parameter}
 
-\item{p.config}{The new parameter value}
+\item{p.config}{The parameter file}
 
 \item{obs}{Observation against which the simulation needs to be tested.}
 
-\item{sim.file}{simulation against which the measured data needs to be tested.}
+\item{sim.file}{Simulation against which the measured data needs to be tested.}
 
-\item{f.cost}{Is the cost function. The used cost funciton is user defined.}
+\item{f.cost}{Is the cost function. The used cost function is user defined and has to be defined as: f.cost(obs,sim.file)}
 }
 \description{
 This function updates the parameters, rund the model with the new parameters and calculates the cost/fit.

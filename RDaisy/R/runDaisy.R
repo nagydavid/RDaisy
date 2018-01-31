@@ -4,7 +4,7 @@
 #'
 #'@description This function runs the Daisy model.
 #'
-#'@param RunFile The complete path to the file with extension ".dai". THis file is thesetup of the model.
+#'@param RunFile The complete path to the file with extension ".dai". This file is the setup file of the model.
 #'@param showLogFile Either True or False to show the log file. (default = FALSE)
 #'@param PathToDaisy Define where Daisy is installed. NOTE: This user should have admin rights to this folder.
 #'

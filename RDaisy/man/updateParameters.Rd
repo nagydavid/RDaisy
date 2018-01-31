@@ -13,9 +13,9 @@ updateParameters(p, p.config, v, f, t)
 
 \item{v}{The value to which the defined parameter has to change.}
 
-\item{f}{The file in whioch the parameter is located.}
+\item{f}{The file in which the parameter is located.}
 
-\item{t}{The'}
+\item{t}{The file to which the parameter set has to be written.}
 }
 \description{
 This function reads the parameter settings

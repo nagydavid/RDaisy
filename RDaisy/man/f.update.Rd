@@ -11,9 +11,9 @@ f.update(p, v, f, t)
 
 \item{v}{The value to which the defined parameter has to change.}
 
-\item{f}{The file in whioch the parameter is located.}
+\item{f}{The file in which the parameter is located.}
 
-\item{t}{The}
+\item{t}{The file to which the parameter is stored.}
 }
 \description{
 This function runs the Daisy model.
@@ -22,6 +22,7 @@ This function runs the Daisy model.
 \dontrun{
 f.update <- function(p, v, f, t)
 }
+
 }
 \author{
 JWM Pullens, M Jabloun

@@ -1,4 +1,4 @@
-Package: Rdaisy
+Package: RDaisy
 Type: Package
 Title: R package to run the Daisy model
 Version: 1.0

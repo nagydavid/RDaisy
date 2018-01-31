@@ -8,7 +8,7 @@ runDaisy(RunFile, showLogFile = FALSE,
   PathToDaisy = "C:/Program Files/Daisy 5.49/bin/daisy.exe")
 }
 \arguments{
-\item{RunFile}{The complete path to the file with extension ".dai". THis file is thesetup of the model.}
+\item{RunFile}{The complete path to the file with extension ".dai". This file is the setup file of the model.}
 
 \item{showLogFile}{Either True or False to show the log file. (default = FALSE)}
 
