@@ -10,7 +10,9 @@
 #'
 #'@examples
 #'\dontrun{
-#'runDaisy(RunFile="C:/Daisy 5.31/sample/test.dai",showLogFile = FALSE, PathToDaisy = "C:/Daisy 5.31/bin/daisy.exe")
+#'runfile="C:/Daisy 5.31/sample/test.dai"
+#'PathToDaisy = "C:/Daisy 5.31/bin/daisy.exe"
+#'runDaisy(RunFile=RunFile, showLogFile = FALSE, PathToDaisy = PathToDaisy)
 #'}
 #' @export
 
