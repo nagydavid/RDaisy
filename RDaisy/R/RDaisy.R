@@ -10,5 +10,5 @@
 #'The package provides a user-friendly tool that allows simulating agricultural fields, under different management strategies and climate change scenarios.
 #'
 #'
-#'For details on how to use the package, go to the help files of the functions.
+#'For details on how to use the package, go to the help files of ech specific function, by using e.g. "?runDaisy"
 NULL
