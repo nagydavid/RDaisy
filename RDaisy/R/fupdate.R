@@ -14,6 +14,9 @@
 #'f.update <- function(p, v, f, t)
 #'}
 #'
+#'
+#'
+# This function is not exported and is will not be visible for the users. Teh function is internally used in updateParameters.R
 f.update <- function(p, v, f, t) {
   txt <- readLines(f)
   for (i in 1:length(p)) {
