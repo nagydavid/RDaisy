@@ -1,0 +1,74 @@
+;;; test-minimize.dai -- Automatic parameter calibration.
+
+(description "Demonstrate automatic parameter calibration.")
+(directory "Output")
+
+;; Use standard parameterizations.
+(input file "crop.dai")
+(input file "tillage.dai")
+(input file "chemistry.dai")
+(input file "vegetation.dai")
+
+(input file "dk-horizon.dai")
+(input file "dk-soil.dai")
+(input file "dk-crop.dai")
+(input file "dk-fertilizer.dai")
+
+(input file "log.dai")
+(input file "dk-management.dai")
+
+
+(defhorizon Ap FAO3
+  "Andeby top soil."
+  ;; We want to estimate clay content.
+  (clay $Ap_clay)
+  (normalize true) ;Normalize other soil particle fractions.
+  (silt 10.5 [%]) (sand 81.5 [%]) (humus 1.12 [%])
+  (C_per_N 11.0 [g C/g N])
+  (dry_bulk_density 1.5 [g/cm^3]))
+
+(defhorizon C Ap "Andeby C horizon." (humus 0.12 [%]))
+
+(defcolumn Andeby default
+  "Data collected by F.Guf at the B.And farm, Andeby, 2002."
+  (Soil (horizons (-20 Ap) (-2.5 [m] C))
+        (border -1 [m])
+        (MaxRootingDepth 60.0 [cm]))
+  (OrganicMatter none)
+  (Groundwater deep)
+)
+ 
+(deflog "Sample water content" column
+  "Average water content in two intervals. This could be used for comparison with, say, TDR probes."
+  (where "interval_water_content.dlf")
+  (when hourly)
+  (entries (interval (tag "tocalibrate")
+                     (from 0 [cm])
+                     (to -15 [cm])
+                     (path column "${column}" SoilWater Theta)
+                     (spec fixed SoilWater Theta)
+                     (density true)
+                     (dimension "%"))
+	)
+)
+
+					 
+(defprogram MySim Daisy
+	(weather default "dk-taastrup.dwf")
+	(column Andeby)
+	(time 1986 12 1 1)
+	(stop 1987 2 1 1)
+	(manager "SBarley w. MF")
+	(print_time false)
+  
+	;; The simulated data is from the "Field water" log.
+	(output 
+		("Soil Water Content" (when daily) (print_header false) (print_dimension false))
+	)
+)
+
+;; Or optimize it.
+(run MySim)
+
+
+;;; test-minimize.dai ends here.

@@ -4,23 +4,17 @@
 \alias{f.update}
 \title{Function to update the parameters}
 \usage{
-f.update(p, v, f, t)
+f.update(file)
 }
 \arguments{
-\item{p}{The name of the parameter that needs to be changed.}
-
-\item{v}{The value to which the defined parameter has to change.}
-
-\item{f}{The file in which the parameter is located.}
-
-\item{t}{The file to which the parameter is stored.}
+\item{file}{The name of the parameter that needs to be changed.}
 }
 \description{
 This function runs the Daisy model.
 }
 \examples{
 \dontrun{
-f.update <- function(p, v, f, t)
+f.update <- function(file)
 }
 
 

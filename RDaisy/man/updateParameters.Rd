@@ -4,18 +4,12 @@
 \alias{updateParameters}
 \title{update Parameters}
 \usage{
-updateParameters(p, p.config, v, f, t)
+updateParameters(p, p.config)
 }
 \arguments{
 \item{p}{The parameter}
 
 \item{p.config}{The new parameter value}
-
-\item{v}{The value to which the defined parameter has to change.}
-
-\item{f}{The file in which the parameter is located.}
-
-\item{t}{The file to which the parameter set has to be written.}
 }
 \description{
 This function reads the parameter settings
