@@ -18,7 +18,10 @@
 updateParameters<- function(p, p.config) {
   #   params <- fread(param.file)
   p.config$default=p
-  p.config[, f.update(p.config), by=c(file$from.file, file$to.file)]
+  # p.config[, f.update(p.config), by=c(file$from.file, file$to.file)]
+  p.config[, f.update(p.config)]
 
-  return("Done")
+  return("Input Files successfully updated")
 }
+
+
