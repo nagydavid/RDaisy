@@ -2,18 +2,19 @@
 #'
 #'@author JWM Pullens, M Jabloun
 #'
-#'@description This function runs the Daisy model.
+#'@description This function updates the parameter file.
 #'
-#'@param file The name of the parameter that needs to be changed.
+#'@param file The name of the file with the parameters to be calibrated
 #'
 #'@examples
 #'\dontrun{
-#'f.update <- function(file)
+#'f.update(file)
 #'}
 #'
 #'
 #'
 # This function is not exported and is will not be visible for the users. Teh function is internally used in updateParameters.R
+
 f.update <- function(file){
 
 

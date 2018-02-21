@@ -7,14 +7,14 @@
 f.update(file)
 }
 \arguments{
-\item{file}{The name of the parameter that needs to be changed.}
+\item{file}{The name of the file with the parameters to be calibrated}
 }
 \description{
-This function runs the Daisy model.
+This function updates the parameter file.
 }
 \examples{
 \dontrun{
-f.update <- function(file)
+f.update(file)
 }
 
 
