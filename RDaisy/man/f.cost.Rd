@@ -4,7 +4,7 @@
 \alias{f.cost}
 \title{Cost function}
 \usage{
-f.cost(p, costfunction, p.config, obs, sim.file, PathToDaisy)
+f.cost(p, costfunction, p.config, obs, sim.file, RunFile, PathToDaisy)
 }
 \arguments{
 \item{p}{Name of the parameter}
@@ -16,6 +16,8 @@ f.cost(p, costfunction, p.config, obs, sim.file, PathToDaisy)
 \item{obs}{Observation against which the simulation needs to be tested.}
 
 \item{sim.file}{Simulation against which the measured data needs to be tested.}
+
+\item{RunFile}{The complete path to the file with extension ".dai". This file is the setup file of the model.}
 
 \item{PathToDaisy}{Specify the path to the Daisy executable}
 }
