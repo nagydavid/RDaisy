@@ -2,18 +2,18 @@
 #'
 #'@author JWM Pullens, M Jabloun
 #'
-#'@description This function updates the parameters, rund the model with the new parameters and calculates the cost/fit.
+#'@description This function updates the parameters, runs the model with the new parameters and calculates the cost/fit.
 #'
 #'@param p Name of the parameter
+#'@param costfunction Is the cost function. The used cost function is user defined and has to be defined as: f.cost(obs,sim.file)
 #'@param p.config The parameter file
 #'@param obs Observation against which the simulation needs to be tested.
 #'@param sim.file Simulation against which the measured data needs to be tested.
-#'@param cost Is the cost function. The used cost function is user defined and has to be defined as: f.cost(obs,sim.file)
-#'
+#'@param PathToDaisy Specify the path to the Daisy executable
 #'
 #'@examples
 #'\dontrun{
-#'f.cost(p, p.config, obs, sim.file,cost)
+#'f.cost(p,costfunction, p.config, obs, sim.file,PathToDaisy)
 #'}
 #' @export
 

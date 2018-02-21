@@ -4,10 +4,12 @@
 \alias{f.cost}
 \title{Cost function}
 \usage{
-f.cost(p, p.config, obs, sim.file, cost)
+f.cost(p, costfunction, p.config, obs, sim.file, PathToDaisy)
 }
 \arguments{
 \item{p}{Name of the parameter}
+
+\item{costfunction}{Is the cost function. The used cost function is user defined and has to be defined as: f.cost(obs,sim.file)}
 
 \item{p.config}{The parameter file}
 
@@ -15,14 +17,14 @@ f.cost(p, p.config, obs, sim.file, cost)
 
 \item{sim.file}{Simulation against which the measured data needs to be tested.}
 
-\item{cost}{Is the cost function. The used cost function is user defined and has to be defined as: f.cost(obs,sim.file)}
+\item{PathToDaisy}{Specify the path to the Daisy executable}
 }
 \description{
-This function updates the parameters, rund the model with the new parameters and calculates the cost/fit.
+This function updates the parameters, runs the model with the new parameters and calculates the cost/fit.
 }
 \examples{
 \dontrun{
-f.cost(p, p.config, obs, sim.file,cost)
+f.cost(p,costfunction, p.config, obs, sim.file,PathToDaisy)
 }
 }
 \author{
