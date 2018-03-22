@@ -7,11 +7,11 @@
 f.cost(p, costfunction, p.config, obs, sim.file, RunFile, PathToDaisy)
 }
 \arguments{
-\item{p}{Name of the parameter}
+\item{p}{Vector of parameter values that will be used to update the input files (names of parameters are in p.conifg)}
 
 \item{costfunction}{Is the cost function. The used cost function is user defined and has to be defined as: f.cost(obs,sim.file)}
 
-\item{p.config}{The parameter file}
+\item{p.config}{The parameter file in which the names of the parameters that need to be changed are located.}
 
 \item{obs}{Observation against which the simulation needs to be tested.}
 
@@ -26,7 +26,7 @@ This function updates the parameters, runs the model with the new parameters and
 }
 \examples{
 \dontrun{
-f.cost(p,costfunction, p.config, obs, sim.file,PathToDaisy)
+f.cost(p,costfunction, p.config, obs, sim.file,RunFile,PathToDaisy)
 }
 }
 \author{

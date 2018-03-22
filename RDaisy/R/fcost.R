@@ -4,9 +4,9 @@
 #'
 #'@description This function updates the parameters, runs the model with the new parameters and calculates the cost/fit.
 #'
-#'@param p Name of the parameter
+#'@param p Vector of parameter values that will be used to update the input files (names of parameters are in p.conifg)
 #'@param costfunction Is the cost function. The used cost function is user defined and has to be defined as: f.cost(obs,sim.file)
-#'@param p.config The parameter file
+#'@param p.config The parameter file in which the names of the parameters that need to be changed are located.
 #'@param obs Observation against which the simulation needs to be tested.
 #'@param sim.file Simulation against which the measured data needs to be tested.
 #'@param RunFile The complete path to the file with extension ".dai". This file is the setup file of the model.
@@ -14,7 +14,7 @@
 #'
 #'@examples
 #'\dontrun{
-#'f.cost(p,costfunction, p.config, obs, sim.file,PathToDaisy)
+#'f.cost(p,costfunction, p.config, obs, sim.file,RunFile,PathToDaisy)
 #'}
 #' @export
 

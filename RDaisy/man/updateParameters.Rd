@@ -7,9 +7,9 @@
 updateParameters(p, p.config)
 }
 \arguments{
-\item{p}{The parameter}
+\item{p}{The vector of parameter values that will be used to update the input files}
 
-\item{p.config}{The new parameter value}
+\item{p.config}{This argument will provide the ma,es om the p-config data table. This argument can either be a file or a data table already loaded in the R environment.}
 }
 \description{
 This function reads the parameter settings

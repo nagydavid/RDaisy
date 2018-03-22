@@ -8,7 +8,7 @@
 #'
 #'The package a mechanistic simulation model of the physical and biological processes in an agricultural field.
 #'The package provides a user-friendly tool that allows simulating agricultural fields, under different management strategies and climate change scenarios.
+#'This package is compatible with all Daisy versions (last tested with Daisy version 5.58). No issues are foreseen with future updates of Daisy.
 #'
-#'
-#'For details on how to use the package, go to the help files of ech specific function, by using e.g. "?runDaisy"
+#'For details on how to use the package, go to the help files of each specific function, by using e.g. "?runDaisy"
 NULL

@@ -9,8 +9,8 @@ Description: This package integrates the Daisy model with the R environment. The
 License: GPL-3
 Encoding: UTF-8
 LazyData: true
+Depends: data.table
 suggests: 
-  data.table,
   lubridate,
   hydroGOF,
   DEoptim,

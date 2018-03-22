@@ -13,9 +13,9 @@ The RDaisy R package provides an interface to the RDaisy model in R.
 
 The package a mechanistic simulation model of the physical and biological processes in an agricultural field.
 The package provides a user-friendly tool that allows simulating agricultural fields, under different management strategies and climate change scenarios.
+This package is compatible with all Daisy versions (last tested with Daisy version 5.58)
 
-
-For details on how to use the package, go to the help files of ech specific function, by using e.g. "?runDaisy"
+For details on how to use the package, go to the help files of each specific function, by using e.g. "?runDaisy"
 }
 \author{
 JWM Pullens, M Jabloun
