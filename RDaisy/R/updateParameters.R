@@ -4,19 +4,21 @@
 #'
 #'@description This function reads the parameter settings
 #'
-#'@param p The parameter
-#'@param p.config The new parameter value
+#'@param p The vector of parameter values that will be used to update the input files
+#'@param p.config This argument will provide the ma,es om the p-config data table. This argument can either be a file or a data table already loaded in the R environment.
 #'
 #'
 #'@examples
 #'\dontrun{
 #'updateParameters(p= "", p.config="")
 #'}
+#'@import data.table
 #' @export
 
 #read parameter settings
 updateParameters<- function(p, p.config) {
-  CheckParameters(p.config)
+  if(file.exists(p.config)==TRUE){p.config=data.table::fread(p.config)}
+  CheckParameters(p.config) #Here we check for any duplicates in the p.config file
 
   #   params <- fread(param.file)
   p.config$default=p
