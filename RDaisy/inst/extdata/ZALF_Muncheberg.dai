@@ -1,0 +1,51 @@
+;;; ZALF_Muncheberg.dai -- Sample file using the Daisy libraries.
+;;; Data from: ZALF_Muncheberg
+;;; http://open-research-data-zalf.ext.zalf.de/SitePages/DatasetInformation.aspx?ord=1992_167
+;; In this test case we will only use plot 2
+
+;; Use standard parameterizations.
+(input file "tillage.dai")
+(input file "crop.dai")
+(input file "log.dai")
+(input file "fertilizer.dai")
+(input file "soil_ZALF_Muncheberg.dai")
+(input file "management_ZALF_Muncheberg.man")
+
+;; Combine it.
+(defprogram ZALF_Muncheberg Daisy
+
+  ;; Field to use.
+  (column ZALF_plot2)
+  
+  ;; Weather data.
+  (weather default "ZALF_Muncheberg.dwf")
+
+  ;; Simulation start and stop dates.
+  (time 1992 1 2)
+  (stop 1998 08 29)
+
+  ;; Management activities.
+  (manager activity "management_ZALF_Muncheberg")
+
+	
+	;; Create outputs in this folder.
+(log_prefix "Output/")
+	
+  ;; Create these log files.
+  (output harvest
+	  ("Field nitrogen" (when daily))
+	  ("Soil nitrogen" (when daily) (from 0 [m]) (to -90 [cm]))
+	  ("Field water" (when daily))
+	  ("Soil water" (when daily) (from 0 [m]) (to -90 [cm]))
+	  ("Crop Production"
+	    (where "crop.dlf"))
+	   
+	   ("Soil Water Content" 
+		   (when (hour 12))
+		   (where "1_swct.txt")
+		   (print_header false) (print_dimension false))))
+
+;; Use it.
+(run ZALF_Muncheberg)
+
+;;; ZALF_Muncheberg.dai ends here.
