@@ -17,6 +17,7 @@ NO3DryDep: 1.1 kgN/ha/year
 TAverage: 8.5 dgC
 TAmplitude: 20.1 dgC
 MaxTDay: 200 yday
+PrecipCorrect: 0.16 0.18 0.25 0.33 0.23 0.25 0.25 0.23 0.20 0.16 0.22 0.17
 
 -----------------------------------------------------       
 Year Month Day GlobRad AirTemp Precip Wind RelHum
