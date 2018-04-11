@@ -8,8 +8,67 @@
 (input file "crop.dai")
 (input file "log.dai")
 (input file "fertilizer.dai")
-(input file "soil_ZALF_Muncheberg.dai")
 (input file "management_ZALF_Muncheberg.man")
+
+
+;; We define the soil.
+(defhorizon Ap FAO3
+  "ZALF top soil."
+  (clay 9 [%])
+  (silt 8 [%])
+  (sand 83 [%])
+  (humus 0.58 [%])
+  (C_per_N 11.6 [g C/g N])
+  (dry_bulk_density 1.45 [g/cm^3]))
+  
+  (defhorizon Ael FAO3
+  "ZALF	soil Ael horizon."
+  (clay 6 [%])
+  (silt 1 [%])
+  (sand 93 [%])
+  (humus 0.13 [%])
+  (C_per_N 10 [g C/g N])
+  (dry_bulk_density 1.5 [g/cm^3]))
+    
+  (defhorizon Bt1 FAO3
+  "ZALF soil Bt1 horizon."
+  (clay 12 [%])
+  (silt 10 [%])
+  (sand 78 [%])
+  (humus 0.13 [%])
+  (dry_bulk_density 1.55 [g/cm^3]))
+    
+  (defhorizon Bt2 FAO3
+  "ZALF soil Bt2 horizon."
+  (clay 11 [%])
+  (silt 9 [%])
+  (sand 80 [%])
+  (humus 0.13 [%])
+  (dry_bulk_density 1.55 [g/cm^3]))
+	
+  (defhorizon C1 FAO3
+  "ZALF soil C1 horizon."
+  (clay 2 [%])
+  (silt 1 [%])
+  (sand 97 [%])
+  (humus 0.13 [%])
+  (dry_bulk_density 1.55 [g/cm^3]))
+  
+  (defhorizon C2 FAO3
+  "ZALF soil C2 horizon."
+  (clay 1 [%])
+  (silt 1 [%])
+  (sand 98 [%])
+  (humus 0.13 [%])
+  (dry_bulk_density 1.55 [g/cm^3]))
+	
+;; We build the column from the horizons.
+(defcolumn ZALF_plot2 default
+    (Soil (horizons (-30 [cm] Ap) (-90 [cm] Ael) (-130 [cm] Bt1) (-170 [cm] Bt2) (-180 [cm] C1) (-225 [cm] C2))
+        (border -90 [cm])
+        (MaxRootingDepth 120.0 [cm]))
+  (Groundwater deep)
+  )
 
 ;; Combine it.
 (defprogram ZALF_Muncheberg Daisy
