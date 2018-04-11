@@ -69,22 +69,21 @@
         (MaxRootingDepth 120.0 [cm]))
   (Groundwater deep)
   )
-
-;; Combine it.
-(defprogram ZALF_Muncheberg Daisy
-
+  
+   ;; Weather data.
+  (weather default "ZALF_Muncheberg.dwf")
+  
   ;; Field to use.
   (column ZALF_plot2)
   
-  ;; Weather data.
-  (weather default "ZALF_Muncheberg.dwf")
+  ;; Management activities.
+  (manager activity "management_ZALF_Muncheberg")
 
   ;; Simulation start and stop dates.
   (time 1992 1 2)
   (stop 1998 08 29)
 
-  ;; Management activities.
-  (manager activity "management_ZALF_Muncheberg")
+  
 
 	
 	;; Create outputs in this folder.
@@ -92,19 +91,17 @@
 	
   ;; Create these log files.
   (output harvest
-	  ("Field nitrogen" (when daily))
-	  ("Soil nitrogen" (when daily) (from 0 [m]) (to -90 [cm]))
-	  ("Field water" (when daily))
-	  ("Soil water" (when daily) (from 0 [m]) (to -90 [cm]))
+	  ("Field nitrogen" (when daily) print_header false) (print_dimension false))
+	  ("Soil nitrogen" (when daily) (from 0 [m]) (to -90 [cm]) print_header false) (print_dimension false))
+	  ("Field water" (when daily) print_header false) (print_dimension false))
+	  ("Soil water" (when daily) (from 0 [m]) (to -90 [cm]) print_header false) (print_dimension false))
 	  ("Crop Production"
-	    (where "crop.dlf"))
+	    (where "crop.dlf") print_header false) (print_dimension false))
 	   
 	   ("Soil Water Content" 
 		   (when (hour 12))
 		   (where "1_swct.txt")
-		   (print_header false) (print_dimension false))))
+		   (print_header false) (print_dimension false)))
 
-;; Use it.
-(run ZALF_Muncheberg)
 
 ;;; ZALF_Muncheberg.dai ends here.
