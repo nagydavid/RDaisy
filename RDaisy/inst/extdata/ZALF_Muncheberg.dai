@@ -91,12 +91,12 @@
 	
   ;; Create these log files.
   (output harvest
-	  ("Field nitrogen" (when daily) print_header false) (print_dimension false))
-	  ("Soil nitrogen" (when daily) (from 0 [m]) (to -90 [cm]) print_header false) (print_dimension false))
-	  ("Field water" (when daily) print_header false) (print_dimension false))
-	  ("Soil water" (when daily) (from 0 [m]) (to -90 [cm]) print_header false) (print_dimension false))
+	  ("Field nitrogen" (when daily) (print_header false) (print_dimension false))
+	  ("Soil nitrogen" (when daily) (from 0 [m]) (to -90 [cm]) (print_header false) (print_dimension false))
+	  ("Field water" (when daily) (print_header false) (print_dimension false))
+	  ("Soil water" (when daily) (from 0 [m]) (to -90 [cm]) (print_header false) (print_dimension false))
 	  ("Crop Production"
-	    (where "crop.dlf") print_header false) (print_dimension false))
+	    (where "crop.dlf") (print_header false) (print_dimension false))
 	   
 	   ("Soil Water Content" 
 		   (when (hour 12))
