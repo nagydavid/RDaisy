@@ -11,8 +11,6 @@
 #'f.update(file)
 #'}
 #'
-#'
-#'
 # This function is not exported and is will not be visible for the users. Teh function is internally used in updateParameters.R
 
 f.update <- function(file){
