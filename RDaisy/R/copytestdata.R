@@ -33,11 +33,11 @@ copytestdata<-function(new_folder,package_folder=NULL){
   #define path where the files/folders should be copied to
   if(dir.exists(new_folder)==FALSE){dir.create(new_folder)}
   if(is.null(package_folder)){
-    package_folder=from = paste(.libPaths()[1],"/RDaisy/extdata/",sep="")
-    a=list.files(package_folder)
+    package_folder <- paste(.libPaths()[1],"/RDaisy/extdata/",sep="")
+    a <- list.files(package_folder)
     file.copy(file.path(package_folder,a),new_folder)
   }else{
-    a=list.files(package_folder)
+    a <- list.files(package_folder)
     file.copy(file.path(package_folder,a),new_folder)
   }
   print(paste("Folder structure succefully copied to ",new_folder))

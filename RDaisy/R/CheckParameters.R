@@ -17,6 +17,6 @@ CheckParameters<-function(file){
   if(anyDuplicated(file$name)==0){
     return("No duplicates were found")
   }else{
-    stop(paste("Note: ",gsub(pattern = "$",replacement = "",x=file$name[which(duplicated(file$name)==TRUE)],fixed=T)," is duplicate",sep = ""))
+    stop(paste("Note: ",gsub(pattern = "$",replacement = "",x=file$name[which(duplicated(file$name)==TRUE)],fixed=TRUE)," is duplicate",sep = ""))
   }
 }
