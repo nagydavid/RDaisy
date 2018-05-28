@@ -16,14 +16,14 @@
 #' @export
 
 #read parameter settings
-updateParameters<- function(p, p.config) {
+updateParameters<- function(p, p.config,DEO=F) {
   if(file.exists(p.config)==TRUE){p.config <- data.table::fread(p.config)}
   CheckParameters(p.config) #Here we check for any duplicates in the p.config file
 
   #   params <- fread(param.file)
   p.config$default<-p
   # p.config[, f.update(p.config), by=c(file$from.file, file$to.file)]
-  p.config[, f.update(p.config)]
+  p.config[, f.update(p.config,DEO=F)]
 
   return("Input Files successfully updated")
 }
