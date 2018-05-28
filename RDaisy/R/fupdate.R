@@ -10,20 +10,23 @@
 #'\dontrun{
 #'f.update(file)
 #'}
-#'asdas 
+#'
 # This function is not exported and it will not be visible for the users. Teh function is internally used in updateParameters.R
 
-f.update <- function(file){
+f.update <- function(file,DEO){
 
 
   for (i in 1:length(file$name)){
     if(i>1){
     txt <- readLines(file$to.file[i])
     txt <- gsub(file$name[i], file$default[i], txt, fixed = TRUE)
+    if(DEO==T){
+    txt <- gsub("$ind", Sys.getpid(), txt, fixed = TRUE)}else{
+    txt <- gsub("$ind", ind, txt, fixed = TRUE)}
     cat(txt, file = file$to.file[i], sep="\n")}else{
     txt <- readLines(file$from.file[i])
     txt <- gsub(file$name[i], file$default[i], txt, fixed = TRUE)
     cat(txt, file = file$to.file[i], sep="\n")}
   }
-
+  
 }
