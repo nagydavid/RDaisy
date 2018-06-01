@@ -26,8 +26,6 @@
 #'    copytestdata(new_folder="~/testdata/",package_folder=NULL)
 #' }
 #'@export
-#'
-#'
 
 copytestdata<-function(new_folder,package_folder=NULL){
   #define path where the files/folders should be copied to

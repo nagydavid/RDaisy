@@ -4,14 +4,14 @@
 \alias{updateParameters}
 \title{update Parameters}
 \usage{
-updateParameters(p, p.config, DEO = F)
+updateParameters(p, p.config, DEoptim = F)
 }
 \arguments{
 \item{p}{The vector of parameter values that will be used to update the input files}
 
 \item{p.config}{This argument will provide the ma,es om the p-config data table. This argument can either be a file or a data table already loaded in the R environment.}
 
-\item{DEO}{Specify if you run Daisy for DEOptim}
+\item{DEoptim}{Specify if you run Daisy for DEOptim}
 }
 \description{
 This function reads the parameter settings

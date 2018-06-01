@@ -4,7 +4,7 @@
 \alias{f.cost}
 \title{Cost function}
 \usage{
-f.cost(p, costfunction, p.config, obs, RunFile, PathToDaisy, DEO = F, ...)
+f.cost(p, costfunction, p.config, obs, RunFile, PathToDaisy, DEoptim = F, ...)
 }
 \arguments{
 \item{p}{Vector of parameter values that will be used to update the input files (names of parameters are in p.conifg)}
@@ -19,7 +19,7 @@ f.cost(p, costfunction, p.config, obs, RunFile, PathToDaisy, DEO = F, ...)
 
 \item{PathToDaisy}{Specify the path to the Daisy executable}
 
-\item{DEO}{Specify if you run Daisy for DEOptim}
+\item{DEoptim}{Specify if you run Daisy for DEOptim}
 
 \item{...}{addtional parameters}
 }

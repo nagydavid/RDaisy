@@ -4,12 +4,14 @@
 \alias{f.update}
 \title{Function to update the parameters}
 \usage{
-f.update(file, DEO, ind = NULL)
+f.update(file, Morris = FALSE, DEoptim = FALSE, ind = NULL)
 }
 \arguments{
 \item{file}{The name of the file with the parameters to be calibrated}
 
-\item{DEO}{Specify if you run Daisy for DEOptim}
+\item{Morris}{Specify if you run Daisy for Morris}
+
+\item{DEoptim}{Specify if you run Daisy for DEOptim}
 
 \item{ind}{Index (only use internally for Morris function)}
 }
