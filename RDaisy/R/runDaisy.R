@@ -10,7 +10,6 @@
 #'@param Morris Specify if Morris sensitivity analylis is needed. (from package sensitivity)
 #'@param DEoptim Specify if Deoptimizaltion is needed. (from package DEoptim)
 #'@param costfunction read.optim (needs explination)
-#'@param ind index file, to decide which output to read
 #'@param obs  observation data with date and measurement, same dimension of the simulation
 #'@param wdDir working environment path
 #'@param OutDir  output path

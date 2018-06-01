@@ -6,7 +6,7 @@
 \usage{
 runDaisy(RunFile, showLogFile = FALSE,
   PathToDaisy = "C:/Program Files/Daisy 5.49/bin/daisy.exe", Morris = FALSE,
-  DEoptim = FALSE, costfunction, ind, obs, wdDir, OutDir, interval, year)
+  DEoptim = FALSE, costfunction, obs, wdDir, OutDir, interval, year)
 }
 \arguments{
 \item{RunFile}{The complete path to the file with extension ".dai". This file is the setup file of the model.}
@@ -20,8 +20,6 @@ runDaisy(RunFile, showLogFile = FALSE,
 \item{DEoptim}{Specify if Deoptimizaltion is needed. (from package DEoptim)}
 
 \item{costfunction}{read.optim (needs explination)}
-
-\item{ind}{index file, to decide which output to read}
 
 \item{obs}{observation data with date and measurement, same dimension of the simulation}
 
