@@ -4,7 +4,7 @@
 \alias{f.cost}
 \title{Cost function}
 \usage{
-f.cost(p, costfunction, p.config, obs, sim.file, RunFile, PathToDaisy)
+f.cost(p, costfunction, p.config, obs, RunFile, PathToDaisy, DEO = F, ...)
 }
 \arguments{
 \item{p}{Vector of parameter values that will be used to update the input files (names of parameters are in p.conifg)}
@@ -15,11 +15,13 @@ f.cost(p, costfunction, p.config, obs, sim.file, RunFile, PathToDaisy)
 
 \item{obs}{Observation against which the simulation needs to be tested.}
 
-\item{sim.file}{Simulation against which the measured data needs to be tested.}
-
 \item{RunFile}{The complete path to the file with extension ".dai". This file is the setup file of the model.}
 
 \item{PathToDaisy}{Specify the path to the Daisy executable}
+
+\item{DEO}{Specify if you run Daisy for DEOptim}
+
+\item{...}{addtional parameters}
 }
 \description{
 This function updates the parameters, runs the model with the new parameters and calculates the cost/fit.

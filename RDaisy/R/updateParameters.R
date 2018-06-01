@@ -6,6 +6,7 @@
 #'
 #'@param p The vector of parameter values that will be used to update the input files
 #'@param p.config This argument will provide the ma,es om the p-config data table. This argument can either be a file or a data table already loaded in the R environment.
+#'@param DEO Specify if you run Daisy for DEOptim
 #'
 #'
 #'@examples
