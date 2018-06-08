@@ -439,3 +439,5 @@ read.optim <- function(ind, obs,wdDir, OutDir, interval,year,DEoptim){
 
   return(NSE)
 }
+
+#read.optim(ind, obs,wdDir, OutDir, interval,year,DEoptim)

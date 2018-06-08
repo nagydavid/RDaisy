@@ -1,6 +1,6 @@
 #'@title Function to check if there are no duplicates in the parameter file
 #'
-#'@author JWM Pullens, M Jabloun
+#'@author JWM Pullens, M Jabloun, D Nagy
 #'
 #'@description This function checks the if there are no duplicates in the file with the new parameter values
 #'

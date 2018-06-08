@@ -4,11 +4,13 @@
 \alias{runDaisy}
 \title{Function to run the Daisy model}
 \usage{
-runDaisy(RunFile, showLogFile = FALSE,
-  PathToDaisy = "C:/Program Files/Daisy 5.49/bin/daisy.exe", Morris = FALSE,
-  DEoptim = FALSE, costfunction, obs, wdDir, OutDir, interval, year)
+runDaisy(p.config, RunFile, showLogFile = TRUE,
+  PathToDaisy = "C:/Program Files/Daisy 5.49/bin/daisy.exe", Morris, DEoptim,
+  dflt, costfunction, obs, wdDir, OutDir, interval, year, All, ind)
 }
 \arguments{
+\item{p.config}{This argument will provide the ma,es om the p-config data table. This argument can either be a file or a data table already loaded in the R environment.}
+
 \item{RunFile}{The complete path to the file with extension ".dai". This file is the setup file of the model.}
 
 \item{showLogFile}{Either True or False to show the log file. (default = FALSE)}
@@ -18,6 +20,8 @@ runDaisy(RunFile, showLogFile = FALSE,
 \item{Morris}{Specify if Morris sensitivity analylis is needed. (from package sensitivity)}
 
 \item{DEoptim}{Specify if Deoptimizaltion is needed. (from package DEoptim)}
+
+\item{dflt}{Specify if you run Daisy for default values}
 
 \item{costfunction}{read.optim (needs explination)}
 
@@ -30,6 +34,10 @@ runDaisy(RunFile, showLogFile = FALSE,
 \item{interval}{is the interval of the calibration period, in our case the from 1992 and 1993 drainage year.}
 
 \item{year}{if is TRUE than user gets the all output objectives of the years, if it FALSE, it gives the mean of all calculated annual objective.}
+
+\item{All}{If TRUE Giving all performance measure, if FALSE giving the specified performance measure in the script}
+
+\item{ind}{index}
 }
 \description{
 This function runs the Daisy model.
@@ -42,5 +50,5 @@ runDaisy(RunFile=RunFile, showLogFile = FALSE, PathToDaisy = PathToDaisy)
 }
 }
 \author{
-JWM Pullens, M Jabloun
+JWM Pullens, M Jabloun, D Nagy
 }

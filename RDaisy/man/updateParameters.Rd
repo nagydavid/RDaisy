@@ -4,14 +4,22 @@
 \alias{updateParameters}
 \title{update Parameters}
 \usage{
-updateParameters(p, p.config, DEoptim = F)
+updateParameters(p, p.config, RunFile, Morris, DEoptim, dflt, ind)
 }
 \arguments{
 \item{p}{The vector of parameter values that will be used to update the input files}
 
 \item{p.config}{This argument will provide the ma,es om the p-config data table. This argument can either be a file or a data table already loaded in the R environment.}
 
+\item{RunFile}{The complete path to the file with extension ".dai". This file is the setup file of the model.}
+
+\item{Morris}{Specify if you run Daisy for Morris}
+
 \item{DEoptim}{Specify if you run Daisy for DEOptim}
+
+\item{dflt}{Specify if you run Daisy for default values}
+
+\item{ind}{index}
 }
 \description{
 This function reads the parameter settings
@@ -22,5 +30,5 @@ updateParameters(p= "", p.config="")
 }
 }
 \author{
-JWM Pullens, M Jabloun
+JWM Pullens, M Jabloun, D Nagy
 }

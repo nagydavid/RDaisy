@@ -18,5 +18,5 @@ CheckParameters(file)
 }
 }
 \author{
-JWM Pullens, M Jabloun
+JWM Pullens, M Jabloun, D Nagy
 }

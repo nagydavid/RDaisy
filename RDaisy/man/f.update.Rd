@@ -4,14 +4,18 @@
 \alias{f.update}
 \title{Function to update the parameters}
 \usage{
-f.update(file, Morris = FALSE, DEoptim = FALSE, ind = NULL)
+f.update(file, RunFile, Morris, DEoptim, dflt, ind)
 }
 \arguments{
 \item{file}{The name of the file with the parameters to be calibrated}
 
+\item{RunFile}{The complete path to the file with extension ".dai". This file is the setup file of the model.}
+
 \item{Morris}{Specify if you run Daisy for Morris}
 
 \item{DEoptim}{Specify if you run Daisy for DEOptim}
+
+\item{dflt}{Specify if you run Daisy for default values}
 
 \item{ind}{Index (only use internally for Morris function)}
 }
@@ -22,8 +26,7 @@ This function updates the parameter file.
 \dontrun{
 f.update(file)
 }
-
 }
 \author{
-JWM Pullens, M Jabloun
+JWM Pullens, M Jabloun, D Nagy
 }
