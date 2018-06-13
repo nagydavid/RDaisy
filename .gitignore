@@ -8,6 +8,9 @@
 # RStudio files
 .Rproj.user/
 
+# Rdata files
+.RData
+
 # Project file
 RDaisy.Rproj
 .Rproj.user
