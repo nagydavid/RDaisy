@@ -22,7 +22,7 @@
 f.update <- function(file,RunFile,Morris,DEoptim,dflt,ind){
   index="$ind"
   
-  file$to.file <- paste0("input/",Sys.getpid(),"_",file[,strsplit(to.file,"/")][2])
+  file$to.file <- paste0("input/",Sys.getpid(),"_",file[,strsplit(file$to.file,"/")][2])
   
   for (i in 1:length(file$name)){
 
