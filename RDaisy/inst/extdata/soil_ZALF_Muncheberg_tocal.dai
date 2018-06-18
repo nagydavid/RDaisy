@@ -1,0 +1,114 @@
+;; We define the soil.
+(defhorizon Ap FAO3
+  "ZALF top soil."
+  (clay 9 [%])
+  (silt 8 [%])
+  (sand 83 [%])
+  (humus 0.58 [%])
+  (C_per_N 11.6 [g C/g N])
+  (SOM_fractions  0.40 0.400 0.200) 
+  (dry_bulk_density 1.45 [g/cm^3])
+  (hydraulic M_vG
+    (K_sat $K_sat1 [cm/h])
+    (Theta_res $Theta_res1 [cm^3 H2O/cm^3])
+    (Theta_sat $Theta_sat1 [cm^3 H2O/cm^3])
+    (alpha $alpha1 [cm^-1])
+	(l  $l1)
+    (n $n1)))
+	
+	
+  (defhorizon Ael FAO3
+  "ZALF	soil Ael horizon."
+  (clay 6 [%])
+  (silt 1 [%])
+  (sand 93 [%])
+  (humus 0.13 [%])
+  (C_per_N 10 [g C/g N])
+  (SOM_fractions  0.40 0.400 0.200) 
+  (dry_bulk_density 1.5 [g/cm^3])
+   (hydraulic M_vG
+    (K_sat $K_sat2 [cm/h])
+    (Theta_res $Theta_res2 [cm^3 H2O/cm^3])
+    (Theta_sat $Theta_sat2 [cm^3 H2O/cm^3])
+    (alpha $alpha2 [cm^-1])
+	(l  $l2)
+    (n $n2)))
+    
+  (defhorizon Bt1 FAO3
+  "ZALF soil Bt1 horizon."
+  (clay 12 [%])
+  (silt 10 [%])
+  (sand 78 [%])
+  (humus 0.13 [%])
+  (SOM_fractions  0.40 0.400 0.200) 
+  (dry_bulk_density 1.55 [g/cm^3])
+   (hydraulic M_vG
+    (K_sat $K_sat3[cm/h])
+    (Theta_res $Theta_res3 [cm^3 H2O/cm^3])
+    (Theta_sat $Theta_sat3 [cm^3 H2O/cm^3])
+    (alpha $alpha3 [cm^-1])
+	(l  $l3)
+    (n $n3)))
+    
+  (defhorizon Bt2 FAO3
+  "ZALF soil Bt2 horizon."
+  (clay 11 [%])
+  (silt 9 [%])
+  (sand 80 [%])
+  (humus 0.13 [%])
+  (SOM_fractions  0.40 0.400 0.200) 
+  (dry_bulk_density 1.55 [g/cm^3])
+  (hydraulic M_vG
+    (K_sat $K_sat4 [cm/h])
+    (Theta_res $Theta_res4 [cm^3 H2O/cm^3])
+    (Theta_sat $Theta_sat4 [cm^3 H2O/cm^3])
+    (alpha $alpha4[cm^-1])
+	(l  $l4)
+    (n $n4)))
+	
+  (defhorizon C1 FAO3
+  "ZALF soil C1 horizon."
+  (clay 2 [%])
+  (silt 1 [%])
+  (sand 97 [%])
+  (humus 0.13 [%])
+  (SOM_fractions  0.40 0.400 0.200) 
+  (dry_bulk_density 1.55 [g/cm^3])
+    (hydraulic M_vG
+    (K_sat $K_sat5[cm/h])
+    (Theta_res $Theta_res5 [cm^3 H2O/cm^3])
+    (Theta_sat $Theta_sat5 [cm^3 H2O/cm^3])
+    (alpha $alpha5[cm^-1])
+	(l  $l5)
+    (n $n5)))
+  
+  (defhorizon C2 FAO3
+  "ZALF soil C2 horizon."
+  (clay 1 [%])
+  (silt 1 [%])
+  (sand 98 [%])
+  (humus 0.13 [%])
+	(SOM_fractions  0.40 0.400 0.200) 
+  (dry_bulk_density 1.55 [g/cm^3])
+    (hydraulic M_vG
+    (K_sat $K_sat6[cm/h])
+    (Theta_res $Theta_res6[cm^3 H2O/cm^3])
+    (Theta_sat $Theta_sat6[cm^3 H2O/cm^3])
+    (alpha $alpha6[cm^-1])
+	(l  $l6)
+    (n $n6)))
+	
+;; We build the column from the horizons.
+ (defcolumn ZALF_plot2 default
+ (Bioclimate default (pet FAO_PM_hourly))
+	(Soil (MaxRootingDepth $MaxRootingDepth [cm])
+		(horizons (-30 [cm] Ap) (-90 [cm] Ael) (-130 [cm] Bt1) (-170 [cm] Bt2) (-180 [cm] C1) (-225 [cm] C2))
+        (border -90 [cm]))
+	(Movement vertical
+        (Geometry (zplus -1  -2  -3  -4  -5  -6  -7  -8  -9 -10 -11 -12 -13
+		-14 -15 -16 -17 -18 -19 -20 -21 -22 -23 -24 -25 -26 -27 -28 -29 -30 
+		-31 -32 -33 -34 -35 -36 -37 -38 -39 -40 -41 -42 -43 -44 -45 -46 -47
+		-48 -49 -50 -55 -60 -65 -70 -75 -80 -85 -90 -95 -100 -110 -120 -130 -140 -150
+        -160 -170 -180 -200 -210 -225)))
+	(Groundwater deep)
+	)
