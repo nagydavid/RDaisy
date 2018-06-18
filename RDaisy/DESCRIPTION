@@ -3,7 +3,8 @@ Type: Package
 Title: R package to run the Daisy model
 Version: 1.0
 Authors@R: c(person("J.W.M.","Pullens",email="jeroenpullens@gmail.com",role=c("aut","cre")),
- person("M.", "Jabloun",email="Mohamed.Jabloun@nottingham.ac.uk",role=c("aut")))
+ person("M.", "Jabloun",email="Mohamed.Jabloun@nottingham.ac.uk",role=c("aut")),
+ person("D.", "Nagy",email="davidnagy@agro.au.dk",role=c("aut")))
 Maintainer: "J.W.M. Pullens <jeroenpullens@gmail.com>
 Description: This package integrates the Daisy model with the R environment. The daisy model is a mechanistic simulation model of the physical and biological processes in an agricultural field. The model is produced and maintained by the university of COpenhagen. This R package is a standalone, and there are no conficts of interest.
 License: GPL-3
