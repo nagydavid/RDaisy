@@ -6,7 +6,7 @@
 \usage{
 runDaisy(p.config, RunFile, showLogFile = TRUE,
   PathToDaisy = "C:/Program Files/Daisy 5.49/bin/daisy.exe", Morris, DEoptim,
-  dflt, costfunction, obs, wdDir, OutDir, interval, year, All, ind)
+  dflt, costfunction, obs, wdDir, OutDir, interval, year, All, param_sens)
 }
 \arguments{
 \item{p.config}{This argument will provide the ma,es om the p-config data table. This argument can either be a file or a data table already loaded in the R environment.}
@@ -37,7 +37,7 @@ runDaisy(p.config, RunFile, showLogFile = TRUE,
 
 \item{All}{If TRUE Giving all performance measure, if FALSE giving the specified performance measure in the script}
 
-\item{ind}{index}
+\item{param_sens}{sensitive parameters}
 }
 \description{
 This function runs the Daisy model.

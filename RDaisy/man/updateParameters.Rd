@@ -4,7 +4,8 @@
 \alias{updateParameters}
 \title{update Parameters}
 \usage{
-updateParameters(p, p.config, RunFile, Morris, DEoptim, dflt, ind)
+updateParameters(p, p.config, RunFile, wdDir, Morris, DEoptim, dflt, ind,
+  param_sens)
 }
 \arguments{
 \item{p}{The vector of parameter values that will be used to update the input files}
@@ -13,6 +14,8 @@ updateParameters(p, p.config, RunFile, Morris, DEoptim, dflt, ind)
 
 \item{RunFile}{The complete path to the file with extension ".dai". This file is the setup file of the model.}
 
+\item{wdDir}{working environment path}
+
 \item{Morris}{Specify if you run Daisy for Morris}
 
 \item{DEoptim}{Specify if you run Daisy for DEOptim}
@@ -20,6 +23,8 @@ updateParameters(p, p.config, RunFile, Morris, DEoptim, dflt, ind)
 \item{dflt}{Specify if you run Daisy for default values}
 
 \item{ind}{index}
+
+\item{param_sens}{sensitive parameters}
 }
 \description{
 This function reads the parameter settings

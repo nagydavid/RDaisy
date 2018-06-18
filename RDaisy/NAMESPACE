@@ -3,6 +3,7 @@
 export(CheckParameters)
 export(copytestdata)
 export(f.cost)
+export(f.update)
 export(runDaisy)
 export(updateParameters)
 import(data.table)

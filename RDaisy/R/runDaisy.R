@@ -17,8 +17,8 @@
 #'@param OutDir  output path
 #'@param interval is the interval of the calibration period, in our case the from 1992 and 1993 drainage year.
 #'@param year if is TRUE than user gets the all output objectives of the years, if it FALSE, it gives the mean of all calculated annual objective.
-#'@param ind index
 #'@param All If TRUE Giving all performance measure, if FALSE giving the specified performance measure in the script
+#'@param param_sens sensitive parameters
 #'
 #'
 #'@examples
@@ -32,30 +32,44 @@
 #' @export
 
 runDaisy <- function(p.config,RunFile, showLogFile = TRUE, PathToDaisy = "C:/Program Files/Daisy 5.49/bin/daisy.exe",Morris,DEoptim,dflt,
-                     costfunction,obs,wdDir,OutDir,interval,year, All, ind){
+                     costfunction,obs,wdDir,OutDir,interval,year, All,param_sens){
   obs=obs
   wdDir=wdDir
   OutDir=OutDir
   interval=interval
   year=year
   All=All
-  ind=ind
   
+  
+  if(Morris==TRUE & DEoptim ==TRUE & dflt==TRUE){
+    stop("Default, Morris and DEoptim are selected. Please select only one option.")
+  }  
   if(Morris==TRUE & DEoptim ==TRUE){
     stop("Both Morris and DEoptim are selected. Please select only one option.")
   }
+  if(dflt==TRUE & DEoptim ==TRUE){
+    stop("Both default and DEoptim are selected. Please select only one option.")
+  }
+  if(Morris==TRUE & dflt ==TRUE){
+    stop("Both Morris and default are selected. Please select only one option.")
+  }
   if(Morris==TRUE){
-    source(costfunction)
+    costfunction<-as.function(costfunction)
+    MR<-costfunction(p.config,RunFile,showLogFile,PathToDaisy,Morris, DEoptim, dflt,obs,wdDir, OutDir, interval,year,All)
+    return(MR)
   }
   
   if(DEoptim ==TRUE){
-    source(costfunction)
+    costfunction<-as.function(costfunction)
+    DE<-costfunction(p.config,RunFile,showLogFile,PathToDaisy,Morris, DEoptim,dflt,obs,wdDir, OutDir, interval,year,All,param_sens)
+    return(DE)
   }
   if(dflt == TRUE){
     if(file.exists(p.config)==TRUE){p.config <- data.table::fread(p.config)}
     CheckParameters(p.config) #Here we check for any duplicates in the p.config file
-    p<-p.config$default
-    p.config[, f.update(p.config, RunFile,Morris, DEoptim,ind)]
+    
+    ind<-NULL
+    p.config[, f.update(p.config, RunFile,wdDir,Morris, DEoptim,dflt,ind)]
     
     RunFile<-paste(paste((strsplit(RunFile,"/")[[1]][1:length(strsplit(RunFile,"/")[[1]])-1]),collapse ="/"),
                    "input",paste0(Sys.getpid(),"_",stringr::str_sub(strsplit(RunFile,"/")[[1]][length(strsplit(RunFile,"/")[[1]])],0,-5),"_opt.dai"),sep = "/")

@@ -5,7 +5,7 @@
 \title{Cost function}
 \usage{
 f.cost(p, p.config, RunFile, showLogFile, PathToDaisy, Morris, DEoptim, dflt,
-  costfunction, obs, wdDir, OutDir, interval, year, All, ind)
+  costfunction, obs, wdDir, OutDir, interval, year, All, ind, param_sens)
 }
 \arguments{
 \item{p}{Vector of parameter values that will be used to update the input files (names of parameters are in p.conifg)}
@@ -39,13 +39,16 @@ f.cost(p, p.config, RunFile, showLogFile, PathToDaisy, Morris, DEoptim, dflt,
 \item{All}{If TRUE Giving all performance measure, if FALSE giving the specified performance measure in the script}
 
 \item{ind}{index}
+
+\item{param_sens}{sensitive parameters}
 }
 \description{
 This function updates the parameters, runs the model with the new parameters and calculates the cost/fit.
 }
 \examples{
 \dontrun{
-f.cost(p,costfunction, p.config, obs, sim.file,RunFile,PathToDaisy)
+f.cost(p, p.config, RunFile,showLogFile,PathToDaisy,Morris,DEoptim,
+dflt,costfunction,obs,wdDir,OutDir,interval,year,All,ind,param_sens)
 }
 }
 \author{
