@@ -1,6 +1,6 @@
-#' @title Function to copy test data to user specified folder
+#' @title Function to copy internal data and R-scripts to user specified folder
 #' @description
-#' This function copies the test data from the R package to a user-defined folder. This is necesarry since the model does not read the data from R.
+#' This function copies the internal dataand R-scripts from the R package to a user-defined folder. This is necesarry since the model does not read the data from R.
 #'
 #' The model needs to be run in a seperate folder.
 #'
@@ -11,23 +11,25 @@
 #' Freely available: http://dx.doi.org/10.4228/ZALF.1992.167
 #' Mirschel, Wilfried; Wenkel, Karl Otto; Wegehenkel, Martin; Kersebaum, Kurt Christian; Schindler, Uwe( 2010): Comprehensive multivariable field data set for agro-ecosystem modelling from Muencheberg Experimental Stations in 1992 - 1998 ,Leibniz-Zentrum für Agrarlandschaftsforschung(ZALF e.V.).[doi: 10.4228/ZALF.1992.167]
 #'
-#' @author JWM Pullens
+#' The R-scripts, "Morris.R", "DEoptim.R" and "run.R" are used in the manuscript and can be used as examples and/ or templates.
 #'
-#' @usage copytestdata(new_folder,package_folder=NULL)
-#' @param new_folder Folder to where the data needs to be copied
+#' @author JWM Pullens, D Nagy
+#'
+#' @usage copyinternaldata(new_folder,package_folder=NULL)
+#' @param new_folder Folder to where the data and R-scripts needs to be copied
 #' @param package_folder Folder where the R package is installed, if this is not specified during installation leave this empty.
 #'
 #' @examples
 #' \dontrun{
 #'  for Windows:
-#'    copytestdata(new_folder="C:/testdata/",package_folder=NULL)
+#'    copyinternaldata(new_folder="C:/testdata/",package_folder=NULL)
 #'
 #'  for Linux:
-#'    copytestdata(new_folder="~/testdata/",package_folder=NULL)
+#'    copyinternaldata(new_folder="~/testdata/",package_folder=NULL)
 #' }
 #'@export
 
-copytestdata<-function(new_folder,package_folder=NULL){
+copyinternaldata<-function(new_folder,package_folder=NULL){
   #define path where the files/folders should be copied to
   if(dir.exists(new_folder)==FALSE){dir.create(new_folder)}
   if(is.null(package_folder)){
