@@ -33,6 +33,9 @@ runDaisy(p.config=T_param ,obs=T_obs, RunFile=T_RunFile, showLogFile=TRUE,PathTo
 f.cost(p=fread(T_param)$default, p.config=T_param, RunFile=T_RunFile, showLogFile=TRUE,PathToDaisy=T_path,Morris=TRUE,DEoptim=FALSE, dflt = FALSE,costfunction = NULL,
        obs=T_obs, wdDir="F:/RDaisy_stuff", OutDir="output",interval=1993:1995,year=TRUE,All=TRUE,ind=Sys.getpid(),param_sens = NULL)
 
+source("Morris_f.R")
+source("DEoptim_f.R")
+
 # run of daisy with Morris function
 Morris.SrC<-runDaisy(p.config=T_param ,obs=T_obs, RunFile=T_RunFile, showLogFile=TRUE,PathToDaisy=T_path,Morris=TRUE,DEoptim=FALSE, dflt = FALSE,
          wdDir="F:/RDaisy_stuff",OutDir="output",interval=c(1993:1995),year=TRUE,All=TRUE, costfunction = DaisyMorris,param_sens = NULL)
