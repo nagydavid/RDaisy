@@ -4,7 +4,7 @@
 \alias{f.update}
 \title{Function to update the parameters}
 \usage{
-f.update(file, RunFile, wdDir, Morris, DEoptim, dflt, ind)
+f.update(file, RunFile, wdDir, sensitivity, calib, dflt, ind)
 }
 \arguments{
 \item{file}{The name of the file with the parameters to be calibrated}
@@ -13,9 +13,9 @@ f.update(file, RunFile, wdDir, Morris, DEoptim, dflt, ind)
 
 \item{wdDir}{working environment path}
 
-\item{Morris}{Specify if you run Daisy for Morris}
+\item{sensitivity}{Specify if you run Daisy for Morris}
 
-\item{DEoptim}{Specify if you run Daisy for DEOptim}
+\item{calib}{Specify if you run Daisy for DEOptim}
 
 \item{dflt}{Specify if you run Daisy for default values}
 

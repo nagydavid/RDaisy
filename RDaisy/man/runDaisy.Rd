@@ -4,40 +4,18 @@
 \alias{runDaisy}
 \title{Function to run the Daisy model}
 \usage{
-runDaisy(p.config, RunFile, showLogFile = TRUE,
-  PathToDaisy = "C:/Program Files/Daisy 5.49/bin/daisy.exe", Morris, DEoptim,
-  dflt, costfunction, obs, wdDir, OutDir, interval, year, All, param_sens)
+runDaisy(RunFile, showLogFile = TRUE,
+  PathToDaisy = "C:/Program Files/Daisy 5.49/bin/daisy.exe",
+  ctrldaisy = Daisy.control())
 }
 \arguments{
-\item{p.config}{This argument will provide the ma,es om the p-config data table. This argument can either be a file or a data table already loaded in the R environment.}
-
 \item{RunFile}{The complete path to the file with extension ".dai". This file is the setup file of the model.}
 
 \item{showLogFile}{Either True or False to show the log file. (default = FALSE)}
 
 \item{PathToDaisy}{Define where Daisy is installed. NOTE: This user should have admin rights to this folder.}
 
-\item{Morris}{Specify if Morris sensitivity analylis is needed. (from package sensitivity)}
-
-\item{DEoptim}{Specify if Deoptimizaltion is needed. (from package DEoptim)}
-
-\item{dflt}{Specify if you run Daisy for default values}
-
-\item{costfunction}{read.optim (needs explination)}
-
-\item{obs}{observation data with date and measurement, same dimension of the simulation}
-
-\item{wdDir}{working environment path}
-
-\item{OutDir}{output path}
-
-\item{interval}{is the interval of the calibration period, in our case the from 1992 and 1993 drainage year.}
-
-\item{year}{if is TRUE than user gets the all output objectives of the years, if it FALSE, it gives the mean of all calculated annual objective.}
-
-\item{All}{If TRUE Giving all performance measure, if FALSE giving the specified performance measure in the script}
-
-\item{param_sens}{sensitive parameters}
+\item{ctrldaisy}{Extra arguments that are needed for Optimization/Calibration and Sensitivity analysis (see  \code{\link{Daisy.control}})}
 }
 \description{
 This function runs the Daisy model.

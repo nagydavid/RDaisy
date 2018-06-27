@@ -6,8 +6,8 @@
 #'
 #'@param file The name of the file with the parameters to be calibrated
 #'@param RunFile The complete path to the file with extension ".dai". This file is the setup file of the model.
-#'@param Morris Specify if you run Daisy for Morris
-#'@param DEoptim Specify if you run Daisy for DEOptim
+#'@param sensitivity Specify if you run Daisy for Morris
+#'@param calib Specify if you run Daisy for DEOptim
 #'@param wdDir working environment path
 #'@param dflt Specify if you run Daisy for default values
 #'@param ind Index (only use internally for Morris function)
@@ -21,7 +21,7 @@
 # This function is not exported and it will not be visible for the users. Teh function is internally used in updateParameters.R
 #' @export
 
-f.update <- function(file,RunFile,wdDir,Morris,DEoptim,dflt,ind){
+f.update <- function(file,RunFile,wdDir,sensitivity,calib,dflt,ind){
   index="$ind"
   setwd(wdDir)
   
@@ -43,10 +43,11 @@ f.update <- function(file,RunFile,wdDir,Morris,DEoptim,dflt,ind){
       txt <- gsub(file$name[i], file$default[i], txt, fixed = TRUE)
       cat(txt, file = file$to.file[i], sep="\n")}
   }
-  if(DEoptim==TRUE){
+  
+  if(calib==TRUE){
     txt2 <- readLines(RunFile,warn=FALSE)
     txt2 <- gsub(index, Sys.getpid(), txt2, fixed = TRUE)}
-  if(Morris==TRUE){
+  if(sensitivity==TRUE){
     txt2 <- readLines(RunFile,warn=FALSE)
     txt2 <- gsub(index, ind, txt2, fixed = TRUE)}
   if(dflt==TRUE){

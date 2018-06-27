@@ -4,43 +4,16 @@
 \alias{f.cost}
 \title{Cost function}
 \usage{
-f.cost(p, p.config, RunFile, showLogFile, PathToDaisy, Morris, DEoptim, dflt,
-  costfunction, obs, wdDir, OutDir, interval, year, All, ind, param_sens)
+f.cost(RunFile, showLogFile, PathToDaisy, ctrldaisy)
 }
 \arguments{
-\item{p}{Vector of parameter values that will be used to update the input files (names of parameters are in p.conifg)}
-
-\item{p.config}{The parameter file in which the names of the parameters that need to be changed are located.}
-
 \item{RunFile}{The complete path to the file with extension ".dai". This file is the setup file of the model.}
 
 \item{showLogFile}{Either True or False to show the log file. (default = FALSE)}
 
 \item{PathToDaisy}{Specify the path to the Daisy executable}
 
-\item{Morris}{Specify if you run Daisy for Morris}
-
-\item{DEoptim}{Specify if you run Daisy for DEOptim}
-
-\item{dflt}{Specify if you run Daisy for default values}
-
-\item{costfunction}{read.optim (needs explination)}
-
-\item{obs}{Observation against which the simulation needs to be tested.}
-
-\item{wdDir}{working environment path}
-
-\item{OutDir}{output path}
-
-\item{interval}{is the interval of the calibration period, in our case the from 1992 and 1993 drainage year.}
-
-\item{year}{if is TRUE than user gets the all output objectives of the years, if it FALSE, it gives the mean of all calculated annual objective.}
-
-\item{All}{If TRUE Giving all performance measure, if FALSE giving the specified performance measure in the script}
-
-\item{ind}{index}
-
-\item{param_sens}{sensitive parameters}
+\item{ctrldaisy}{Extra arguments that are needed for Optimization/Calibration and Sensitivity analysis (see  \code{\link{Daisy.control}})}
 }
 \description{
 This function updates the parameters, runs the model with the new parameters and calculates the cost/fit.
