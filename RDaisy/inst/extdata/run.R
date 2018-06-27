@@ -8,7 +8,7 @@ library(RDaisy)
 library(foreach)
 library(doParallel)
 library(ggplot2)
-
+library(zoo)
 
 setwd("C:/test_RDAISY")
 
