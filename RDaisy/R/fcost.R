@@ -20,9 +20,10 @@ f.cost <- function(RunFile,showLogFile,PathToDaisy,ctrldaisy){
   sub <- do.call(Daisy.control, as.list(ctrldaisy))
   updateParameters(p = sub$p, p.config = sub$p.config,RunFile = RunFile,wdDir = sub$wdDir, sensitivity = sub$sensitivity, calib = sub$calib,dflt = sub$dflt, ind = sub$ind,param_sens = sub$param_sens)
   #2. Run Daisy with the new input files
-  runDaisy(RunFile,showLogFile ,PathToDaisy,ctrldaisy = Daisy.control(sensitivity=sub$sensitivity,
-                                                                    calib=sub$calib,
-                                                                    costfunction=sub$costfunction,
+  runDaisy(RunFile,showLogFile ,PathToDaisy,ctrldaisy = Daisy.control(sensitivity=F,
+                                                                    calib=F,
+                                                                    dflt = F,
+                                                                    costfunction=NULL,
                                                                     obs = sub$obs,
                                                                     wdDir = sub$wdDir,
                                                                     OutDir = sub$OutDir,
