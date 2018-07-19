@@ -6,7 +6,7 @@
 	(wait (at 1992 09 03 1))
 	(sow "Winter Rape")
 	(wait (at 1993 04 25 1))
-	(harvest "Winter Rape" (stem 0.0) (leaf 0.0) (sorg 0.0)) 
+	(harvest "Winter Rape" (stem 0.75)(leaf 0.75)(sorg 0.98)) 
 	(plowing (depth -25 [cm]))
 
 	(wait (at 1993 04 26 1))	
@@ -19,16 +19,16 @@
 	(wait (at 1993 05 21 1))	
 	(irrigate_surface 6 [mm/h])
 	(wait (at 1993 10 06 1))
-	(harvest "Sugar Beet" (leaf 0.0))	
+	(harvest "Sugar Beet" (stem 0.75)(leaf 0.75)(sorg 0.98))	
 
 	(wait (at 1993 10 15 1))		
-	(sow "Winter Wheat")
+	(sow "Winter Wheat OPT")
 	(wait (at 1994 04 27 1))
 	(fertilize (cattle_slurry (weight 17 [Mg w.w./ha])))
 	(wait (at 1994 05 09 1))
 	(fertilize (cattle_slurry (weight 17 [Mg w.w./ha])))
 	(wait (at 1994 07 26 1))
-	(harvest "Winter Wheat")	
+	(harvest "Winter Wheat OPT"(stem 0.75)(leaf 0.75)(sorg 0.98))	
 
 	(wait (at 1994 08 10 1))
 	(plowing (depth -15 [cm]))
@@ -44,7 +44,7 @@
 	(wait (at 1995 03 09 1))
 	(fertilize (cattle_slurry (weight 21.0 [Mg w.w./ha])))
 	(wait (at 1995 07 21 1))
-	(harvest "Winter Barley")
+	(harvest "Winter Barley"(stem 0.75)(leaf 0.75)(sorg 0.98))
 		
 	(wait (at 1995 07 24 1))
 	(plowing (depth -15 [cm]))
@@ -57,7 +57,7 @@
 	(wait (at 1996 04 29 1))
 	(fertilize (cattle_slurry (weight 36.0 [Mg w.w./ha])))
 	(wait (at 1996 08 21 1))
-	(harvest "Ryegrass")
+	(harvest "Ryegrass"(stem 0.75)(leaf 0.75)(sorg 0.98))
 
 	(wait (at 1996 09 04 1))
 	(plowing (depth -23 [cm]))
@@ -65,7 +65,7 @@
 	(wait (at 1996 09 05 1))		
 	(sow "Winter Rape")
 	(wait (at 1997 03 26 1))
-	(harvest "Winter Rape" (stem 0.0) (leaf 0.0) (sorg 0.0))
+	(harvest "Winter Rape" (stem 0.75)(leaf 0.75)(sorg 0.98))
 	(rotavation -10 )
 		
 	(wait (at 1997 04 03 1))		
@@ -74,9 +74,9 @@
 	(harvest "Sugar Beet" (leaf 0.0))
 
 	(wait (at 1997 10 08 1))	
-	(sow "Winter Wheat")
+	(sow "Winter Wheat OPT")
 	(wait (at 1998 05 05 1))
 	(fertilize (cattle_slurry (weight 23.6 [Mg w.w./ha])))
-	(wait (at 1998 07 27 1))
-	(harvest "Winter Wheat")
+	(wait (at 1998 06 09 1))
+	(harvest "Winter Wheat OPT"(stem 0.75)(leaf 0.75)(sorg 0.98))
 )

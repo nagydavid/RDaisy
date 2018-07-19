@@ -1,14 +1,14 @@
 #morris
 
 #compile Morris Matrix output
-morris.swct0_30 <- function(param_matrix,obs, wdDir, OutDir, interval,year,sensitivity,All){
+morris.swct0_30 <- function(param_matrix,obs, wdDir, OutDir, interval,year,sensitivity,calib,All){
   
   My.Packages <- c("lubridate","data.table", "hydroGOF","RDaisy")
   #create data table to store output files 
   Mod.ouT <- data.table("p.ind" = 1:nrow(param_matrix)) 
   #reading
   Mod.ouT <- foreach(i=1:nrow(param_matrix), .packages = My.Packages, 
-                     .export=c("read.optim.0_30.swct")) %dopar%  Mod.ouT[i, read.optim.0_30.swct(i,obs, wdDir, OutDir, interval,year,sensitivity),
+                     .export=c("read.optim.0_30.swct")) %dopar%  Mod.ouT[i, read.optim.0_30.swct(ind = i,obs = obs,wdDir =  wdDir,OutDir =  OutDir, interval = interval,year = year,sensitivity = sensitivity,calib = calib),
                                                                          by = p.ind]
   #merging output
   Mod.ouT <- rbindlist(Mod.ouT)
@@ -21,14 +21,14 @@ morris.swct0_30 <- function(param_matrix,obs, wdDir, OutDir, interval,year,sensi
     return(swct0_30_ouT)
   }}
 
-morris.swct30_60 <- function(param_matrix, obs,wdDir, OutDir, interval,year,sensitivity,All){
+morris.swct30_60 <- function(param_matrix, obs,wdDir, OutDir, interval,year,sensitivity,calib,All){
   
   My.Packages <- c("lubridate","data.table", "hydroGOF","RDaisy")
   #create data table to store output files 
   Mod.ouT <- data.table("p.ind" = 1:nrow(param_matrix)) 
   #reading
   Mod.ouT <- foreach(i=1:nrow(param_matrix), .packages = My.Packages, 
-                     .export=c("read.optim.30_60.swct")) %dopar%  Mod.ouT[i, read.optim.30_60.swct(i, obs,wdDir, OutDir, interval,year,sensitivity),
+                     .export=c("read.optim.30_60.swct")) %dopar%  Mod.ouT[i, read.optim.30_60.swct(ind = i,obs = obs,wdDir =  wdDir,OutDir =  OutDir, interval = interval,year = year,sensitivity = sensitivity,calib = calib),
                                                                          by = p.ind]
   #merging output
   Mod.ouT <- rbindlist(Mod.ouT)
@@ -41,14 +41,14 @@ morris.swct30_60 <- function(param_matrix, obs,wdDir, OutDir, interval,year,sens
     return(swct30_60_ouT)
   }}
 
-morris.swct60_90 <- function(param_matrix,obs, wdDir, OutDir, interval,year,sensitivity,All){
+morris.swct60_90 <- function(param_matrix,obs, wdDir, OutDir, interval,year,sensitivity,calib,All){
   
   My.Packages <- c("lubridate","data.table", "hydroGOF","RDaisy")
   #create data table to store output files 
   Mod.ouT <- data.table("p.ind" = 1:nrow(param_matrix)) 
   #reading
   Mod.ouT <- foreach(i=1:nrow(param_matrix), .packages = My.Packages, 
-                     .export=c("read.optim.60_90.swct")) %dopar%  Mod.ouT[i, read.optim.60_90.swct(i, obs,wdDir, OutDir, interval,year,sensitivity),
+                     .export=c("read.optim.60_90.swct")) %dopar%  Mod.ouT[i, read.optim.60_90.swct(ind = i,obs = obs,wdDir =  wdDir,OutDir =  OutDir, interval = interval,year = year,sensitivity = sensitivity,calib = calib),
                                                                          by = p.ind]
   #merging output
   Mod.ouT <- rbindlist(Mod.ouT)
@@ -63,14 +63,14 @@ morris.swct60_90 <- function(param_matrix,obs, wdDir, OutDir, interval,year,sens
 
 
 #compile Morris Matrix output
-morris.N0_30 <- function(param_matrix,obs, wdDir, OutDir, interval,year,sensitivity,All){
+morris.N0_30 <- function(param_matrix,obs, wdDir, OutDir, interval,year,sensitivity,calib,All){
   
   My.Packages <- c("lubridate","data.table", "hydroGOF","RDaisy")
   #create data table to store output files 
   Mod.ouT <- data.table("p.ind" = 1:nrow(param_matrix)) 
   #reading
   Mod.ouT <- foreach(i=1:nrow(param_matrix), .packages = My.Packages, 
-                     .export=c("read.optim.0_30.N")) %dopar%  Mod.ouT[i, read.optim.0_30.N(i,obs, wdDir, OutDir, interval,year,sensitivity),
+                     .export=c("read.optim.0_30.N")) %dopar%  Mod.ouT[i, read.optim.0_30.N(ind = i,obs = obs,wdDir =  wdDir,OutDir =  OutDir, interval = interval,year = year,sensitivity = sensitivity,calib = calib),
                                                                       by = p.ind]
   #merging output
   Mod.ouT <- rbindlist(Mod.ouT)
@@ -83,14 +83,14 @@ morris.N0_30 <- function(param_matrix,obs, wdDir, OutDir, interval,year,sensitiv
     return(N0_30_ouT)
   }}
 
-morris.N30_60 <- function(param_matrix,obs, wdDir, OutDir, interval,year,sensitivity,All){
+morris.N30_60 <- function(param_matrix,obs, wdDir, OutDir, interval,year,sensitivity,calib,All){
   
   My.Packages <- c("lubridate","data.table", "hydroGOF","RDaisy")
   #create data table to store output files 
   Mod.ouT <- data.table("p.ind" = 1:nrow(param_matrix)) 
   #reading
   Mod.ouT <- foreach(i=1:nrow(param_matrix), .packages = My.Packages, 
-                     .export=c("read.optim.30_60.N")) %dopar%  Mod.ouT[i, read.optim.30_60.N(i,obs, wdDir, OutDir, interval,year,sensitivity),
+                     .export=c("read.optim.30_60.N")) %dopar%  Mod.ouT[i, read.optim.30_60.N(ind = i,obs = obs,wdDir =  wdDir,OutDir =  OutDir, interval = interval,year = year,sensitivity = sensitivity,calib = calib),
                                                                       by = p.ind]
   #merging output
   Mod.ouT <- rbindlist(Mod.ouT)
@@ -103,14 +103,14 @@ morris.N30_60 <- function(param_matrix,obs, wdDir, OutDir, interval,year,sensiti
     return(N30_60_ouT)
   }}
 
-morris.N60_90 <- function(param_matrix,obs, wdDir, OutDir, interval,year,sensitivity,All){
+morris.N60_90 <- function(param_matrix,obs, wdDir, OutDir, interval,year,sensitivity,calib,All){
   
   My.Packages <- c("lubridate","data.table", "hydroGOF","RDaisy")
   #create data table to store output files 
   Mod.ouT <- data.table("p.ind" = 1:nrow(param_matrix)) 
   #reading
   Mod.ouT <- foreach(i=1:nrow(param_matrix), .packages = My.Packages, 
-                     .export=c("read.optim.60_90.N")) %dopar%  Mod.ouT[i, read.optim.60_90.N(i,obs, wdDir, OutDir, interval,year,sensitivity),
+                     .export=c("read.optim.60_90.N")) %dopar%  Mod.ouT[i, read.optim.60_90.N(ind = i,obs = obs,wdDir =  wdDir,OutDir =  OutDir, interval = interval,year = year,sensitivity = sensitivity,calib = calib),
                                                                       by = p.ind]
   #merging output
   Mod.ouT <- rbindlist(Mod.ouT)
@@ -123,14 +123,14 @@ morris.N60_90 <- function(param_matrix,obs, wdDir, OutDir, interval,year,sensiti
     return(N60_90_ouT)
   }}
 
-morris.Yield <- function(param_matrix,obs, wdDir, OutDir, interval,year,sensitivity,All){
+morris.Yield <- function(param_matrix,obs, wdDir, OutDir, interval,year,sensitivity,calib,All){
   
   My.Packages <- c("lubridate","data.table", "hydroGOF","RDaisy")
   #create data table to store output files 
   Mod.ouT <- data.table("p.ind" = 1:nrow(param_matrix)) 
   #reading
   Mod.ouT <- foreach(i=1:nrow(param_matrix), .packages = My.Packages, 
-                     .export=c("read.optim.Yield")) %dopar%  Mod.ouT[i, read.optim.yield(i,obs, wdDir, OutDir, interval,year,sensitivity),
+                     .export=c("read.optim.Yield")) %dopar%  Mod.ouT[i, read.optim.Yield(ind = i,obs = obs,wdDir =  wdDir,OutDir =  OutDir, interval = interval,year = year,sensitivity = sensitivity,calib = calib),
                                                                        by = p.ind]
   #merging output
   Mod.ouT <- rbindlist(Mod.ouT)
@@ -146,21 +146,21 @@ morris.Yield <- function(param_matrix,obs, wdDir, OutDir, interval,year,sensitiv
 
 
 
-read_morris <- function(param_matrix,obs,wdDir, OutDir, interval,year,sensitivity,All){
-  swct0_30<-morris.swct0_30(param_matrix, obs,wdDir, OutDir, interval,year,sensitivity,All)
-  
-  swct30_60<-morris.swct30_60(param_matrix,obs, wdDir, OutDir, interval,year,sensitivity,All)
-  
-  swct60_90<-morris.swct60_90(param_matrix,obs, wdDir, OutDir, interval,year,sensitivity,All)
-  
-  N0_30<-morris.N0_30(param_matrix,obs,  wdDir, OutDir, interval,year,sensitivity,All)
-  
-  N30_60<-morris.N30_60(param_matrix,obs,  wdDir,OutDir, interval,year,sensitivity,All)
-  
-  N60_90<-morris.N60_90(param_matrix,obs,  wdDir, OutDir, interval,year,sensitivity,All)
-  
-  Yield<-morris.Yield(param_matrix,obs,  wdDir, OutDir, interval,year,sensitivity,All)
-  
+read_morris <- function(param_matrix,obs,wdDir, OutDir, interval,year,sensitivity,calib,All){
+  swct0_30<-morris.swct0_30(param_matrix, obs,wdDir, OutDir, interval,year,sensitivity,calib,All)
+
+  swct30_60<-morris.swct30_60(param_matrix,obs, wdDir, OutDir, interval,year,sensitivity,calib,All)
+
+  swct60_90<-morris.swct60_90(param_matrix,obs, wdDir, OutDir, interval,year,sensitivity,calib,All)
+
+  N0_30<-morris.N0_30(param_matrix,obs,  wdDir, OutDir, interval,year,sensitivity,calib,All)
+
+  N30_60<-morris.N30_60(param_matrix,obs,  wdDir,OutDir, interval,year,sensitivity,calib,All)
+
+  N60_90<-morris.N60_90(param_matrix,obs,  wdDir, OutDir, interval,year,sensitivity,calib,All)
+
+  Yield<-morris.Yield(param_matrix,obs, wdDir, OutDir, interval,year,sensitivity,calib,All)
+
   AllObj <- rbind(swct0_30,swct30_60,swct60_90,N0_30,N30_60,N60_90,Yield)
   setkey(AllObj, p.ind)
   
@@ -189,17 +189,17 @@ DaisyMorris<-function(RunFile,showLogFile,PathToDaisy,ctrldaisy){
   
   showConnections(all = TRUE)# with this you are able to inspect how many clusters you have
   
-  My.Packages <- c("lubridate","data.table", "hydroGOF","RDaisy")
+  My.Packages <- c("lubridate","data.table", "hydroGOF")
   
   #run daisy for each paramater set from the Sensitivity Matrix
   
-  Out.Sens <- foreach(i=1:nrow(Morris.sens$X), .packages = My.Packages ) %dopar% f.cost(RunFile=RunFile, showLogFile=showLogFile,PathToDaisy=PathToDaisy,ctrldaisy = Daisy.control(sensitivity = T,calib = FALSE, dflt = FALSE,costfunction = NULL,obs=ctrldaisy$obs, wdDir="C:/test_RDAISY", OutDir="output",interval=1993:1995,year=TRUE,All=TRUE,ind=i,param_sens = NULL,p=fread(ctrldaisy$p.config)$default, p.config=ctrldaisy$p.config))
+  Out.Sens <- foreach(i=1:nrow(Morris.sens$X), .packages = My.Packages ) %dopar% f.cost(RunFile=RunFile, showLogFile=showLogFile,PathToDaisy=PathToDaisy,ctrldaisy = Daisy.control(sensitivity = T,calib = FALSE, dflt = FALSE,costfunction = NULL,obs=ctrldaisy$obs, wdDir="F:/Jeroen", OutDir="output",interval=1993:1995,year=TRUE,All=TRUE,ind=i,param_sens = NULL,p=Morris.sens$X[i,], p.config=ctrldaisy$p.config))
 
   sens.dt <- as.data.table(Morris.sens$X)
   
   #read all sensitivity measures for each parameter set.
   
-  Morris.Obj <- read_morris(Morris.sens$X,obs,wdDir, OutDir, interval,year,sensitivity,All)
+  Morris.Obj <- read_morris(param_matrix = Morris.sens$X,obs = ctrldaisy$obs,wdDir = ctrldaisy$wdDir, OutDir = ctrldaisy$OutDir, interval = ctrldaisy$interval,year = ctrldaisy$year,sensitivity = ctrldaisy$sensitivity,calib=ctrldaisy$calib,All = ctrldaisy$All)
   
   #Getting the mean of all sensitivity measures, IT CAN BE CHANGED, here we are taking the mean of the two year of calibration period
   Morris.Sens<- Morris.Obj[,lapply(.SD, mean),by=.(p.ind, Obj)]
@@ -258,4 +258,3 @@ DaisyMorris<-function(RunFile,showLogFile,PathToDaisy,ctrldaisy){
   return(Morris.plot.dt)
   
 }
-
