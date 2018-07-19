@@ -27,7 +27,7 @@
 	(fertilize (cattle_slurry (weight 17 [Mg w.w./ha])))
 	(wait (at 1994 05 09 1))
 	(fertilize (cattle_slurry (weight 17 [Mg w.w./ha])))
-	(wait (at 1994 07 29 1))
+	(wait (at 1994 07 26 1))
 	(harvest "Winter Wheat")	
 
 	(wait (at 1994 08 10 1))
