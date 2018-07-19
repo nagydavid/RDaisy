@@ -551,7 +551,7 @@ DaisyDeoptim<-function(RunFile,showLogFile,PathToDaisy,ctrldaisy){
   lowR <- param_matrix[name %in% ctrldaisy$param_sens, ]$min
   uppR <- param_matrix[name %in% ctrldaisy$param_sens, ]$max
 
-  maxIT <- 10
+  maxIT <- 1000
   
   #ctrldaisy is not transfered to Cost.optim
   Calib.Sens <- DEoptim::DEoptim(fn=Cost.optim_D,
