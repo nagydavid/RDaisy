@@ -75,5 +75,5 @@ Cost.optim(RunFile=T_RunFile,showLogFile=TRUE,PathToDaisy=T_path,ctrldaisy = Dai
            obs=T_obs_all, wdDir="F:/Jeroen/", OutDir="output",interval=1993:1995,year=FALSE,All=FALSE,ind=Sys.getpid(),param_sens = T_param_sens,p=fread(T_param)[name %in% T_param_sens,]$default, p.config=T_param))
 
 
-Calib.T<-runDaisy(RunFile=T_RunFile, showLogFile=FALSE,PathToDaisy=T_path,ctrldaisy = Daisy.control(sensitivity =FALSE,calib=TRUE,dflt=FALSE,costfunction=DaisyDeoptim,
+Calib.T<-runDaisy(RunFile=T_RunFile, showLogFile=FALSE,PathToDaisy=T_path,ctrldaisy = Daisy.control(sensitivity =FALSE,calib = TRUE,dflt=FALSE,costfunction=DaisyDeoptim,
                                                                                                obs=T_obs_all, wdDir="F:/Jeroen/", OutDir="output",interval=1993:1995,year=FALSE,All=FALSE,ind=Sys.getpid(),param_sens = T_param_sens,p=fread(T_param)[name %in% T_param_sens,]$default, p.config=T_param))

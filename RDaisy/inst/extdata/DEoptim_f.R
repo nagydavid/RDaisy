@@ -521,7 +521,17 @@ Cost.optim <- function(RunFile,showLogFile,PathToDaisy,ctrldaisy){
   return(read.optim(ind = ctrldaisy$ind,obs =  ctrldaisy$obs,wdDir = ctrldaisy$wdDir,OutDir =  ctrldaisy$OutDir,interval =  ctrldaisy$interval,year = ctrldaisy$year,sensitivity = ctrldaisy$sensitivity,calib = ctrldaisy$calib,All = ctrldaisy$All))
 }
 
-
+Cost.optim_D <- function(x,RunFile,showLogFile,PathToDaisy,ctrldaisy){
+  print(x)
+  
+  ctrldaisy <- do.call(Daisy.control, as.list(ctrldaisy))
+  p.config <- ctrldaisy$p.config
+  ctrldaisy$p=x
+  ctrldaisy$ind=Sys.getpid()
+  f.cost(RunFile = RunFile,showLogFile=showLogFile,PathToDaisy=PathToDaisy,ctrldaisy=Daisy.control(sensitivity = ctrldaisy$sensitivity,calib=ctrldaisy$calib,dflt=ctrldaisy$dflt,costfunction=ctrldaisy$costfunction,obs=ctrldaisy$obs,wdDir=ctrldaisy$wdDir,OutDir = ctrldaisy$OutDir,interval=ctrldaisy$interval,year=ctrldaisy$year,All=ctrldaisy$All,ind=ctrldaisy$ind,param_sens=ctrldaisy$param_sens,p=ctrldaisy$p, p.config=ctrldaisy$p.config))
+  
+  return(read.optim(ind = ctrldaisy$ind, obs = ctrldaisy$obs,wdDir = ctrldaisy$wdDir, OutDir = ctrldaisy$OutDir, interval = ctrldaisy$interval,year = ctrldaisy$year,sensitivity = ctrldaisy$sensitivity,calib = ctrldaisy$calib,All = ctrldaisy$All))
+}
 
 DaisyDeoptim<-function(RunFile,showLogFile,PathToDaisy,ctrldaisy){
 
@@ -544,23 +554,11 @@ DaisyDeoptim<-function(RunFile,showLogFile,PathToDaisy,ctrldaisy){
   maxIT <- 10
   
   #ctrldaisy is not transfered to Cost.optim
-  
   Calib.Sens <- DEoptim::DEoptim(fn=Cost.optim_D,
-                                  lower = lowR,
-                                  upper = uppR,
-                                  DEoptim::DEoptim.control(itermax=maxIT,parallelType = 1,packages = My.Packages, parVar = c(My.Functions), NP=detectCores()),
-                                  RunFile,showLogFile,PathToDaisy,ctrldaisy
-                                  )
+                                 lower = lowR,
+                                 upper = uppR,
+                                 DEoptim::DEoptim.control(itermax=maxIT,parallelType = 1,packages = My.Packages, parVar = c(My.Functions), NP=detectCores()),
+                                 RunFile,showLogFile,PathToDaisy,ctrldaisy
+                                 )
 }
 
-Cost.optim_D <- function(x,RunFile,showLogFile,PathToDaisy,ctrldaisy){
-  print(x)
-  
-  ctrldaisy <- do.call(Daisy.control, as.list(ctrldaisy))
-  p.config <- ctrldaisy$p.config
-  ctrldaisy$p=x
-  ctrldaisy$ind=Sys.getpid()
-  f.cost(RunFile = RunFile,showLogFile=showLogFile,PathToDaisy=PathToDaisy,ctrldaisy=Daisy.control(sensitivity = ctrldaisy$sensitivity,calib=ctrldaisy$calib,dflt=ctrldaisy$dflt,costfunction=ctrldaisy$costfunction,obs=ctrldaisy$obs,wdDir=ctrldaisy$wdDir,OutDir = ctrldaisy$OutDir,interval=ctrldaisy$interval,year=ctrldaisy$year,All=ctrldaisy$All,ind=ctrldaisy$ind,param_sens=ctrldaisy$param_sens,p=ctrldaisy$p, p.config=ctrldaisy$p.config))
-  
-  return(read.optim(ctrldaisy$ind, ctrldaisy$obs,ctrldaisy$wdDir, ctrldaisy$OutDir, ctrldaisy$interval,ctrldaisy$year,ctrldaisy$calib))
-}

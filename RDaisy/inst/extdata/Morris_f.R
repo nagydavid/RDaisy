@@ -189,7 +189,7 @@ DaisyMorris<-function(RunFile,showLogFile,PathToDaisy,ctrldaisy){
   
   showConnections(all = TRUE)# with this you are able to inspect how many clusters you have
   
-  My.Packages <- c("lubridate","data.table", "hydroGOF")
+  My.Packages <- c("lubridate","data.table", "hydroGOF","RDaisy")
   
   #run daisy for each paramater set from the Sensitivity Matrix
   
