@@ -193,7 +193,7 @@ DaisyMorris<-function(RunFile,showLogFile,PathToDaisy,ctrldaisy){
   
   #run daisy for each paramater set from the Sensitivity Matrix
   
-  Out.Sens <- foreach(i=1:nrow(Morris.sens$X), .packages = My.Packages ) %dopar% f.cost(RunFile=RunFile, showLogFile=showLogFile,PathToDaisy=PathToDaisy,ctrldaisy = Daisy.control(sensitivity = T,calib = FALSE, dflt = FALSE,costfunction = NULL,obs=ctrldaisy$obs, wdDir="F:/Jeroen", OutDir="output",interval=1993:1995,year=TRUE,All=TRUE,ind=i,param_sens = NULL,p=Morris.sens$X[i,], p.config=ctrldaisy$p.config))
+  Out.Sens <- foreach(i=1:nrow(Morris.sens$X), .packages = My.Packages ) %dopar% f.cost(RunFile=RunFile, showLogFile=showLogFile,PathToDaisy=PathToDaisy,ctrldaisy = Daisy.control(sensitivity = T,calib = FALSE, dflt = FALSE,costfunction = NULL,obs=ctrldaisy$obs, wdDir=ctrldaisy$wdDir, OutDir=ctrldaisy$OutDir,interval=ctrldaisy$interval,year=ctrldaisy$year,All=ctrldaisy$All,ind=i,param_sens = NULL,p=Morris.sens$X[i,], p.config=ctrldaisy$p.config))
 
   sens.dt <- as.data.table(Morris.sens$X)
   
