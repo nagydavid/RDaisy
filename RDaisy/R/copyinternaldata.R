@@ -42,6 +42,9 @@ copyinternaldata<-function(new_folder,package_folder=NULL){
   }
   print(paste("Folder structure succefully copied to ",new_folder))
 
+  dir.create(paste(new_folder,"/input",sep=""))
+  print(paste("Created an input folder in the folder",new_folder))
+  
   dir.create(paste(new_folder,"/output",sep=""))
   print(paste("Created an output folder in the folder",new_folder))
 }
