@@ -10,7 +10,7 @@ read.optim.0_30.swct <- function(ind, obs ,wdDir, OutDir, interval,year,sensitiv
   # calib = if it is TRUE, read output files with PID as index, if it falls it reads from index file.
   
   if (calib == T){#If calib is TRUE, then it reads output file which named after the running core(sys.getpid),
-            
+    
     daisyOut <- file.path(wdDir,OutDir,paste(Sys.getpid(), "_swct.dlf", sep=""))
   } else {     #if false is named after the current rownumber of the sensitivity matrix
     daisyOut <- file.path(wdDir,OutDir,paste(ind, "_swct.dlf", sep=""))
@@ -46,10 +46,10 @@ read.optim.0_30.swct <- function(ind, obs ,wdDir, OutDir, interval,year,sensitiv
     #We take the mean of the Soil Water Content from 0 to 30 cm in order to match it with our observed data.
     
     simOut[,sim0_30:=rowMeans(simOut[,5:9])]
-  
+    
     #here we merging the input and the output in order to further process
     SimObsSWC <- merge(simOut[,.SD, .SDcols=c( "date", "sim0_30")],
-                         obs[PLOT=="plot2",.SD, .SDcols=c("date" ,"WATER_0_30_CM_VOL_PROZ")], all.y  = T,by="date")
+                       obs[PLOT=="plot2",.SD, .SDcols=c("date" ,"WATER_0_30_CM_VOL_PROZ")], all.y  = T,by="date")
     
     #Due to our observation data is in percentage water content and daisy provide it with decimal, we convert our observation to decimals
     SimObsSWC[, WATER_0_30_CM_VOL_PROZ:=WATER_0_30_CM_VOL_PROZ/100]
@@ -63,7 +63,7 @@ read.optim.0_30.swct <- function(ind, obs ,wdDir, OutDir, interval,year,sensitiv
     #Calculating HydroGOF matrix
     HydGOF1 <- gof(sim = SimObsSWC1$sim0_30, obs = SimObsSWC1$WATER_0_30_CM_VOL_PROZ,  norm = "maxmin",digits = 4)
     HydGOF2 <- gof(sim = SimObsSWC2$sim0_30, obs = SimObsSWC2$WATER_0_30_CM_VOL_PROZ,  norm = "maxmin",digits = 4)
-
+    
     #transponating HydroGOF matrix for further use
     HydGOF1 <- data.table(t(HydGOF1))
     HydGOF1[,year:=interval[1]]
@@ -148,7 +148,7 @@ read.optim.30_60.swct <- function(ind, obs ,wdDir, OutDir, interval,year,sensiti
       return(GOFMean)
     }
   }
-  }
+}
 
 
 #Reading modelled SWT output and calculating NSE from the package HydroGOF
@@ -421,7 +421,7 @@ read.optim.60_90.N <- function(ind, obs ,wdDir, OutDir, interval,year,sensitivit
     }
   }}
 
-
+#Reading modelled yield output and calculating NSE from the package HydroGOF
 read.optim.Yield<- function(ind, obs ,wdDir, OutDir, interval,year,sensitivity,calib,All){
   
   if (calib == T){
@@ -453,43 +453,22 @@ read.optim.Yield<- function(ind, obs ,wdDir, OutDir, interval,year,sensitivity,c
     simOut[, date := dmy(paste(paste(day, month, year,sep="-")))]
     simOut<-simOut[!duplicated(simOut$date)]
     
-      simOut$simAGB=as.numeric(simOut$stem_DM)+as.numeric(simOut$leaf_DM)+as.numeric(simOut$sorg_DM)
+    simOut$simAGB=as.numeric(simOut$stem_DM)+as.numeric(simOut$leaf_DM)+as.numeric(simOut$sorg_DM)
     simOut$simgrain=simOut$simAGB*simOut$HI
-
     
-    SimObsyield <- merge(simOut[,.SD, .SDcols=c( "date", "simgrain")],
-                     obs[PLOT=="plot2",.SD, .SDcols=c("date" ,"HARVHAND_DR_STORG_BE_KG_HA")], all.y = T,by="date")
+    SimObsyield <- merge(simOut[crop=="Winter Wheat OPT",.SD, .SDcols=c( "date", "simgrain")],
+                         obs[PLOT=="plot2",.SD, .SDcols=c("date" ,"HARVHAND_DR_STORG_BE_KG_HA")], all.y = T,by="date")
     
     SimObsyield[, HARVHAND_DR_STORG_BE_T_HA:=HARVHAND_DR_STORG_BE_KG_HA/1000]
     
     SimObsyield <- na.omit(SimObsyield)
     
-    SimObsyield1 <- SimObsyield[date %between% c(dmy(paste("01-01",interval[1])),dmy(paste("31-12",interval[1])))]
-    SimObsyield2 <- SimObsyield[date %between% c(dmy(paste("01-01",interval[2])),dmy(paste("31-12",interval[2])))]
-    
-    
     HydGOF <- data.table(t(gof(sim = SimObsyield$simgrain, obs = SimObsyield$HARVHAND_DR_STORG_BE_T_HA,  norm = "maxmin",digits = 4)))
     HydGOF[,year:=interval[1]]
-    # HydGOF1 <- gof(sim = SimObsyield1$simgrain, obs = SimObsyield1$HARVHAND_DR_STORG_BE_T_HA,  norm = "maxmin",digits = 4)
-    # HydGOF2 <- gof(sim = SimObsyield2$simgrain, obs = SimObsyield2$HARVHAND_DR_STORG_BE_T_HA,  norm = "maxmin",digits = 4)
-    # 
-    # 
-    # HydGOF1 <- data.table(t(HydGOF1))
-    # HydGOF1[,year:=interval[1]]
-    # HydGOF2 <- data.table(t(HydGOF2))
-    # HydGOF2[,year:=interval[2]]
-    # 
-    # HydGOF <- rbind(HydGOF1,HydGOF2)
-    GOFMean <- HydGOF
-    # GOFMean <- HydGOF[,lapply(.SD,mean, na.rm=F)]
-    # GOFMean[,year:=0000]
     
-    if (year==T){
-      return(HydGOF)
-    } else {
-      return(GOFMean)
-    }
-  }}
+    return(HydGOF)
+  }
+}
 
 read.optim <- function(ind, obs,wdDir, OutDir, interval,year,sensitivity,calib,All){
   swct0_30<-read.optim.0_30.swct(ind, obs ,wdDir, OutDir, interval,year,sensitivity,calib,All)
@@ -503,9 +482,9 @@ read.optim <- function(ind, obs,wdDir, OutDir, interval,year,sensitivity,calib,A
   N30_60<-read.optim.30_60.N(ind, obs ,wdDir, OutDir, interval,year,sensitivity,calib,All)
   
   N60_90<-read.optim.60_90.N(ind, obs ,wdDir, OutDir, interval,year,sensitivity,calib,All)
-
+  
   Yield <- read.optim.Yield(ind, obs ,wdDir, OutDir, interval,year,sensitivity,calib,All)
-    
+  
   NSE<- (1-swct0_30$NSE)+(1-swct30_60$NSE)+(1-swct60_90$NSE)+(1-N0_30$NSE)+(1-N30_60$NSE)+(1-N60_90$NSE)+(1-Yield$NSE)
   
   return(NSE)
@@ -515,7 +494,7 @@ Cost.optim <- function(RunFile,showLogFile,PathToDaisy,ctrldaisy){
   
   ctrldaisy <- do.call(Daisy.control, as.list(ctrldaisy))
   p.config <- ctrldaisy$p.config
-    ctrldaisy$ind=Sys.getpid()
+  ctrldaisy$ind=Sys.getpid()
   f.cost(RunFile = RunFile,showLogFile=showLogFile,PathToDaisy=PathToDaisy,ctrldaisy=Daisy.control(sensitivity = ctrldaisy$sensitivity,calib=ctrldaisy$calib,dflt=ctrldaisy$dflt,costfunction=ctrldaisy$costfunction,obs=ctrldaisy$obs,wdDir=ctrldaisy$wdDir,OutDir = ctrldaisy$OutDir,interval=ctrldaisy$interval,year=ctrldaisy$year,All=ctrldaisy$All,ind=ctrldaisy$ind,param_sens=ctrldaisy$param_sens,p=ctrldaisy$p, p.config=ctrldaisy$p.config))
   
   return(read.optim(ind = ctrldaisy$ind,obs =  ctrldaisy$obs,wdDir = ctrldaisy$wdDir,OutDir =  ctrldaisy$OutDir,interval =  ctrldaisy$interval,year = ctrldaisy$year,sensitivity = ctrldaisy$sensitivity,calib = ctrldaisy$calib,All = ctrldaisy$All))
@@ -534,7 +513,7 @@ Cost.optim_D <- function(x,RunFile,showLogFile,PathToDaisy,ctrldaisy){
 }
 
 DaisyDeoptim<-function(RunFile,showLogFile,PathToDaisy,ctrldaisy){
-
+  
   set.seed(1)
   p.config <- ctrldaisy$p.config
   param_matrix<-fread(p.config)
@@ -544,14 +523,14 @@ DaisyDeoptim<-function(RunFile,showLogFile,PathToDaisy,ctrldaisy){
   Base.Functions<-c("CheckParameters","runDaisy","f.update","updateParameters","f.cost")
   My.Packages <- c("data.table", "hydroGOF", "lubridate","RDaisy")
   My.Functions <- c("read.optim.0_30.swct","read.optim.30_60.swct","read.optim.60_90.swct","read.optim.0_30.N","read.optim.30_60.N","read.optim.60_90.N","read.optim.Yield","read.optim","Cost.optim_D","DaisyMorris")
-
+  
   #DeOptim calibration
   #Paralell cluster setup
   
   lowR <- param_matrix[name %in% ctrldaisy$param_sens, ]$min
   uppR <- param_matrix[name %in% ctrldaisy$param_sens, ]$max
-
-  maxIT <- 1000
+  
+  maxIT <- 100
   
   #ctrldaisy is not transfered to Cost.optim
   Calib.Sens <- DEoptim::DEoptim(fn=Cost.optim_D,
@@ -559,6 +538,6 @@ DaisyDeoptim<-function(RunFile,showLogFile,PathToDaisy,ctrldaisy){
                                  upper = uppR,
                                  DEoptim::DEoptim.control(itermax=maxIT,parallelType = 1,packages = My.Packages, parVar = c(My.Functions), NP=detectCores()),
                                  RunFile,showLogFile,PathToDaisy,ctrldaisy
-                                 )
+  )
 }
 
