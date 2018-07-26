@@ -203,7 +203,6 @@ DaisyMorris<-function(RunFile,showLogFile,PathToDaisy,ctrldaisy){
   
   #Getting the mean of all sensitivity measures, IT CAN BE CHANGED, here we are taking the mean of the two year of calibration period
   Morris.Sens<- Morris.Obj[,lapply(.SD, mean),by=.(p.ind, Obj)]
-  Morris.Sens[,NSE:=1-NSE]
   
   #subsetting only for NSE values
   Morris.NSE <- dcast(Morris.Sens[,.(p.ind,Obj,NSE)], p.ind  ~ Obj, value.var="NSE")
