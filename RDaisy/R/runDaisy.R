@@ -7,13 +7,13 @@
 #'@param RunFile The complete path to the file with extension ".dai". This file is the setup file of the model.
 #'@param showLogFile Either True or False to show the log file. (default = FALSE)
 #'@param PathToDaisy Define where Daisy is installed. NOTE: This user should have admin rights to this folder.
-#'@param ctrldaisy Extra arguments that are needed for Optimization/Calibration and Sensitivity analysis (see  \code{\link{Daisy.control}})
+#'@param ctrldaisy Extra arguments that are needed for Optimization/Calibration and Sensitivity analysis (see  \code{\link{Daisy.control}}. Do not add it when only a single simple run is neded)
 #'
 #'
 #'@examples
 #'\dontrun{
-#'runfile="C:/Daisy 5.31/sample/test.dai"
-#'PathToDaisy = "C:/Daisy 5.31/bin/daisy.exe"
+#'RunFile="C:/Program Files/Daisy 5.59/sample/test.dai"
+#'PathToDaisy = "C:/Program Files/Daisy 5.59/bin/daisy.exe"
 #'runDaisy(RunFile=RunFile, showLogFile = FALSE, PathToDaisy = PathToDaisy)
 #'}
 #'@import data.table
@@ -37,7 +37,12 @@ runDaisy <- function(RunFile, showLogFile = TRUE, PathToDaisy = "C:/Program File
   p <- control$p
   ind <- control$ind
   
-  
+  if(sensitivity==FALSE & calib == FALSE & dflt == FALSE){
+    #build the command
+    cmdToRun <- paste("\"", PathToDaisy, "\"", " \"", RunFile, "\"", sep="")
+    #run it
+    system(cmdToRun, show.output.on.console = showLogFile  )}
+    
   if(sensitivity==TRUE & calib ==TRUE & dflt==TRUE){
     stop("Default, Sensitivity and calibration are selected. Please select only one option.")
   }  

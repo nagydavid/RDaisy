@@ -15,15 +15,15 @@ runDaisy(RunFile, showLogFile = TRUE,
 
 \item{PathToDaisy}{Define where Daisy is installed. NOTE: This user should have admin rights to this folder.}
 
-\item{ctrldaisy}{Extra arguments that are needed for Optimization/Calibration and Sensitivity analysis (see  \code{\link{Daisy.control}})}
+\item{ctrldaisy}{Extra arguments that are needed for Optimization/Calibration and Sensitivity analysis (see  \code{\link{Daisy.control}}. Do not add it when only a single simple run is neded)}
 }
 \description{
 This function runs the Daisy model.
 }
 \examples{
 \dontrun{
-runfile="C:/Daisy 5.31/sample/test.dai"
-PathToDaisy = "C:/Daisy 5.31/bin/daisy.exe"
+RunFile="C:/Program Files/Daisy 5.59/sample/test.dai"
+PathToDaisy = "C:/Program Files/Daisy 5.59/bin/daisy.exe"
 runDaisy(RunFile=RunFile, showLogFile = FALSE, PathToDaisy = PathToDaisy)
 }
 }
