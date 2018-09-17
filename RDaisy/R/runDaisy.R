@@ -14,7 +14,7 @@
 #'\dontrun{
 #'RunFile="C:/Program Files/Daisy 5.59/sample/test.dai"
 #'PathToDaisy = "C:/Program Files/Daisy 5.59/bin/daisy.exe"
-#'runDaisy(RunFile=RunFile, showLogFile = FALSE, PathToDaisy = PathToDaisy)
+#'runDaisy(RunFile=RunFile, showLogFile = FALSE, PathToDaisy = PathToDaisy,ctrldaisy=Daisy.control())
 #'}
 #'@import data.table
 #'@import stringr

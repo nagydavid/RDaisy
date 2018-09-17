@@ -18,4 +18,4 @@ suggests:
   ggplot2
 URL: https://github.com/jeroenpullens/RDaisy
 BugReports: https://github.com/jeroenpullens/RDaisy/issues
-RoxygenNote: 6.0.1
+RoxygenNote: 6.1.0
