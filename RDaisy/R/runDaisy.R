@@ -37,11 +37,6 @@ runDaisy <- function(RunFile, showLogFile = TRUE, PathToDaisy = "C:/Program File
   p <- control$p
   ind <- control$ind
   
-  if(sensitivity==FALSE & calib == FALSE & dflt == FALSE){
-    #build the command
-    cmdToRun <- paste("\"", PathToDaisy, "\"", " \"", RunFile, "\"", sep="")
-    #run it
-    system(cmdToRun, show.output.on.console = showLogFile  )}
     
   if(sensitivity==TRUE & calib ==TRUE & dflt==TRUE){
     stop("Default, Sensitivity and calibration are selected. Please select only one option.")
