@@ -33,6 +33,17 @@ f.update <- function(file,RunFile,wdDir,sensitivity,calib,dflt,ind){
       if(file$from.file[i]==file$from.file[i-1]){
         txt <- readLines(file$to.file[i],warn=FALSE)
         txt <- gsub(file$name[i], file$default[i], txt, fixed = TRUE)
+        if(ncol(file)>7){
+          if(file$exp.pm[i]==1){
+            y<-0
+            for(j in 1:length(file$name)){
+              file$exp[i] <- gsub(file$name[j],file$default[j],file$exp[i],fixed = TRUE)
+            }
+            y<-eval(parse(text=file$exp[i]))
+            
+            txt <- gsub(file$name.exp[i], y, txt, fixed = TRUE)
+          }
+        }  
         cat(txt, file = file$to.file[i], sep="\n")
       } else {
         txt <- readLines(file$from.file[i],warn=FALSE)

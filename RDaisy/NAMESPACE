@@ -3,6 +3,7 @@
 export(CheckParameters)
 export(Daisy.control)
 export(copyinternaldata)
+export(copytestdata)
 export(f.cost)
 export(f.update)
 export(runDaisy)
