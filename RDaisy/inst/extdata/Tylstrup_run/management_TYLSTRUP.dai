@@ -1,0 +1,391 @@
+(defaction "management_TYLSTRUP" activity 	
+
+	;; 2000
+	(wait (at 2000 03 17))
+	(plowing (depth -20 [cm]))
+	
+	(wait (at 2000 03 28))
+	(fertilize (NPK01 (weight 229 [kg/ha]))) ; amount of 124 kg N is given, used conversion 0.54
+	(seed_bed_preparation -5 [cm])
+
+	(wait (at 2000 03 29))
+	(sow "Vaarbyg2")
+
+	(wait (at 2000 07 07))
+	(irrigate_overhead 31 [mm/h])
+	
+	(wait (at 2000 08 21))
+	(harvest "Vaarbyg2" (stub 11 [cm])(stem 0.75)(leaf 0.75)(sorg 0.98))
+	
+	(wait (at 2000 09 07))
+	(disk_harrowing -6 [cm])
+	
+	(wait (at 2000 09 14))
+	(plowing (depth -25 [cm]))
+	
+	(wait (at 2000 09 30))
+	(seed_bed_preparation -5 [cm])
+	
+	(wait (at 2000 10 01))
+	(sow "Rug")
+	
+	;; 2001
+	
+	(wait (at 2001 03 29))
+	(fertilize (NPK01 (weight 94 [kg/ha]))) ; amount of 51 kg N is given, used conversion 0.54
+	
+	(wait (at 2001 05 14))
+	(fertilize (NPK01 (weight 100 [kg/ha]))) ; amount of 54 kg N is given, used conversion 0.54
+
+	(wait (at 2001 05 31))
+	(irrigate_overhead 23 [mm/h])
+	
+	(wait (at 2001 06 21))
+	(irrigate_overhead 21 [mm/h])
+
+	(wait (at 2001 08 28))
+	(harvest "Rug" (stub 22 [cm])(stem 0.75)(leaf 0.75)(sorg 0.98))
+	
+	(wait (at 2001 09 01))
+	(plowing (depth -24 [cm]))
+	
+	(wait (at 2001 09 03))
+	(fertilize (NPK01 (weight 44 [kg/ha]))) ; amount of 24 kg N is given, used conversion 0.54
+	(seed_bed_preparation -4.5 [cm])
+	(sow "Vinterraps_Tylstrup")
+	
+	;; 2002
+	(wait (at 2002 03 22))
+	(fertilize (NPK01 (weight 287 [kg/ha]))) 	 ; amount of 155 kg N is given, used conversion 0.54
+	
+	(wait (at 2002 04 24))
+	(irrigate_overhead 24 [mm/h])
+	
+	(wait (at 2002 05 16))
+	(irrigate_overhead 22 [mm/h])
+	
+	(wait (at 2002 05 31))
+	(irrigate_overhead 34 [mm/h])
+	
+	(wait (at 2002 07 27))
+	(harvest "Vinterraps_Tylstrup" (stub 11 [cm])(stem 0.75)(leaf 0.75)(sorg 0.98))
+	
+	(wait (at 2002 08 12))
+	(disk_harrowing  -6 [cm])
+	
+	(wait (at 2002 09 19))
+	(sow "Vinterhvede2")
+	
+	;; 2003
+	(wait (at 2003 03 17))
+	(fertilize (NPK01 (weight 113 [kg/ha]))) ; amount of 61.1 kg N is given, used conversion 0.54
+	
+	(wait (at 2003 05 13))
+	(fertilize (NPK01 (weight 141 [kg/ha]))) ; amount of 76.4 kg N is given, used conversion 0.54
+	
+	(wait (at 2003 06 24))
+	(irrigate_overhead 23 [mm/h])
+	
+	(wait (at 2003 08 20))
+	(harvest "Vinterhvede2" (stub 18 [cm])(stem 0.75)(leaf 0.75)(sorg 0.98))
+	
+	(wait (at 2003 10 29))
+	(plowing (depth -20 [cm]))
+	
+	;; 2004
+	(wait (at 2004 04 22))
+	(fertilize (NPK01 (weight 340 [kg/ha]))) ; amount of 183.8 kg N is given, used conversion 0.54
+	
+	(wait (at 2004 04 27))
+	(seed_bed_preparation -12 [cm])
+	
+	(wait (at 2004 04 29))
+	(sow "Potato; Tylstrup")
+	
+	(wait (at 2004 08 09))
+	(irrigate_overhead 28 [mm/h])
+	
+	(wait (at 2004 08 16))
+	(irrigate_overhead 29 [mm/h])
+	
+	(wait (at 2004 10 05))
+	(harvest "Potato; Tylstrup")
+	
+	;; 2005
+	(wait (at 2005 04 01))
+	(rotavation -8 [cm])
+	
+	(wait (at 2005 04 07))
+	(plowing (depth -20 [cm]))
+	
+	(wait (at 2005 04 20))
+	(seed_bed_preparation -4 [cm])
+	
+	(wait (at 2005 04 26))
+	(fertilize (NPK01 (weight 241 [kg/ha]))) ; amount of 130.4 kg N is given, used conversion 0.54
+	(seed_bed_preparation -7 [cm])
+	
+	(wait (at 2005 04 28))
+	(fertilize (NPK01 (weight 56 [kg/ha]))) ; amount of 30.5 kg N is given, used conversion 0.54
+	(sow "Silomajs; Tylstrup")
+	
+	(wait (at 2005 07 13))
+	(irrigate_overhead 38 [mm/h])
+	
+	(wait (at 2005 10 10))
+	(harvest "Silomajs; Tylstrup" (stub 22 [cm])(stem 0.75)(leaf 0.75)(sorg 0.98))
+	
+	(wait (at 2005 11 05))
+	(rotavation -8 [cm])
+	
+	;;2006
+	(wait (at 2006 04 21))
+	(plowing (depth -22 [cm]))
+	(fertilize (NPK01 (weight 196 [kg/ha]))) ; amount of 106 kg N is given, used conversion 0.54
+	
+	(wait (at 2006 04 23))
+	(seed_bed_preparation -7 [cm])
+	(sow "Vaarbyg2")
+	
+	(wait (at 2006 06 19))
+	(irrigate_overhead 29 [mm/h])
+	
+	(wait (at 2006 07 09))
+	(irrigate_overhead 29 [mm/h])
+	
+	(wait (at 2006 08 24))
+	(harvest "Vaarbyg2" (stub 12 [cm])(stem 0.75)(leaf 0.75)(sorg 0.98))
+	
+	(wait (at 2006 08 25))
+	(rotavation -5 [cm])
+	
+	(wait (at 2006 08 26))
+	(plowing (depth -23 [cm]))
+	(sow "Vinterraps_Tylstrup")
+	
+	(wait (at 2006 09 06))
+	(seed_bed_preparation -7 [cm])
+	(sow "Vinterraps_Tylstrup")
+	
+	(wait (at 2006 09 12))
+	(fertilize (NPK01 (weight 59 [kg/ha]))) ; amount of 31.7 kg N is given, used conversion 0.54
+	
+	;;2007
+	(wait (at 2007 03 22))
+	(fertilize (NPK01 (weight 289 [kg/ha]))) ; amount of 156 kg N is given, used conversion 0.54
+	
+	(wait (at 2007 06 08))
+	(irrigate_overhead 30 [mm/h])
+	
+	(wait (at 2007 08 01))
+	(harvest "Vinterraps_Tylstrup" (stem 0)(leaf 0)(sorg 0.98))
+	
+	(wait (at 2007 08 03))
+	(rotavation -3 [cm])
+	
+	(wait (at 2007 09 07))
+	(rotavation -7 [cm])
+	
+	(wait (at 2007 09 12))
+	(plowing (depth -20 [cm]))
+	
+	(wait (at 2007 09 24))
+	(sow "Vinterhvede2")
+	
+	;;2008
+	(wait (at 2008 04 04))
+	(fertilize (NPK01 (weight 160 [kg/ha]))) ; amount of 86 kg N is given, used conversion 0.54
+	
+	(wait (at 2008 05 15))
+	(fertilize (NPK01 (weight 130 [kg/ha]))) ; amount of 70.4 kg N is given, used conversion 0.54
+	
+	(wait (at 2008 05 22))
+	(irrigate_overhead 32 [mm/h])
+	
+	(wait (at 2008 05 29))
+	(irrigate_overhead 32 [mm/h])
+	
+	(wait (at 2008 06 05))
+	(irrigate_overhead 30 [mm/h])
+	
+	(wait (at 2008 06 13))
+	(irrigate_overhead 30 [mm/h])
+	
+	(wait (at 2008 08 18))
+	(harvest "Vinterhvede2" (stub 17 [cm])(stem 0.75)(leaf 0.75)(sorg 0.98))
+	
+	;;2009
+	(wait (at 2009 04 10))
+	(plowing (depth -24 [cm]))
+	
+	(wait (at 2009 04 12))
+	(fertilize (NPK01 (weight 250 [kg/ha]))) ; amount of 135 kg N is given, used conversion 0.54
+	
+	(wait (at 2009 04 14))
+	(sow "Vaarbyg2")
+	
+	(wait (at 2009 06 29))
+	(irrigate_overhead 26 [mm/h])
+	
+	(wait (at 2009 07 08))
+	(irrigate_overhead 27 [mm/h])
+	
+	(wait (at 2009 08 20))
+	(harvest "Vaarbyg2" (stub 12 [cm])(stem 0.75)(leaf 0.75)(sorg 0.98))
+	
+	;;2010
+	(wait (at 2010 04 04))
+	(plowing (depth -24 [cm]))
+	
+	(wait (at 2010 04 27))
+	(fertilize (NPK01 (weight 325 [kg/ha]))) ; amount of 175.5 kg N is given, used conversion 0.54
+	
+	(wait (at 2010 05 04))
+	(seed_bed_preparation -10 [cm])
+	
+	(wait (at 2010 05 06))
+	(sow "Potato; Tylstrup")
+	
+	(wait (at 2010 07 06))
+	(irrigate_overhead 29 [mm/h])
+	
+	(wait (at 2010 07 27))
+	(irrigate_overhead 28 [mm/h])
+	
+	(wait (at 2010 10 20))
+	(harvest "Potato; Tylstrup")
+	
+	;;2011
+	(wait (at 2011 04 17))
+	(plowing (depth -24 [cm]))
+	
+	(wait (at 2011 04 19))
+	(fertilize (NPK01 (weight 255 [kg/ha]))) ; amount of 138 kg N is given, used conversion 0.54
+	(seed_bed_preparation -10 [cm])
+	(sow "Vaarbyg2")
+	
+	(wait (at 2011 08 16))
+	(harvest "Vaarbyg2" (stub 14 [cm])(stem 0.75)(leaf 0.75)(sorg 0.98))
+	
+	;;2012
+	(wait (at 2012 03 22))
+	(plowing (depth -24 [cm]))
+	
+	(wait (at 2012 03 24))
+	(sow "Vaarbyg2")
+	
+	(wait (at 2012 04 29))
+	(fertilize (NPK01 (weight 229 [kg/ha]))) ; amount of 123.9 kg N is given, used conversion 0.54
+	
+	(wait (at 2012 05 31))
+	(irrigate_overhead 24 [mm/h])
+	
+	(wait (at 2012 08 27))
+	(harvest "Vaarbyg2" (stub 15 [cm])(stem 0.75)(leaf 0.75)(sorg 0.98))
+	
+	(wait (at 2012 09 20))
+	(plowing (depth -22 [cm]))
+	
+	(wait (at 2012 09 23))
+	(sow "Rug")
+	
+	;;2013
+	(wait (at 2013 04 04))
+	(fertilize (NPK01 (weight 105 [kg/ha]))) ; amount of 56.7 kg N is given, used conversion 0.54
+	
+	(wait (at 2013 05 02))
+	(fertilize (NPK01 (weight 132 [kg/ha]))) ; amount of 71.4 kg N is given, used conversion 0.54
+	
+	(wait (at 2013 08 20))
+	(harvest "Rug"(stub 15 [cm])(stem 0.75)(leaf 0.75)(sorg 0.98))
+	
+	;;2014
+	(wait (at 2014 02 26))
+	(plowing (depth -23 [cm]))
+	
+	(wait (at 2014 04 02))
+	(seed_bed_preparation -5 [cm])
+	
+	(wait (at 2014 04 03))
+	(fertilize (NPK01 (weight 325 [kg/ha]))) ; amount of 175.5 kg N is given, used conversion 0.54
+	
+	(wait (at 2014 04 15))
+	(seed_bed_preparation  -20 [cm])
+	(sow "Potato; Tylstrup")
+	
+	(wait (at 2014 06 13))
+	(irrigate_overhead 24 [mm/h])
+	
+	(wait (at 2014 06 20))
+	(irrigate_overhead 24 [mm/h])
+	
+	(wait (at 2014 07 04))
+	(irrigate_overhead 24 [mm/h])
+	
+	(wait (at 2014 07 23))
+	(irrigate_overhead 24 [mm/h])
+	
+	(wait (at 2014 07 30))
+	(irrigate_overhead 24 [mm/h])
+	
+	(wait (at 2014 09 12))
+	(sow "Potato; Tylstrup")
+	
+	(wait (at 2014 09 20))
+	(disk_harrowing -10 [cm])
+	(stubble_cultivation -25 [cm])
+	
+	(wait (at 2014 09 22))
+	(sow "Vinterhvede2")
+	
+	(wait (at 2014 09 29))
+	(fertilize (NPK01 (weight 45 [kg/ha]))) ; amount of 24.5 kg N is given, used conversion 0.54
+	
+	;;2015
+	(wait (at 2015 03 24))
+	(fertilize (NPK01 (weight 92 [kg/ha]))) ; amount of 49.6 kg N is given, used conversion 0.54
+	
+	(wait (at 2015 05 05))
+	(fertilize (NPK01 (weight 194 [kg/ha]))) ; amount of 105 kg N is given, used conversion 0.54
+	
+	(wait (at 2015 07 21))
+	(irrigate_overhead 26 [mm/h])
+	
+	(wait (at 2015 08 20))
+	(sow "Vinterraps_Tylstrup")
+	
+	(wait (at 2015 09 08))
+	(harvest "Vinterhvede2")
+	
+	;;2016
+	(wait (at 2016 03 22))
+	(plowing (depth -23 [cm]))
+	
+	(wait (at 2016 04 15))
+	(sow "Vaarbyg2")
+	
+	(wait (at 2016 04 18))
+	(fertilize (NPK01 (weight 311 [kg/ha]))) ; amount of 168 kg N is given, used conversion 0.54
+	
+	(wait (at 2016 04 21))
+	(sow "Wclover")
+	
+	(wait (at 2016 06 09))
+	(irrigate_overhead 27 [mm/h])
+	
+	(wait (at 2016 08 19))
+	(harvest "Vaarbyg2" (stub 12 [cm])(stem 0.75)(leaf 0.75)(sorg 0.98))
+	
+	;;2017
+	(wait (at 2017 03 22))
+	(plowing (depth -23 [cm]))
+	
+	(wait (at 2017 03 28))
+	(sow "Vaarbyg2")
+	
+	(wait (at 2017 04 06))
+	(fertilize (NPK01 (weight 246 [kg/ha]))) ; amount of 133 kg N is given, used conversion 0.54
+	
+	(wait (at 2017 08 14))
+	(harvest "Vaarbyg2" (stub 12 [cm])(stem 0.75)(leaf 0.75)(sorg 0.98))
+)

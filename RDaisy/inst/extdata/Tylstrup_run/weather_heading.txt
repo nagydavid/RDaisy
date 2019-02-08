@@ -1,0 +1,22 @@
+dwf-0.0
+Station: Tylstrup
+Elevation: 12 m
+Longitude: 9.95 dgEast
+Latitude: 57.18 dgNorth
+TimeZone: 15 dgEast
+Surface: reference
+ScreenHeight: 2 m
+Begin: 1990-01-01
+End: 2013-12-31
+Timestep: 1 hours
+NH4WetDep: 0.9 ppm
+NH4DryDep: 2.2 kgN/ha/year
+NO3WetDep: 0.6 ppm
+NO3DryDep: 1.1 kgN/ha/year
+TAverage: 8.6 dgC
+TAmplitude: 8.077 dgC
+MaxTDay: 217 yday
+PrecipCorrect: 1.21 1.22 1.22 1.18 1.15 1.14 1.15 1.11 1.13 1.14 1.16 1.19
+-----------------------------------------------------
+Year Month Day GlobRad T_min T_max AirTemp VapPres Wind Precip	Precip
+year month mday W/m^2 dgC dgC dgC Pa m/s mm/d
