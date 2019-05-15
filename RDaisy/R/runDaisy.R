@@ -77,8 +77,8 @@ runDaisy <- function(RunFile, showLogFile = TRUE, PathToDaisy = "C:/Program File
     system(cmdToRun, show.output.on.console = showLogFile  )
   } else {
     
-    RunFile<-paste(paste((strsplit(RunFile,"/")[[1]][1:length(strsplit(RunFile,"/")[[1]])-1]),collapse ="/"),
-                   "input",paste0(Sys.getpid(),"_",stringr::str_sub(strsplit(RunFile,"/")[[1]][length(strsplit(RunFile,"/")[[1]])],0,-5),"_opt.dai"),sep = "/")
+    #RunFile<-paste(paste((strsplit(RunFile,"/")[[1]][1:length(strsplit(RunFile,"/")[[1]])-1]),collapse ="/"),
+    #               "input",paste0(Sys.getpid(),"_",stringr::str_sub(strsplit(RunFile,"/")[[1]][length(strsplit(RunFile,"/")[[1]])],0,-5),"_opt.dai"),sep = "/")
     #build the command
     cmdToRun <- paste("\"", PathToDaisy, "\"", " \"", RunFile, "\"", sep="")
     #run it
