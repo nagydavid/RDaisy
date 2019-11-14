@@ -11,7 +11,7 @@ devtools::install_github(repo="nagydavid/RDaisy",subdir = "RDaisy")
 To report errors in the package, please use 
 
 - the issue tracker in the github repository of RDaisy https://github.com/nagydavid/Rdaisy/issues (prefered option)
-- via email jeroenpullens[at]gmail.com
+- via email jeroenpullens[at]gmail.com or hello[at]davidnagy.dk
 
 
 Below the status of the automatic Travis CI tests on the master branch (if this doesn't load see [here](https://travis-ci.org/nagydavid/RDaisy))
