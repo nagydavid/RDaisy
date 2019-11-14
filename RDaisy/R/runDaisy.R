@@ -14,7 +14,7 @@
 #'\dontrun{
 #'RunFile="C:/Program Files/Daisy 5.59/sample/test.dai"
 #'PathToDaisy = "C:/Program Files/Daisy 5.59/bin/daisy.exe"
-#'runDaisy(RunFile=RunFile, showLogFile = FALSE, PathToDaisy = PathToDaisy,ctrldaisy=Daisy.control())
+#'runDaisy(RunFile=RunFile, showLogFile = FALSE, PathToDaisy = PathToDaisy)
 #'}
 #'@import data.table
 #'@import stringr
@@ -36,7 +36,7 @@ runDaisy <- function(RunFile, showLogFile = TRUE, PathToDaisy = "C:/Program File
   p.config <- control$p.config
   p <- control$p
   ind <- control$ind
-  
+
     
   if(sensitivity==TRUE & calib ==TRUE & dflt==TRUE){
     stop("Default, Sensitivity and calibration are selected. Please select only one option.")
@@ -77,8 +77,8 @@ runDaisy <- function(RunFile, showLogFile = TRUE, PathToDaisy = "C:/Program File
     system(cmdToRun, show.output.on.console = showLogFile  )
   } else {
     
-    #RunFile<-paste(paste((strsplit(RunFile,"/")[[1]][1:length(strsplit(RunFile,"/")[[1]])-1]),collapse ="/"),
-    #               "input",paste0(Sys.getpid(),"_",stringr::str_sub(strsplit(RunFile,"/")[[1]][length(strsplit(RunFile,"/")[[1]])],0,-5),"_opt.dai"),sep = "/")
+    RunFile<-paste(paste((strsplit(RunFile,"/")[[1]][1:length(strsplit(RunFile,"/")[[1]])-1]),collapse ="/"),
+                   "input",paste0(Sys.getpid(),"_",stringr::str_sub(strsplit(RunFile,"/")[[1]][length(strsplit(RunFile,"/")[[1]])],0,-5),"_opt.dai"),sep = "/")
     #build the command
     cmdToRun <- paste("\"", PathToDaisy, "\"", " \"", RunFile, "\"", sep="")
     #run it
