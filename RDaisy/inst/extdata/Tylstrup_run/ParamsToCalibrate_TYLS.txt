@@ -20,8 +20,8 @@ $n2	3	1.8188	2.804	soil_Tylstrup_tocal.dai	input/soil_Tylstrup_opt.dai	soil_Tyls
 $n3	2.263181	2.2404	3.7516	soil_Tylstrup_tocal.dai	input/soil_Tylstrup_opt.dai	soil_Tylstrup.dai	0		
 $Ap	32	20	40	soil_Tylstrup_tocal.dai	input/soil_Tylstrup_opt.dai	soil_Tylstrup.dai	0		
 $B	75	60	90	soil_Tylstrup_tocal.dai	input/soil_Tylstrup_opt.dai	soil_Tylstrup.dai	1	paste(-(as.data.table(c($Ap,$B,seq(55,100,5),seq(110,500,10),(seq(1,50,1))))[!duplicated(V1)][order(V1)]$V1), collapse=' ')	$zplus
-$DSRate1_M	0.021957023	0.001	0.09	M_Tylstrup_tocal.dai	input/M_Tylstrup_opt.dai	M_Tylstrup.dai	0		
-$DSRate2_M	0.018587711	0.001	0.09	M_Tylstrup_tocal.dai	input/M_Tylstrup_opt.dai	M_Tylstrup.dai	0		
+$DSRate1_M	0.021982329	0.001	0.09	M_Tylstrup_tocal.dai	input/M_Tylstrup_opt.dai	M_Tylstrup.dai	0		
+$DSRate2_M	0.0185563	0.001	0.09	M_Tylstrup_tocal.dai	input/M_Tylstrup_opt.dai	M_Tylstrup.dai	0		
 $E_Leaf_M	0.75	0.375	1.125	M_Tylstrup_tocal.dai	input/M_Tylstrup_opt.dai	M_Tylstrup.dai	0		
 $E_Root_M	0.78	0.39	1.17	M_Tylstrup_tocal.dai	input/M_Tylstrup_opt.dai	M_Tylstrup.dai	0		
 $E_Sorg_M	0.8	0.4	1.2	M_Tylstrup_tocal.dai	input/M_Tylstrup_opt.dai	M_Tylstrup.dai	0		
@@ -30,8 +30,8 @@ $EmrTSum_M	180	90	270	M_Tylstrup_tocal.dai	input/M_Tylstrup_opt.dai	M_Tylstrup.d
 $Fm_M	6.5	3.25	9.75	M_Tylstrup_tocal.dai	input/M_Tylstrup_opt.dai	M_Tylstrup.dai	0		
 $PARext_M	1.187811	0.5939055	1.7817165	M_Tylstrup_tocal.dai	input/M_Tylstrup_opt.dai	M_Tylstrup.dai	0		
 $Qeff_M	0.046645	0.0233225	0.0699675	M_Tylstrup_tocal.dai	input/M_Tylstrup_opt.dai	M_Tylstrup.dai	0		
-$DSRate1_PO	0.021331882	0.001	0.09	PO_Tylstrup_tocal.dai	input/PO_Tylstrup_opt.dai	PO_Tylstrup.dai	0		
-$DSRate2_PO	0.011135214	0.001	0.09	PO_Tylstrup_tocal.dai	input/PO_Tylstrup_opt.dai	PO_Tylstrup.dai	0		
+$DSRate1_PO	0.021398833	0.001	0.09	PO_Tylstrup_tocal.dai	input/PO_Tylstrup_opt.dai	PO_Tylstrup.dai	0		
+$DSRate2_PO	0.01113096	0.001	0.09	PO_Tylstrup_tocal.dai	input/PO_Tylstrup_opt.dai	PO_Tylstrup.dai	0		
 $E_Leaf_PO	0.68	0.34	1.02	PO_Tylstrup_tocal.dai	input/PO_Tylstrup_opt.dai	PO_Tylstrup.dai	0		
 $E_Root_PO	0.69	0.345	1.035	PO_Tylstrup_tocal.dai	input/PO_Tylstrup_opt.dai	PO_Tylstrup.dai	0		
 $E_Sorg_PO	0.7	0.35	1.05	PO_Tylstrup_tocal.dai	input/PO_Tylstrup_opt.dai	PO_Tylstrup.dai	0		
@@ -40,8 +40,8 @@ $EmrTSum_PO	100	50	150	PO_Tylstrup_tocal.dai	input/PO_Tylstrup_opt.dai	PO_Tylstr
 $Fm_PO	5	2.5	7.5	PO_Tylstrup_tocal.dai	input/PO_Tylstrup_opt.dai	PO_Tylstrup.dai	0		
 $PARext_PO	0.6	0.3	0.9	PO_Tylstrup_tocal.dai	input/PO_Tylstrup_opt.dai	PO_Tylstrup.dai	0		
 $Qeff_PO	0.04	0.02	0.06	PO_Tylstrup_tocal.dai	input/PO_Tylstrup_opt.dai	PO_Tylstrup.dai	0		
-$DSRate1_SB	0.066708106	0.001	0.09	SB_Tylstrup_tocal.dai	input/SB_Tylstrup_opt.dai	SB_Tylstrup.dai	0		
-$DSRate2_SB	0.048276963	0.001	0.09	SB_Tylstrup_tocal.dai	input/SB_Tylstrup_opt.dai	SB_Tylstrup.dai	0		
+$DSRate1_SB	0.013967796	0.001	0.09	SB_Tylstrup_tocal.dai	input/SB_Tylstrup_opt.dai	SB_Tylstrup.dai	0		
+$DSRate2_SB	0.060961444	0.001	0.09	SB_Tylstrup_tocal.dai	input/SB_Tylstrup_opt.dai	SB_Tylstrup.dai	0		
 $E_Leaf_SB	0.68	0.34	1.02	SB_Tylstrup_tocal.dai	input/SB_Tylstrup_opt.dai	SB_Tylstrup.dai	0		
 $E_Root_SB	0.69	0.345	1.035	SB_Tylstrup_tocal.dai	input/SB_Tylstrup_opt.dai	SB_Tylstrup.dai	0		
 $E_Sorg_SB	0.7	0.35	1.05	SB_Tylstrup_tocal.dai	input/SB_Tylstrup_opt.dai	SB_Tylstrup.dai	0		
@@ -50,8 +50,8 @@ $EmrTSum_SB	100	50	150	SB_Tylstrup_tocal.dai	input/SB_Tylstrup_opt.dai	SB_Tylstr
 $Fm_SB	5	2.5	7.5	SB_Tylstrup_tocal.dai	input/SB_Tylstrup_opt.dai	SB_Tylstrup.dai	0		
 $PARext_SB	0.6	0.3	0.9	SB_Tylstrup_tocal.dai	input/SB_Tylstrup_opt.dai	SB_Tylstrup.dai	0		
 $Qeff_SB	0.04	0.02	0.06	SB_Tylstrup_tocal.dai	input/SB_Tylstrup_opt.dai	SB_Tylstrup.dai	0		
-$DSRate1_WR	0.039853154	0.001	0.09	WR_Tylstrup_tocal.dai	input/WR_Tylstrup_opt.dai	WR_Tylstrup.dai	0		
-$DSRate2_WR	0.019252296	0.001	0.09	WR_Tylstrup_tocal.dai	input/WR_Tylstrup_opt.dai	WR_Tylstrup.dai	0		
+$DSRate1_WR	0.005244995	0.001	0.09	WR_Tylstrup_tocal.dai	input/WR_Tylstrup_opt.dai	WR_Tylstrup.dai	0		
+$DSRate2_WR	0.039665191	0.001	0.09	WR_Tylstrup_tocal.dai	input/WR_Tylstrup_opt.dai	WR_Tylstrup.dai	0		
 $E_Leaf_WR	0.68	0.34	1.02	WR_Tylstrup_tocal.dai	input/WR_Tylstrup_opt.dai	WR_Tylstrup.dai	0		
 $E_Root_WR	0.69	0.345	1.035	WR_Tylstrup_tocal.dai	input/WR_Tylstrup_opt.dai	WR_Tylstrup.dai	0		
 $E_Sorg_WR	0.5	0.25	0.75	WR_Tylstrup_tocal.dai	input/WR_Tylstrup_opt.dai	WR_Tylstrup.dai	0		
@@ -60,8 +60,8 @@ $EmrTSum_WR	180	90	270	WR_Tylstrup_tocal.dai	input/WR_Tylstrup_opt.dai	WR_Tylstr
 $Fm_WR	5	2.5	7.5	WR_Tylstrup_tocal.dai	input/WR_Tylstrup_opt.dai	WR_Tylstrup.dai	0		
 $PARext_WR	0.7	0.35	1.05	WR_Tylstrup_tocal.dai	input/WR_Tylstrup_opt.dai	WR_Tylstrup.dai	0		
 $Qeff_WR	0.05	0.025	0.075	WR_Tylstrup_tocal.dai	input/WR_Tylstrup_opt.dai	WR_Tylstrup.dai	0		
-$DSRate1_WW	0.02706118	0.001	0.09	WW_Tylstrup_tocal.dai	input/WW_Tylstrup_opt.dai	WW_Tylstrup.dai	0		
-$DSRate2_WW	0.024767252	0.001	0.09	WW_Tylstrup_tocal.dai	input/WW_Tylstrup_opt.dai	WW_Tylstrup.dai	0		
+$DSRate1_WW	0.029902477	0.001	0.09	WW_Tylstrup_tocal.dai	input/WW_Tylstrup_opt.dai	WW_Tylstrup.dai	0		
+$DSRate2_WW	0.022626343	0.001	0.09	WW_Tylstrup_tocal.dai	input/WW_Tylstrup_opt.dai	WW_Tylstrup.dai	0		
 $E_Leaf_WW	0.68	0.34	1.02	WW_Tylstrup_tocal.dai	input/WW_Tylstrup_opt.dai	WW_Tylstrup.dai	0		
 $E_Root_WW	0.69	0.345	1.035	WW_Tylstrup_tocal.dai	input/WW_Tylstrup_opt.dai	WW_Tylstrup.dai	0		
 $E_Sorg_WW	0.7	0.35	1.05	WW_Tylstrup_tocal.dai	input/WW_Tylstrup_opt.dai	WW_Tylstrup.dai	0		

@@ -192,7 +192,7 @@ morris.HV.y <- function(param_matrix,obs, wdDir, OutDir, interval,year,sensitivi
   Mod.ouT <- data.table("p.ind" = 1:nrow(param_matrix)) 
   #reading
   Mod.ouT <- foreach(i=1:nrow(param_matrix), .packages = My.Packages, 
-                     .export=c("read.optim.HV.y" , "gof.default.D")) %do%  Mod.ouT[i, read.optim.HV.y(ind = i,obs = obs,wdDir =  wdDir,OutDir =  OutDir, interval = interval,year = year,sensitivity = sensitivity,calib = calib),
+                     .export=c("read.optim.HV.y" , "gof.default.D")) %dopar%  Mod.ouT[i, read.optim.HV.y(ind = i,obs = obs,wdDir =  wdDir,OutDir =  OutDir, interval = interval,year = year,sensitivity = sensitivity,calib = calib),
                                                                      by = p.ind]
   #merging output
   Mod.ouT <- rbindlist(Mod.ouT)
@@ -230,27 +230,46 @@ morris.HV.N <- function(param_matrix,obs, wdDir, OutDir, interval,year,sensitivi
 read_morris <- function(param_matrix,obs,wdDir, OutDir, interval,year,sensitivity,calib,All){
   swct25<-morris.swct25(param_matrix, obs,wdDir, OutDir, interval,year,sensitivity,calib,All)
   
+  print("swct25")
+  
   swct60<-morris.swct60(param_matrix,obs, wdDir, OutDir, interval,year,sensitivity,calib,All)
+  
+  print("swct60")
   
   swct90<-morris.swct90(param_matrix,obs, wdDir, OutDir, interval,year,sensitivity,calib,All)
   
+  print("swct90")
+  
   swct110<-morris.swct110(param_matrix, obs,wdDir, OutDir, interval,year,sensitivity,calib,All)
+  
+  print("swct110")
   
   swct190<-morris.swct190(param_matrix,obs, wdDir, OutDir, interval,year,sensitivity,calib,All)
   
+  print("swct190")
+  
   swct210<-morris.swct210(param_matrix,obs, wdDir, OutDir, interval,year,sensitivity,calib,All)
   
-  # SC1.N<-morris.SC1.N(param_matrix,obs,  wdDir, OutDir, interval,year,sensitivity,calib,All)
-  # 
-  # SC2.N<-morris.SC2.N(param_matrix,obs,  wdDir,OutDir, interval,year,sensitivity,calib,All)
+  print("swct210")
+  
+  SC1.N<-morris.SC1.N(param_matrix,obs,  wdDir, OutDir, interval,year,sensitivity,calib,All)
+  
+  print("SC1.N")
+  
+  SC2.N<-morris.SC2.N(param_matrix,obs,  wdDir,OutDir, interval,year,sensitivity,calib,All)
+  
+  print("SC2.N")
   # 
   HV.Y<-morris.HV.y(param_matrix,obs, wdDir, OutDir, interval,year,sensitivity,calib,All)
   
+  print("HV.Y")
+  
   HV.N<-morris.HV.N(param_matrix,obs, wdDir, OutDir, interval,year,sensitivity,calib,All)
   
+  print("HV.N")
  # DS<-morris.DS(param_matrix,obs, wdDir, OutDir, interval,year,sensitivity,calib,All)
   
-  AllObj <- rbind(swct25,swct60,swct90,swct110,swct190,swct210,HV.Y,HV.N)#,DS ,SC1.N,SC2.N
+  AllObj <- rbind(swct25,swct60,swct90,swct110,swct190,swct210,SC1.N,SC2.N,HV.Y,HV.N)#,DS 
   setkey(AllObj, p.ind)
   
   return(AllObj)
@@ -286,8 +305,8 @@ DaisyMorris<-function(RunFile,showLogFile,PathToDaisy,ctrldaisy){
   
   #run daisy for each paramater set from the Sensitivity Matrix
   
-  # Out.Sens <- foreach(i=1:nrow(Morris.sens$X), .packages = My.Packages ) %dopar% f.cost(RunFile=RunFile, showLogFile=showLogFile,PathToDaisy=PathToDaisy,ctrldaisy = Daisy.control(sensitivity = T,calib = FALSE, dflt = FALSE,costfunction = NULL,obs=ctrldaisy$obs, wdDir=ctrldaisy$wdDir, OutDir=ctrldaisy$OutDir,interval=ctrldaisy$interval,year=ctrldaisy$year,All=ctrldaisy$All,ind=i,param_sens = param_matrix$name,p=Morris.sens$X[i,], p.config=ctrldaisy$p.config))
-  # 
+#  Out.Sens <- foreach(i=1:nrow(Morris.sens$X), .packages = My.Packages ) %dopar% f.cost(RunFile=RunFile, showLogFile=showLogFile,PathToDaisy=PathToDaisy,ctrldaisy = Daisy.control(sensitivity = T,calib = FALSE, dflt = FALSE,costfunction = NULL,obs=ctrldaisy$obs, wdDir=ctrldaisy$wdDir, OutDir=ctrldaisy$OutDir,interval=ctrldaisy$interval,year=ctrldaisy$year,All=ctrldaisy$All,ind=i,param_sens = param_matrix$name,p=Morris.sens$X[i,], p.config=ctrldaisy$p.config))
+  
   sens.dt <- as.data.table(Morris.sens$X)
   
   #read all sensitivity measures for each parameter set.
@@ -295,7 +314,7 @@ DaisyMorris<-function(RunFile,showLogFile,PathToDaisy,ctrldaisy){
   Morris.Obj <- read_morris(param_matrix = Morris.sens$X,obs = ctrldaisy$obs,wdDir = ctrldaisy$wdDir, OutDir = ctrldaisy$OutDir, interval = ctrldaisy$interval,year = ctrldaisy$year,sensitivity = ctrldaisy$sensitivity,calib=ctrldaisy$calib,All = ctrldaisy$All)
   
   setnames(Morris.Obj, make.names(names(Morris.Obj)))
-   
+  
   
   Morris.Obj[,NRMSE:=NRMSE]
   Morris.Obj[,mNSE:=1-mNSE]
@@ -327,53 +346,48 @@ DaisyMorris<-function(RunFile,showLogFile,PathToDaisy,ctrldaisy){
     swct110 <- DT[,get(x="swct110")]
     swct190 <- DT[,get(x="swct190")]
     swct210 <- DT[,get(x="swct210")]
-    # SC1.N <- DT[,get(x="SC1.N")]
-    # SC2.N <- DT[,get(x="SC2.N")]
+    SC1.N <- DT[,get(x="SC1.N")]
+    SC2.N <- DT[,get(x="SC2.N")]
     HV.y <- DT[,get(x="HV.y")]
     HV.N <- DT[,get(x="HV.N")]
-   # DS <- DT[,get(x="DS")]
+    # DS <- DT[,get(x="DS")]
     
-    cbind(swct25,swct60,swct90,swct110,swct190,swct210,HV.y,HV.N)#SC1.N,SC2.N,DS
+    cbind(swct25,swct60,swct90,swct110,swct190,swct210,HV.y,HV.N,SC1.N,SC2.N)#,DS
   }
   
   Morris.dt.list<-NULL
   for(i in 1:length(Morris.list)){
     
-  # running Morris again to get the EE
-  set.seed(SeeD)
-  
-  Morris.sens <- sensitivity::morris(model = get.response, factors = param_matrix$name ,r=10 ,design = list(type = "oat", levels = 10, grid.jump = 5), 
-                                     binf = param_matrix$min, bsup = param_matrix$max, DT=Morris.list[[i]])
-  
-  
-  #Morris mean(mu)
-  mu <- apply(Morris.sens$ee, 3, function(M){
-    apply(M, 2, mean)
-  })
-  
-  #Morris absolute mean(mu.star) F. Campolongo, J. Cariboni and A. Saltelli, 2007, An effective screening design for sensitivity, Environmental Modelling \& Software, 22, 1509–1518.
-  mu.star <- apply(abs(Morris.sens$ee), 3, function(M){
-    apply(M, 2, mean)
-  })
-  
-  #Morris standard deviation
-  sigma <- apply(Morris.sens$ee, 3, function(M){
-    apply(M, 2, sd)
-  })
-  
-  mu.star.m <- as.data.table(melt(mu.star,value=.("swct25","swct60","swct90","swct110","swct190","swct210","HV.y","HV.N","DS")))#,"SC1.N","SC2.N"
-  
-  sigma.m <- as.data.table(melt(sigma,value=.("swct25","swct60","swct90","swct110","swct190","swct210","HV.y","HV.N","DS")))#,"SC1.N","SC2.N"
-  
-  Morris.plot.dt<-merge(mu.star.m,sigma.m,by=c("Var1","Var2"))
-  
-  names(Morris.plot.dt)<- c("par","obj","mu.star","sigma")
-  
-  Morris.plot.dt[,PeCr:=names(Morris.list)[i]]
-  
-  Morris.dt.list<-rbind(Morris.dt.list,Morris.plot.dt)
-  
-  
+    # running Morris again to get the EE
+    set.seed(SeeD)
+    
+    Morris.sens <- sensitivity::morris(model = get.response, factors = param_matrix$name ,r=10 ,design = list(type = "oat", levels = 10, grid.jump = 5), 
+                                       binf = param_matrix$min, bsup = param_matrix$max, DT=Morris.list[[i]])
+    
+    
+
+    mu.star <- apply(Morris.sens$ee, 3, function(M){
+      apply(abs(M), 2, mean)
+    })
+    
+    #Morris standard deviation
+    sigma <- apply(Morris.sens$ee, 3, function(M){
+      apply(M, 2, sd)
+    })
+    
+    mu.star.m <- as.data.table(melt(mu.star,value=.("swct25","swct60","swct90","swct110","swct190","swct210","HV.y","HV.N","SC1.N","SC2.N")))#,
+    
+    sigma.m <- as.data.table(melt(sigma,value=.("swct25","swct60","swct90","swct110","swct190","swct210","HV.y","HV.N","SC1.N","SC2.N")))#
+    
+    Morris.plot.dt<-merge(mu.star.m,sigma.m,by=c("Var1","Var2"))
+    
+    names(Morris.plot.dt)<- c("par","obj","mu.star","sigma")
+    
+    Morris.plot.dt[,PeCr:=names(Morris.list)[i]]
+    
+    Morris.dt.list<-rbind(Morris.dt.list,Morris.plot.dt)
+    
+    
   }
   
   closeAllConnections()

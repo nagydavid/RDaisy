@@ -48,72 +48,36 @@ read.optim.25.swct <- function(ind, obs ,wdDir, OutDir, interval,year,sensitivit
     
     simOut<-simOut[!duplicated(simOut$date)]
     
-    simTDR <- simOut[,lapply(.SD,mean), .SDcols=c("Theta....25.5"),by="date"]
+    simTDR <- simOut[,lapply(.SD,mean), .SDcols=c("Theta....25"),by="date"]
     
     #This part of the function has to be user defined. Here we provide an approach to create an output objective.
     #We take the mean of the Soil Water Content from 0 to 30 cm in order to match it with our observed data.
     
     #here we merging the input and the output in order to further process
-    SimObsSWC <- merge(simTDR[,.SD, .SDcols=c( "date","Theta....25.5" )],
+    SimObsSWC <- merge(simTDR[,.SD, .SDcols=c( "date","Theta....25" )],
                        obs$tdr.obs[,.SD, .SDcols=c("date" ,"S25")], all.y  = T,by="date")
     
 
     #omitting all NA to not bias our HydroGOF output
     SimObsSWC <- na.omit(SimObsSWC)
     
-    #the objective function are set up to be able to see the annual difference of our objective
-    SimObsSWC1 <- SimObsSWC[date %between% c(dmy(paste("31-03",interval[1])),dmy(paste("01-04",interval[2])))]#2005-2006
-    SimObsSWC2 <- SimObsSWC[date %between% c(dmy(paste("31-03",interval[2])),dmy(paste("01-04",interval[3])))]#2006-2007
-    SimObsSWC3 <- SimObsSWC[date %between% c(dmy(paste("31-03",interval[3])),dmy(paste("01-04",interval[4])))]#2007-2008
-    SimObsSWC4 <- SimObsSWC[date %between% c(dmy(paste("31-03",interval[4])),dmy(paste("01-04",interval[5])))]#2008-2009
-    SimObsSWC5 <- SimObsSWC[date %between% c(dmy(paste("31-03",interval[5])),dmy(paste("01-04",interval[6])))]#2009-2010 
-    SimObsSWC6 <- SimObsSWC[date %between% c(dmy(paste("31-03",interval[6])),dmy(paste("01-04",interval[7])))]#2010-2011 
-    SimObsSWC7 <- SimObsSWC[date %between% c(dmy(paste("31-03",interval[7])),dmy(paste("01-04",interval[8])))]#2011-2012 
-    SimObsSWC8 <- SimObsSWC[date %between% c(dmy(paste("31-03",interval[8])),dmy(paste("01-04",interval[9])))]#2012-2013
+    SimObsSWC[,season:=ifelse(month(date) < 10, year(date)-1 , year(date))]
+    HydGOF<-SimObsSWC[,data.table(t(gof.default.D(sim = Theta....25, obs = S25,  norm = "maxmin",digits = 4))),by=season]
     
+    HydGOF<-HydGOF[season %in% interval]
     
-    #Calculating HydroGOF matrix
-    HydGOF1 <- gof.default.D(sim = SimObsSWC1$Theta....25.5, obs = SimObsSWC1$S25,  norm = "maxmin",digits = 4, j = 1) 
-    HydGOF2 <- gof.default.D(sim = SimObsSWC2$Theta....25.5, obs = SimObsSWC2$S25,  norm = "maxmin",digits = 4, j = 1)
-    HydGOF3 <- gof.default.D(sim = SimObsSWC3$Theta....25.5, obs = SimObsSWC3$S25,  norm = "maxmin",digits = 4, j = 1)
-    HydGOF4 <- gof.default.D(sim = SimObsSWC4$Theta....25.5, obs = SimObsSWC4$S25,  norm = "maxmin",digits = 4, j = 1)
-    HydGOF5 <- gof.default.D(sim = SimObsSWC5$Theta....25.5, obs = SimObsSWC5$S25,  norm = "maxmin",digits = 4, j = 1)
-    HydGOF6 <- gof.default.D(sim = SimObsSWC6$Theta....25.5, obs = SimObsSWC6$S25,  norm = "maxmin",digits = 4, j = 1)
-    HydGOF7 <- gof.default.D(sim = SimObsSWC7$Theta....25.5, obs = SimObsSWC7$S25,  norm = "maxmin",digits = 4, j = 1)
-    HydGOF8 <- gof.default.D(sim = SimObsSWC8$Theta....25.5, obs = SimObsSWC8$S25,  norm = "maxmin",digits = 4, j = 1)
+    HydGOF[,year:=season][,season:=NULL]
     
-    
-    #transponating HydroGOF matrix for further use
-    HydGOF1 <- data.table(t(HydGOF1))
-    HydGOF1[,year:=interval[1]]
-    HydGOF2 <- data.table(t(HydGOF2))
-    HydGOF2[,year:=interval[2]]
-    HydGOF3 <- data.table(t(HydGOF3))
-    HydGOF3[,year:=interval[3]]
-    HydGOF4 <- data.table(t(HydGOF4))
-    HydGOF4[,year:=interval[4]]
-    HydGOF5 <- data.table(t(HydGOF5))
-    HydGOF5[,year:=interval[5]]
-    HydGOF6 <- data.table(t(HydGOF6))
-    HydGOF6[,year:=interval[6]]
-    HydGOF7 <- data.table(t(HydGOF7))
-    HydGOF7[,year:=interval[7]]
-    HydGOF8 <- data.table(t(HydGOF8))
-    HydGOF8[,year:=interval[8]]
-    
-    #rbinding HydroGOF
-    HydGOF <- rbind(HydGOF1,HydGOF2,HydGOF3,HydGOF4,HydGOF5,HydGOF6,HydGOF7,HydGOF8)
-    #mean of all annual objectives
-    GOFMean <- HydGOF[,lapply(.SD,mean, na.rm=F)]
+    GOFMean <- HydGOF[year %in% interval,lapply(.SD,mean, na.rm=F)]
     GOFMean[,year:=0000]
     
     if (year==T){
-      return(HydGOF)
+      return(HydGOF[year %in% interval])
     } else {
       return(GOFMean)
     }
-  }}
-
+}}
+        
 #Reading modelled SWT output and calculating nMAE from the package HydroGOF
 read.optim.60.swct <- function(ind, obs ,wdDir, OutDir, interval,year,sensitivity,calib,All){
   
@@ -158,68 +122,31 @@ read.optim.60.swct <- function(ind, obs ,wdDir, OutDir, interval,year,sensitivit
     
     simOut<-simOut[!duplicated(simOut$date)]
     
-    simTDR <- simOut[,lapply(.SD,mean), .SDcols=c("Theta....62.5"),by="date"]
+    simTDR <- simOut[,lapply(.SD,mean), .SDcols=c("Theta....60"),by="date"]
     
     #This part of the function has to be user defined. Here we provide an approach to create an output objective.
     #We take the mean of the Soil Water Content from 0 to 30 cm in order to match it with our observed data.
     
     #here we merging the input and the output in order to further process
-    SimObsSWC <- merge(simTDR[,.SD, .SDcols=c( "date","Theta....62.5" )],
+    SimObsSWC <- merge(simTDR[,.SD, .SDcols=c( "date","Theta....60" )],
                        obs$tdr.obs[,.SD, .SDcols=c("date" ,"S60")], all.y  = T,by="date")
     
     
     #omitting all NA to not bias our HydroGOF output
     SimObsSWC <- na.omit(SimObsSWC)
     
-    #the objective function are set up to be able to see the annual difference of our objective
-    SimObsSWC1 <- SimObsSWC[date %between% c(dmy(paste("31-03",interval[1])),dmy(paste("01-04",interval[2])))]#2005-2006
-    SimObsSWC2 <- SimObsSWC[date %between% c(dmy(paste("31-03",interval[2])),dmy(paste("01-04",interval[3])))]#2006-2007
-    SimObsSWC3 <- SimObsSWC[date %between% c(dmy(paste("31-03",interval[3])),dmy(paste("01-04",interval[4])))]#2007-2008
-    SimObsSWC4 <- SimObsSWC[date %between% c(dmy(paste("31-03",interval[4])),dmy(paste("01-04",interval[5])))]#2008-2009
-    SimObsSWC5 <- SimObsSWC[date %between% c(dmy(paste("31-03",interval[5])),dmy(paste("01-04",interval[6])))]#2009-2010 
-    SimObsSWC6 <- SimObsSWC[date %between% c(dmy(paste("31-03",interval[6])),dmy(paste("01-04",interval[7])))]#2010-2011 
-    SimObsSWC7 <- SimObsSWC[date %between% c(dmy(paste("31-03",interval[7])),dmy(paste("01-04",interval[8])))]#2011-2012 
-    SimObsSWC8 <- SimObsSWC[date %between% c(dmy(paste("31-03",interval[8])),dmy(paste("01-04",interval[9])))]#2012-2013
+    SimObsSWC[,season:=ifelse(month(date) < 10, year(date)-1 , year(date))]
+    HydGOF<-SimObsSWC[,data.table(t(gof.default.D(sim = Theta....60, obs = S60,  norm = "maxmin",digits = 4))),by=season]
     
+    HydGOF<-HydGOF[season %in% interval]
     
+    HydGOF[,year:=season][,season:=NULL]
     
-    #Calculating HydroGOF matrix
-    HydGOF1 <- gof.default.D(sim = SimObsSWC1$Theta....62.5, obs = SimObsSWC1$S60,  norm = "maxmin",digits = 4, j = 1) 
-    HydGOF2 <- gof.default.D(sim = SimObsSWC2$Theta....62.5, obs = SimObsSWC2$S60,  norm = "maxmin",digits = 4, j = 1)
-    HydGOF3 <- gof.default.D(sim = SimObsSWC3$Theta....62.5, obs = SimObsSWC3$S60,  norm = "maxmin",digits = 4, j = 1)
-    HydGOF4 <- gof.default.D(sim = SimObsSWC4$Theta....62.5, obs = SimObsSWC4$S60,  norm = "maxmin",digits = 4, j = 1)
-    HydGOF5 <- gof.default.D(sim = SimObsSWC5$Theta....62.5, obs = SimObsSWC5$S60,  norm = "maxmin",digits = 4, j = 1)
-    HydGOF6 <- gof.default.D(sim = SimObsSWC6$Theta....62.5, obs = SimObsSWC6$S60,  norm = "maxmin",digits = 4, j = 1)
-    HydGOF7 <- gof.default.D(sim = SimObsSWC7$Theta....62.5, obs = SimObsSWC7$S60,  norm = "maxmin",digits = 4, j = 1)
-    HydGOF8 <- gof.default.D(sim = SimObsSWC8$Theta....62.5, obs = SimObsSWC8$S60,  norm = "maxmin",digits = 4, j = 1)
-    
-    
-    #transponating HydroGOF matrix for further use
-    HydGOF1 <- data.table(t(HydGOF1))
-    HydGOF1[,year:=interval[1]]
-    HydGOF2 <- data.table(t(HydGOF2))
-    HydGOF2[,year:=interval[2]]
-    HydGOF3 <- data.table(t(HydGOF3))
-    HydGOF3[,year:=interval[3]]
-    HydGOF4 <- data.table(t(HydGOF4))
-    HydGOF4[,year:=interval[4]]
-    HydGOF5 <- data.table(t(HydGOF5))
-    HydGOF5[,year:=interval[5]]
-    HydGOF6 <- data.table(t(HydGOF6))
-    HydGOF6[,year:=interval[6]]
-    HydGOF7 <- data.table(t(HydGOF7))
-    HydGOF7[,year:=interval[7]]
-    HydGOF8 <- data.table(t(HydGOF8))
-    HydGOF8[,year:=interval[8]]
-    
-    #rbinding HydroGOF
-    HydGOF <- rbind(HydGOF1,HydGOF2,HydGOF3,HydGOF4,HydGOF5,HydGOF6,HydGOF7,HydGOF8)
-    #mean of all annual objectives
-    GOFMean <- HydGOF[,lapply(.SD,mean, na.rm=F)]
+    GOFMean <- HydGOF[year %in% interval,lapply(.SD,mean, na.rm=F)]
     GOFMean[,year:=0000]
     
     if (year==T){
-      return(HydGOF)
+      return(HydGOF[year %in% interval])
     } else {
       return(GOFMean)
     }
@@ -269,69 +196,32 @@ read.optim.90.swct <- function(ind, obs ,wdDir, OutDir, interval,year,sensitivit
     
     simOut<-simOut[!duplicated(simOut$date)]
     
-    simTDR <- simOut[,lapply(.SD,mean), .SDcols=c("Theta....92.5"),by="date"]
+    simTDR <- simOut[,lapply(.SD,mean), .SDcols=c("Theta....90"),by="date"]
     
     
     #This part of the function has to be user defined. Here we provide an approach to create an output objective.
     #We take the mean of the Soil Water Content from 0 to 30 cm in order to match it with our observed data.
     
     #here we merging the input and the output in order to further process
-    SimObsSWC <- merge(simTDR[,.SD, .SDcols=c( "date","Theta....92.5" )],
+    SimObsSWC <- merge(simTDR[,.SD, .SDcols=c( "date","Theta....90" )],
                        obs$tdr.obs[,.SD, .SDcols=c("date" ,"S90")], all.y  = T,by="date")
     
     
     #omitting all NA to not bias our HydroGOF output
     SimObsSWC <- na.omit(SimObsSWC)
     
-    #the objective function are set up to be able to see the annual difference of our objective
-    SimObsSWC1 <- SimObsSWC[date %between% c(dmy(paste("31-03",interval[1])),dmy(paste("01-04",interval[2])))]#2005-2006
-    SimObsSWC2 <- SimObsSWC[date %between% c(dmy(paste("31-03",interval[2])),dmy(paste("01-04",interval[3])))]#2006-2007
-    SimObsSWC3 <- SimObsSWC[date %between% c(dmy(paste("31-03",interval[3])),dmy(paste("01-04",interval[4])))]#2007-2008
-    SimObsSWC4 <- SimObsSWC[date %between% c(dmy(paste("31-03",interval[4])),dmy(paste("01-04",interval[5])))]#2008-2009
-    SimObsSWC5 <- SimObsSWC[date %between% c(dmy(paste("31-03",interval[5])),dmy(paste("01-04",interval[6])))]#2009-2010 
-    SimObsSWC6 <- SimObsSWC[date %between% c(dmy(paste("31-03",interval[6])),dmy(paste("01-04",interval[7])))]#2010-2011 
-    SimObsSWC7 <- SimObsSWC[date %between% c(dmy(paste("31-03",interval[7])),dmy(paste("01-04",interval[8])))]#2011-2012 
-    SimObsSWC8 <- SimObsSWC[date %between% c(dmy(paste("31-03",interval[8])),dmy(paste("01-04",interval[9])))]#2012-2013
+    SimObsSWC[,season:=ifelse(month(date) < 10, year(date)-1 , year(date))]
+    HydGOF<-SimObsSWC[,data.table(t(gof.default.D(sim = Theta....90, obs = S90,  norm = "maxmin",digits = 4))),by=season]
     
+    HydGOF<-HydGOF[season %in% interval]
     
+    HydGOF[,year:=season][,season:=NULL]
     
-    #Calculating HydroGOF matrix
-    HydGOF1 <- gof.default.D(sim = SimObsSWC1$Theta....92.5, obs = SimObsSWC1$S90,  norm = "maxmin",digits = 4, j = 1) 
-    HydGOF2 <- gof.default.D(sim = SimObsSWC2$Theta....92.5, obs = SimObsSWC2$S90,  norm = "maxmin",digits = 4, j = 1)
-    HydGOF3 <- gof.default.D(sim = SimObsSWC3$Theta....92.5, obs = SimObsSWC3$S90,  norm = "maxmin",digits = 4, j = 1)
-    HydGOF4 <- gof.default.D(sim = SimObsSWC4$Theta....92.5, obs = SimObsSWC4$S90,  norm = "maxmin",digits = 4, j = 1)
-    HydGOF5 <- gof.default.D(sim = SimObsSWC5$Theta....92.5, obs = SimObsSWC5$S90,  norm = "maxmin",digits = 4, j = 1)
-    HydGOF6 <- gof.default.D(sim = SimObsSWC6$Theta....92.5, obs = SimObsSWC6$S90,  norm = "maxmin",digits = 4, j = 1)
-    HydGOF7 <- gof.default.D(sim = SimObsSWC7$Theta....92.5, obs = SimObsSWC7$S90,  norm = "maxmin",digits = 4, j = 1)
-    HydGOF8 <- gof.default.D(sim = SimObsSWC8$Theta....92.5, obs = SimObsSWC8$S90,  norm = "maxmin",digits = 4, j = 1)
-    
-    
-    #transponating HydroGOF matrix for further use
-    HydGOF1 <- data.table(t(HydGOF1))
-    HydGOF1[,year:=interval[1]]
-    HydGOF2 <- data.table(t(HydGOF2))
-    HydGOF2[,year:=interval[2]]
-    HydGOF3 <- data.table(t(HydGOF3))
-    HydGOF3[,year:=interval[3]]
-    HydGOF4 <- data.table(t(HydGOF4))
-    HydGOF4[,year:=interval[4]]
-    HydGOF5 <- data.table(t(HydGOF5))
-    HydGOF5[,year:=interval[5]]
-    HydGOF6 <- data.table(t(HydGOF6))
-    HydGOF6[,year:=interval[6]]
-    HydGOF7 <- data.table(t(HydGOF7))
-    HydGOF7[,year:=interval[7]]
-    HydGOF8 <- data.table(t(HydGOF8))
-    HydGOF8[,year:=interval[8]]
-    
-    #rbinding HydroGOF
-    HydGOF <- rbind(HydGOF1,HydGOF2,HydGOF3,HydGOF4,HydGOF5,HydGOF6,HydGOF7,HydGOF8)
-    #mean of all annual objectives
-    GOFMean <- HydGOF[,lapply(.SD,mean, na.rm=F)]
+    GOFMean <- HydGOF[year %in% interval,lapply(.SD,mean, na.rm=F)]
     GOFMean[,year:=0000]
     
     if (year==T){
-      return(HydGOF)
+      return(HydGOF[year %in% interval])
     } else {
       return(GOFMean)
     }
@@ -381,68 +271,31 @@ read.optim.110.swct <- function(ind, obs ,wdDir, OutDir, interval,year,sensitivi
     
     simOut<-simOut[!duplicated(simOut$date)]
     
-    simTDR <- simOut[,lapply(.SD,mean), .SDcols=c("Theta....115"),by="date"]
+    simTDR <- simOut[,lapply(.SD,mean), .SDcols=c("Theta....110"),by="date"]
     
     #This part of the function has to be user defined. Here we provide an approach to create an output objective.
     #We take the mean of the Soil Water Content from 0 to 30 cm in order to match it with our observed data.
     
     #here we merging the input and the output in order to further process
-    SimObsSWC <- merge(simTDR[,.SD, .SDcols=c( "date","Theta....115" )],
+    SimObsSWC <- merge(simTDR[,.SD, .SDcols=c( "date","Theta....110" )],
                        obs$tdr.obs[,.SD, .SDcols=c("date" ,"S110")], all.y  = T,by="date")
     
     
     #omitting all NA to not bias our HydroGOF output
     SimObsSWC <- na.omit(SimObsSWC)
     
-    #the objective function are set up to be able to see the annual difference of our objective
-    SimObsSWC1 <- SimObsSWC[date %between% c(dmy(paste("31-03",interval[1])),dmy(paste("01-04",interval[2])))]#2005-2006
-    SimObsSWC2 <- SimObsSWC[date %between% c(dmy(paste("31-03",interval[2])),dmy(paste("01-04",interval[3])))]#2006-2007
-    SimObsSWC3 <- SimObsSWC[date %between% c(dmy(paste("31-03",interval[3])),dmy(paste("01-04",interval[4])))]#2007-2008
-    SimObsSWC4 <- SimObsSWC[date %between% c(dmy(paste("31-03",interval[4])),dmy(paste("01-04",interval[5])))]#2008-2009
-    SimObsSWC5 <- SimObsSWC[date %between% c(dmy(paste("31-03",interval[5])),dmy(paste("01-04",interval[6])))]#2009-2010 
-    SimObsSWC6 <- SimObsSWC[date %between% c(dmy(paste("31-03",interval[6])),dmy(paste("01-04",interval[7])))]#2010-2011 
-    SimObsSWC7 <- SimObsSWC[date %between% c(dmy(paste("31-03",interval[7])),dmy(paste("01-04",interval[8])))]#2011-2012 
-    SimObsSWC8 <- SimObsSWC[date %between% c(dmy(paste("31-03",interval[8])),dmy(paste("01-04",interval[9])))]#2012-2013
+    SimObsSWC[,season:=ifelse(month(date) < 10, year(date)-1 , year(date))]
+    HydGOF<-SimObsSWC[,data.table(t(gof.default.D(sim = Theta....110, obs = S110,  norm = "maxmin",digits = 4))),by=season]
     
+    HydGOF<-HydGOF[season %in% interval]
     
+    HydGOF[,year:=season][,season:=NULL]
     
-    #Calculating HydroGOF matrix
-    HydGOF1 <- gof.default.D(sim = SimObsSWC1$Theta....115, obs = SimObsSWC1$S110,  norm = "maxmin",digits = 4, j = 1) 
-    HydGOF2 <- gof.default.D(sim = SimObsSWC2$Theta....115, obs = SimObsSWC2$S110,  norm = "maxmin",digits = 4, j = 1)
-    HydGOF3 <- gof.default.D(sim = SimObsSWC3$Theta....115, obs = SimObsSWC3$S110,  norm = "maxmin",digits = 4, j = 1)
-    HydGOF4 <- gof.default.D(sim = SimObsSWC4$Theta....115, obs = SimObsSWC4$S110,  norm = "maxmin",digits = 4, j = 1)
-    HydGOF5 <- gof.default.D(sim = SimObsSWC5$Theta....115, obs = SimObsSWC5$S110,  norm = "maxmin",digits = 4, j = 1)
-    HydGOF6 <- gof.default.D(sim = SimObsSWC6$Theta....115, obs = SimObsSWC6$S110,  norm = "maxmin",digits = 4, j = 1)
-    HydGOF7 <- gof.default.D(sim = SimObsSWC7$Theta....115, obs = SimObsSWC7$S110,  norm = "maxmin",digits = 4, j = 1)
-    HydGOF8 <- gof.default.D(sim = SimObsSWC8$Theta....115, obs = SimObsSWC8$S110,  norm = "maxmin",digits = 4, j = 1)
-    
-    
-    #transponating HydroGOF matrix for further use
-    HydGOF1 <- data.table(t(HydGOF1))
-    HydGOF1[,year:=interval[1]]
-    HydGOF2 <- data.table(t(HydGOF2))
-    HydGOF2[,year:=interval[2]]
-    HydGOF3 <- data.table(t(HydGOF3))
-    HydGOF3[,year:=interval[3]]
-    HydGOF4 <- data.table(t(HydGOF4))
-    HydGOF4[,year:=interval[4]]
-    HydGOF5 <- data.table(t(HydGOF5))
-    HydGOF5[,year:=interval[5]]
-    HydGOF6 <- data.table(t(HydGOF6))
-    HydGOF6[,year:=interval[6]]
-    HydGOF7 <- data.table(t(HydGOF7))
-    HydGOF7[,year:=interval[7]]
-    HydGOF8 <- data.table(t(HydGOF8))
-    HydGOF8[,year:=interval[8]]
-    
-    #rbinding HydroGOF
-    HydGOF <- rbind(HydGOF1,HydGOF2,HydGOF3,HydGOF4,HydGOF5,HydGOF6,HydGOF7,HydGOF8)
-    #mean of all annual objectives
-    GOFMean <- HydGOF[,lapply(.SD,mean, na.rm=F)]
+    GOFMean <- HydGOF[year %in% interval,lapply(.SD,mean, na.rm=F)]
     GOFMean[,year:=0000]
     
     if (year==T){
-      return(HydGOF)
+      return(HydGOF[year %in% interval])
     } else {
       return(GOFMean)
     }
@@ -492,69 +345,32 @@ read.optim.190.swct <- function(ind, obs ,wdDir, OutDir, interval,year,sensitivi
     
     simOut<-simOut[!duplicated(simOut$date)]
     
-    simTDR <- simOut[,lapply(.SD,mean), .SDcols=c("Theta....195"),by="date"]
+    simTDR <- simOut[,lapply(.SD,mean), .SDcols=c("Theta....190"),by="date"]
     
     
     #This part of the function has to be user defined. Here we provide an approach to create an output objective.
     #We take the mean of the Soil Water Content from 0 to 30 cm in order to match it with our observed data.
     
     #here we merging the input and the output in order to further process
-    SimObsSWC <- merge(simTDR[,.SD, .SDcols=c( "date","Theta....195" )],
+    SimObsSWC <- merge(simTDR[,.SD, .SDcols=c( "date","Theta....190" )],
                        obs$tdr.obs[,.SD, .SDcols=c("date" ,"S190")], all.y  = T,by="date")
     
     
     #omitting all NA to not bias our HydroGOF output
     SimObsSWC <- na.omit(SimObsSWC)
     
-    #the objective function are set up to be able to see the annual difference of our objective
-    SimObsSWC1 <- SimObsSWC[date %between% c(dmy(paste("31-03",interval[1])),dmy(paste("01-04",interval[2])))]#2005-2006
-    SimObsSWC2 <- SimObsSWC[date %between% c(dmy(paste("31-03",interval[2])),dmy(paste("01-04",interval[3])))]#2006-2007
-    SimObsSWC3 <- SimObsSWC[date %between% c(dmy(paste("31-03",interval[3])),dmy(paste("01-04",interval[4])))]#2007-2008
-    SimObsSWC4 <- SimObsSWC[date %between% c(dmy(paste("31-03",interval[4])),dmy(paste("01-04",interval[5])))]#2008-2009
-    SimObsSWC5 <- SimObsSWC[date %between% c(dmy(paste("31-03",interval[5])),dmy(paste("01-04",interval[6])))]#2009-2010 
-    SimObsSWC6 <- SimObsSWC[date %between% c(dmy(paste("31-03",interval[6])),dmy(paste("01-04",interval[7])))]#2010-2011 
-    SimObsSWC7 <- SimObsSWC[date %between% c(dmy(paste("31-03",interval[7])),dmy(paste("01-04",interval[8])))]#2011-2012 
-    SimObsSWC8 <- SimObsSWC[date %between% c(dmy(paste("31-03",interval[8])),dmy(paste("01-04",interval[9])))]#2012-2013
+    SimObsSWC[,season:=ifelse(month(date) < 10, year(date)-1 , year(date))]
+    HydGOF<-SimObsSWC[,data.table(t(gof.default.D(sim = Theta....190, obs = S190,  norm = "maxmin",digits = 4))),by=season]
     
+    HydGOF<-HydGOF[season %in% interval]
     
+    HydGOF[,year:=season][,season:=NULL]
     
-    #Calculating HydroGOF matrix
-    HydGOF1 <- gof.default.D(sim = SimObsSWC1$Theta....195, obs = SimObsSWC1$S190,  norm = "maxmin",digits = 4, j = 1) 
-    HydGOF2 <- gof.default.D(sim = SimObsSWC2$Theta....195, obs = SimObsSWC2$S190,  norm = "maxmin",digits = 4, j = 1)
-    HydGOF3 <- gof.default.D(sim = SimObsSWC3$Theta....195, obs = SimObsSWC3$S190,  norm = "maxmin",digits = 4, j = 1)
-    HydGOF4 <- gof.default.D(sim = SimObsSWC4$Theta....195, obs = SimObsSWC4$S190,  norm = "maxmin",digits = 4, j = 1)
-    HydGOF5 <- gof.default.D(sim = SimObsSWC5$Theta....195, obs = SimObsSWC5$S190,  norm = "maxmin",digits = 4, j = 1)
-    HydGOF6 <- gof.default.D(sim = SimObsSWC6$Theta....195, obs = SimObsSWC6$S190,  norm = "maxmin",digits = 4, j = 1)
-    HydGOF7 <- gof.default.D(sim = SimObsSWC7$Theta....195, obs = SimObsSWC7$S190,  norm = "maxmin",digits = 4, j = 1)
-    HydGOF8 <- gof.default.D(sim = SimObsSWC8$Theta....195, obs = SimObsSWC8$S190,  norm = "maxmin",digits = 4, j = 1)
-    
-    
-    #transponating HydroGOF matrix for further use
-    HydGOF1 <- data.table(t(HydGOF1))
-    HydGOF1[,year:=interval[1]]
-    HydGOF2 <- data.table(t(HydGOF2))
-    HydGOF2[,year:=interval[2]]
-    HydGOF3 <- data.table(t(HydGOF3))
-    HydGOF3[,year:=interval[3]]
-    HydGOF4 <- data.table(t(HydGOF4))
-    HydGOF4[,year:=interval[4]]
-    HydGOF5 <- data.table(t(HydGOF5))
-    HydGOF5[,year:=interval[5]]
-    HydGOF6 <- data.table(t(HydGOF6))
-    HydGOF6[,year:=interval[6]]
-    HydGOF7 <- data.table(t(HydGOF7))
-    HydGOF7[,year:=interval[7]]
-    HydGOF8 <- data.table(t(HydGOF8))
-    HydGOF8[,year:=interval[8]]
-    
-    #rbinding HydroGOF
-    HydGOF <- rbind(HydGOF1,HydGOF2,HydGOF3,HydGOF4,HydGOF5,HydGOF6,HydGOF7,HydGOF8)
-    #mean of all annual objectives
-    GOFMean <- HydGOF[,lapply(.SD,mean, na.rm=F)]
+    GOFMean <- HydGOF[year %in% interval,lapply(.SD,mean, na.rm=F)]
     GOFMean[,year:=0000]
     
     if (year==T){
-      return(HydGOF)
+      return(HydGOF[year %in% interval])
     } else {
       return(GOFMean)
     }
@@ -604,68 +420,31 @@ read.optim.210.swct <- function(ind, obs ,wdDir, OutDir, interval,year,sensitivi
     
     simOut<-simOut[!duplicated(simOut$date)]
     
-    simTDR <- simOut[,lapply(.SD,mean), .SDcols=c("Theta....215"),by="date"]
+    simTDR <- simOut[,lapply(.SD,mean), .SDcols=c("Theta....210"),by="date"]
     
         #This part of the function has to be user defined. Here we provide an approach to create an output objective.
     #We take the mean of the Soil Water Content from 0 to 30 cm in order to match it with our observed data.
     
     #here we merging the input and the output in order to further process
-    SimObsSWC <- merge(simTDR[,.SD, .SDcols=c( "date","Theta....215" )],
+    SimObsSWC <- merge(simTDR[,.SD, .SDcols=c( "date","Theta....210" )],
                        obs$tdr.obs[,.SD, .SDcols=c("date" ,"S210")], all.y  = T,by="date")
     
     
     #omitting all NA to not bias our HydroGOF output
     SimObsSWC <- na.omit(SimObsSWC)
     
-    #the objective function are set up to be able to see the annual difference of our objective
-    SimObsSWC1 <- SimObsSWC[date %between% c(dmy(paste("31-03",interval[1])),dmy(paste("01-04",interval[2])))]#2005-2006
-    SimObsSWC2 <- SimObsSWC[date %between% c(dmy(paste("31-03",interval[2])),dmy(paste("01-04",interval[3])))]#2006-2007
-    SimObsSWC3 <- SimObsSWC[date %between% c(dmy(paste("31-03",interval[3])),dmy(paste("01-04",interval[4])))]#2007-2008
-    SimObsSWC4 <- SimObsSWC[date %between% c(dmy(paste("31-03",interval[4])),dmy(paste("01-04",interval[5])))]#2008-2009
-    SimObsSWC5 <- SimObsSWC[date %between% c(dmy(paste("31-03",interval[5])),dmy(paste("01-04",interval[6])))]#2009-2010 
-    SimObsSWC6 <- SimObsSWC[date %between% c(dmy(paste("31-03",interval[6])),dmy(paste("01-04",interval[7])))]#2010-2011 
-    SimObsSWC7 <- SimObsSWC[date %between% c(dmy(paste("31-03",interval[7])),dmy(paste("01-04",interval[8])))]#2011-2012 
-    SimObsSWC8 <- SimObsSWC[date %between% c(dmy(paste("31-03",interval[8])),dmy(paste("01-04",interval[9])))]#2012-2013
+    SimObsSWC[,season:=ifelse(month(date) < 10, year(date)-1 , year(date))]
+    HydGOF<-SimObsSWC[,data.table(t(gof.default.D(sim = Theta....210, obs = S210,  norm = "maxmin",digits = 4))),by=season]
     
+    HydGOF<-HydGOF[season %in% interval]
     
+    HydGOF[,year:=season][,season:=NULL]
     
-    #Calculating HydroGOF matrix
-    HydGOF1 <- gof.default.D(sim = SimObsSWC1$Theta....215, obs = SimObsSWC1$S210,  norm = "maxmin",digits = 4, j = 1) 
-    HydGOF2 <- gof.default.D(sim = SimObsSWC2$Theta....215, obs = SimObsSWC2$S210,  norm = "maxmin",digits = 4, j = 1)
-    HydGOF3 <- gof.default.D(sim = SimObsSWC3$Theta....215, obs = SimObsSWC3$S210,  norm = "maxmin",digits = 4, j = 1)
-    HydGOF4 <- gof.default.D(sim = SimObsSWC4$Theta....215, obs = SimObsSWC4$S210,  norm = "maxmin",digits = 4, j = 1)
-    HydGOF5 <- gof.default.D(sim = SimObsSWC5$Theta....215, obs = SimObsSWC5$S210,  norm = "maxmin",digits = 4, j = 1)
-    HydGOF6 <- gof.default.D(sim = SimObsSWC6$Theta....215, obs = SimObsSWC6$S210,  norm = "maxmin",digits = 4, j = 1)
-    HydGOF7 <- gof.default.D(sim = SimObsSWC7$Theta....215, obs = SimObsSWC7$S210,  norm = "maxmin",digits = 4, j = 1)
-    HydGOF8 <- gof.default.D(sim = SimObsSWC8$Theta....215, obs = SimObsSWC8$S210,  norm = "maxmin",digits = 4, j = 1)
-    
-    
-    #transponating HydroGOF matrix for further use
-    HydGOF1 <- data.table(t(HydGOF1))
-    HydGOF1[,year:=interval[1]]
-    HydGOF2 <- data.table(t(HydGOF2))
-    HydGOF2[,year:=interval[2]]
-    HydGOF3 <- data.table(t(HydGOF3))
-    HydGOF3[,year:=interval[3]]
-    HydGOF4 <- data.table(t(HydGOF4))
-    HydGOF4[,year:=interval[4]]
-    HydGOF5 <- data.table(t(HydGOF5))
-    HydGOF5[,year:=interval[5]]
-    HydGOF6 <- data.table(t(HydGOF6))
-    HydGOF6[,year:=interval[6]]
-    HydGOF7 <- data.table(t(HydGOF7))
-    HydGOF7[,year:=interval[7]]
-    HydGOF8 <- data.table(t(HydGOF8))
-    HydGOF8[,year:=interval[8]]
-    
-    #rbinding HydroGOF
-    HydGOF <- rbind(HydGOF1,HydGOF2,HydGOF3,HydGOF4,HydGOF5,HydGOF6,HydGOF7,HydGOF8)
-    #mean of all annual objectives
-    GOFMean <- HydGOF[,lapply(.SD,mean, na.rm=F)]
+    GOFMean <- HydGOF[year %in% interval,lapply(.SD,mean, na.rm=F)]
     GOFMean[,year:=0000]
     
     if (year==T){
-      return(HydGOF)
+      return(HydGOF[year %in% interval])
     } else {
       return(GOFMean)
     }
@@ -713,57 +492,21 @@ read.optim.SC1.N <- function(ind, obs ,wdDir, OutDir, interval,year,sensitivity,
     
     SimObsN <- na.omit(SimObsN)
     
-    SimObsN1 <- SimObsN[date %between% c(dmy(paste("31-03",interval[1])),dmy(paste("01-04",interval[2])))]
-    SimObsN2 <- SimObsN[date %between% c(dmy(paste("31-03",interval[2])),dmy(paste("01-04",interval[3])))]
-    SimObsN3 <- SimObsN[date %between% c(dmy(paste("31-03",interval[3])),dmy(paste("01-04",interval[4])))]
-    SimObsN4 <- SimObsN[date %between% c(dmy(paste("31-03",interval[4])),dmy(paste("01-04",interval[5])))]  
-    SimObsN5 <- SimObsN[date %between% c(dmy(paste("31-03",interval[5])),dmy(paste("01-04",interval[6])))]
-    SimObsN6 <- SimObsN[date %between% c(dmy(paste("31-03",interval[6])),dmy(paste("01-04",interval[7])))]
-    SimObsN7 <- SimObsN[date %between% c(dmy(paste("31-03",interval[7])),dmy(paste("01-04",interval[8])))]
-    SimObsN8 <- SimObsN[date %between% c(dmy(paste("31-03",interval[8])),dmy(paste("01-04",interval[9])))] 
+    SimObsN[,season:=ifelse(month(date) < 10, year(date)-1 , year(date))]
     
-    HydGOF1 <- gof.default.D(sim = SimObsN1$C....100, obs = SimObsN1$AVE1,  norm = "maxmin",digits = 4, j = 1)
-    HydGOF2 <- gof.default.D(sim = SimObsN2$C....100, obs = SimObsN2$AVE1,  norm = "maxmin",digits = 4, j = 1)
-    HydGOF3 <- gof.default.D(sim = SimObsN3$C....100, obs = SimObsN3$AVE1,  norm = "maxmin",digits = 4, j = 1)
-    HydGOF4 <- gof.default.D(sim = SimObsN4$C....100, obs = SimObsN4$AVE1,  norm = "maxmin",digits = 4, j = 1)
-    HydGOF5 <- gof.default.D(sim = SimObsN5$C....100, obs = SimObsN5$AVE1,  norm = "maxmin",digits = 4, j = 1)
-    HydGOF6 <- gof.default.D(sim = SimObsN6$C....100, obs = SimObsN6$AVE1,  norm = "maxmin",digits = 4, j = 1)
-    HydGOF7 <- gof.default.D(sim = SimObsN7$C....100, obs = SimObsN7$AVE1,  norm = "maxmin",digits = 4, j = 1)
-    HydGOF8 <- gof.default.D(sim = SimObsN8$C....100, obs = SimObsN8$AVE1,  norm = "maxmin",digits = 4, j = 1)
+    SimObsN[,N:=.N, by=season]
     
+    HydGOF<-SimObsN[N>1,data.table(t(gof.default.D(sim = C....100, obs = SCB1,  norm = "maxmin",digits = 4))),by=season]
     
-    HydGOF1 <- data.table(t(HydGOF1))
-    HydGOF1[,nMAE:=MAE/mean(SimObsN1$AVE1)]
-    HydGOF1[,year:=interval[1]]
-    HydGOF2 <- data.table(t(HydGOF2))
-    HydGOF2[,nMAE:=MAE/mean(SimObsN2$AVE1)]
-    HydGOF2[,year:=interval[2]]
-    HydGOF3 <- data.table(t(HydGOF3))
-    HydGOF3[,nMAE:=MAE/mean(SimObsN3$AVE1)]
-    HydGOF3[,year:=interval[3]]
-    HydGOF4 <- data.table(t(HydGOF4))
-    HydGOF4[,nMAE:=MAE/mean(SimObsN4$AVE1)]
-    HydGOF4[,year:=interval[4]]
-    HydGOF5 <- data.table(t(HydGOF5))
-    HydGOF5[,nMAE:=MAE/mean(SimObsN5$AVE1)]
-    HydGOF5[,year:=interval[5]]
-    HydGOF6 <- data.table(t(HydGOF6))
-    HydGOF6[,nMAE:=MAE/mean(SimObsN6$AVE1)]
-    HydGOF6[,year:=interval[6]]
-    HydGOF7 <- data.table(t(HydGOF7))
-    HydGOF7[,nMAE:=MAE/mean(SimObsN7$AVE1)]
-    HydGOF7[,year:=interval[7]]
-    HydGOF8 <- data.table(t(HydGOF8))
-    HydGOF8[,nMAE:=MAE/mean(SimObsN8$AVE1)]
-    HydGOF8[,year:=interval[8]]
+    HydGOF<-HydGOF[season %in% interval]
     
-    HydGOF <- rbind(HydGOF1,HydGOF2,HydGOF3,HydGOF4,HydGOF5,HydGOF6,HydGOF7,HydGOF8)
+    HydGOF[,year:=season][,season:=NULL]
     
-    GOFMean <- HydGOF[,lapply(.SD,mean, na.rm=F)]
+    GOFMean <- HydGOF[year %in% interval,lapply(.SD,mean, na.rm=F)]
     GOFMean[,year:=0000]
     
     if (year==T){
-      return(HydGOF)
+      return(HydGOF[year %in% interval])
     } else {
       return(GOFMean)
     }
@@ -810,57 +553,21 @@ read.optim.SC2.N <- function(ind, obs ,wdDir, OutDir, interval,year,sensitivity,
     
     SimObsN <- na.omit(SimObsN)
     
-    SimObsN1 <- SimObsN[date %between% c(dmy(paste("31-03",interval[1])),dmy(paste("01-04",interval[2])))]
-    SimObsN2 <- SimObsN[date %between% c(dmy(paste("31-03",interval[2])),dmy(paste("01-04",interval[3])))]
-    SimObsN3 <- SimObsN[date %between% c(dmy(paste("31-03",interval[3])),dmy(paste("01-04",interval[4])))]
-    SimObsN4 <- SimObsN[date %between% c(dmy(paste("31-03",interval[4])),dmy(paste("01-04",interval[5])))]  
-    SimObsN5 <- SimObsN[date %between% c(dmy(paste("31-03",interval[5])),dmy(paste("01-04",interval[6])))]
-    SimObsN6 <- SimObsN[date %between% c(dmy(paste("31-03",interval[6])),dmy(paste("01-04",interval[7])))]
-    SimObsN7 <- SimObsN[date %between% c(dmy(paste("31-03",interval[7])),dmy(paste("01-04",interval[8])))]
-    SimObsN8 <- SimObsN[date %between% c(dmy(paste("31-03",interval[8])),dmy(paste("01-04",interval[9])))] 
+    SimObsN[,season:=ifelse(month(date) < 10, year(date)-1 , year(date))]
     
-    HydGOF1 <- gof.default.D(sim = SimObsN1$C....200, obs = SimObsN1$AVE2,  norm = "maxmin",digits = 4, j = 1)
-    HydGOF2 <- gof.default.D(sim = SimObsN2$C....200, obs = SimObsN2$AVE2,  norm = "maxmin",digits = 4, j = 1)
-    HydGOF3 <- gof.default.D(sim = SimObsN3$C....200, obs = SimObsN3$AVE2,  norm = "maxmin",digits = 4, j = 1)
-    HydGOF4 <- gof.default.D(sim = SimObsN4$C....200, obs = SimObsN4$AVE2,  norm = "maxmin",digits = 4, j = 1)
-    HydGOF5 <- gof.default.D(sim = SimObsN5$C....200, obs = SimObsN5$AVE2,  norm = "maxmin",digits = 4, j = 1)
-    HydGOF6 <- gof.default.D(sim = SimObsN6$C....200, obs = SimObsN6$AVE2,  norm = "maxmin",digits = 4, j = 1)
-    HydGOF7 <- gof.default.D(sim = SimObsN7$C....200, obs = SimObsN7$AVE2,  norm = "maxmin",digits = 4, j = 1)
-    HydGOF8 <- gof.default.D(sim = SimObsN8$C....200, obs = SimObsN8$AVE2,  norm = "maxmin",digits = 4, j = 1)
+    SimObsN[,N:=.N, by=season]
     
+    HydGOF<-SimObsN[N>1,data.table(t(gof.default.D(sim = C....200, obs = SCB2,  norm = "maxmin",digits = 4))),by=season]
     
-    HydGOF1 <- data.table(t(HydGOF1))
-    HydGOF1[,nMAE:=MAE/mean(SimObsN1$AVE2)]
-    HydGOF1[,year:=interval[1]]
-    HydGOF2 <- data.table(t(HydGOF2))
-    HydGOF2[,nMAE:=MAE/mean(SimObsN2$AVE2)]
-    HydGOF2[,year:=interval[2]]
-    HydGOF3 <- data.table(t(HydGOF3))
-    HydGOF3[,nMAE:=MAE/mean(SimObsN3$AVE2)]
-    HydGOF3[,year:=interval[3]]
-    HydGOF4 <- data.table(t(HydGOF4))
-    HydGOF4[,nMAE:=MAE/mean(SimObsN4$AVE2)]
-    HydGOF4[,year:=interval[4]]
-    HydGOF5 <- data.table(t(HydGOF5))
-    HydGOF5[,nMAE:=MAE/mean(SimObsN5$AVE2)]
-    HydGOF5[,year:=interval[5]]
-    HydGOF6 <- data.table(t(HydGOF6))
-    HydGOF6[,nMAE:=MAE/mean(SimObsN6$AVE2)]
-    HydGOF6[,year:=interval[6]]
-    HydGOF7 <- data.table(t(HydGOF7))
-    HydGOF7[,nMAE:=MAE/mean(SimObsN7$AVE2)]
-    HydGOF7[,year:=interval[7]]
-    HydGOF8 <- data.table(t(HydGOF8))
-    HydGOF8[,nMAE:=MAE/mean(SimObsN8$AVE2)]
-    HydGOF8[,year:=interval[8]]
+    HydGOF<-HydGOF[season %in% interval]
     
-    HydGOF <- rbind(HydGOF1,HydGOF2,HydGOF3,HydGOF4,HydGOF5,HydGOF6,HydGOF7,HydGOF8)
+    HydGOF[,year:=season][,season:=NULL]
     
-    GOFMean <- HydGOF[,lapply(.SD,mean, na.rm=F)]
+    GOFMean <- HydGOF[year %in% interval,lapply(.SD,mean, na.rm=F)]
     GOFMean[,year:=0000]
     
     if (year==T){
-      return(HydGOF)
+      return(HydGOF[year %in% interval])
     } else {
       return(GOFMean)
     }
@@ -904,7 +611,6 @@ read.optim.DS<- function(ind, obs ,wdDir, OutDir, interval,year,sensitivity,cali
     
     simOut[date %between% c(min(BBCHobs[Crop=="MA1"]$date+1),max(BBCHobs[Crop=="MA1"]$date)),Crop:="MA1"]
     simOut[date %between% c(min(BBCHobs[Crop=="WW1"]$date+1),max(BBCHobs[Crop=="WW1"]$date)),Crop:="WW1"] 
-    simOut[date %between% c(min(BBCHobs[Crop=="WR1"]$date+1),max(BBCHobs[Crop=="WR1"]$date)),Crop:="WR1"]
     simOut[date %between% c(min(BBCHobs[Crop=="PO1"]$date+1),max(BBCHobs[Crop=="PO1"]$date)),Crop:="PO1"]
     simOut[date %between% c(min(BBCHobs[Crop=="SB1"]$date+1),max(BBCHobs[Crop=="SB1"]$date)),Crop:="SB1"]
     simOut[date %between% c(min(BBCHobs[Crop=="SB2"]$date+1),max(BBCHobs[Crop=="SB2"]$date)),Crop:="SB2"]
@@ -950,24 +656,24 @@ read.optim.DS<- function(ind, obs ,wdDir, OutDir, interval,year,sensitivity,cali
     SimBMObs_WW1[,DS_day.sim:=(DS+1)*day_df_sim]
     SimBMObs_WW1[,DS_day.obs:=(DS_t+1)*day_df]
     
-    #Winter Rape 
-    SimBMObs_WR1 <- simOut[Crop=="WR1",.(Crop,date,DS)]
-    
-    DS_t<-c(0,1,2)
-    SimBMObs_WR1[,day_df_sim:=as.numeric(date-BBCHobs[Crop=="WR1" & DS_t==-1,]$date)]
-    
-    SimBMObs_WR1<-rbind(
-      SimBMObs_WR1[which(DS >= DS_t[1])][1],
-      SimBMObs_WR1[which(DS >= DS_t[2])][1],
-      SimBMObs_WR1[which.closest(SimBMObs_WR1$DS,DS_t[3])])
-    
-    SimBMObs_WR1$DS_t<-DS_t
-    setkey(SimBMObs_WR1,DS_t)
-    
-    SimBMObs_WR1 <- merge(SimBMObs_WR1,BBCHobs[Crop=="WR1" & DS_t %in% c(0,1,2) ,.(DS_t,day_df)][1:3])
-    
-    SimBMObs_WR1[,DS_day.sim:=(DS+1)*day_df_sim]
-    SimBMObs_WR1[,DS_day.obs:=(DS_t+1)*day_df]
+    # #Winter Rape 
+    # SimBMObs_WR1 <- simOut[Crop=="WR1",.(Crop,date,DS)]
+    # 
+    # DS_t<-c(0,1,2)
+    # SimBMObs_WR1[,day_df_sim:=as.numeric(date-BBCHobs[Crop=="WR1" & DS_t==-1,]$date)]
+    # 
+    # SimBMObs_WR1<-rbind(
+    #   SimBMObs_WR1[which(DS >= DS_t[1])][1],
+    #   SimBMObs_WR1[which(DS >= DS_t[2])][1],
+    #   SimBMObs_WR1[which.closest(SimBMObs_WR1$DS,DS_t[3])])
+    # 
+    # SimBMObs_WR1$DS_t<-DS_t
+    # setkey(SimBMObs_WR1,DS_t)
+    # 
+    # SimBMObs_WR1 <- merge(SimBMObs_WR1,BBCHobs[Crop=="WR1" & DS_t %in% c(0,1,2) ,.(DS_t,day_df)][1:3])
+    # 
+    # SimBMObs_WR1[,DS_day.sim:=(DS+1)*day_df_sim]
+    # SimBMObs_WR1[,DS_day.obs:=(DS_t+1)*day_df]
     
     #Potato 1    
     SimBMObs_PO1 <- simOut[Crop=="PO1",.(Crop,date,DS)]
@@ -1064,6 +770,7 @@ read.optim.DS<- function(ind, obs ,wdDir, OutDir, interval,year,sensitivity,cali
     SimBMObs_SB4[,DS_day.sim:=(DS+1)*day_df_sim]
     SimBMObs_SB4[,DS_day.obs:=(DS_t+1)*day_df]
     
+    rbind(SimBMObs_MA1,SimBMObs_PO1,SimBMObs_SB1,SimBMObs_SB2,SimBMObs_SB3,SimBMObs_SB4,SimBMObs_WW1)
     
     HydGOF_MA1<-data.table(t(gof.default.D(sim = SimBMObs_MA1$DS_day.sim,obs = SimBMObs_MA1$DS_day.obs,norm = "maxmin",digits = 4, j = 1)))
     HydGOF_MA1[,year:=2005]
@@ -1071,8 +778,8 @@ read.optim.DS<- function(ind, obs ,wdDir, OutDir, interval,year,sensitivity,cali
     HydGOF_WW1<-data.table(t(gof.default.D(sim = SimBMObs_WW1$DS_day.sim,obs = SimBMObs_WW1$DS_day.obs,norm = "maxmin",digits = 4, j = 1)))
     HydGOF_WW1[,year:=2008]
     
-    HydGOF_WR1<-data.table(t(gof.default.D(sim = SimBMObs_WR1$DS_day.sim,obs = SimBMObs_WR1$DS_day.obs,norm = "maxmin",digits = 4, j = 1)))
-    HydGOF_WR1[,year:=2007]
+    # HydGOF_WR1<-data.table(t(gof.default.D(sim = SimBMObs_WR1$DS_day.sim,obs = SimBMObs_WR1$DS_day.obs,norm = "maxmin",digits = 4, j = 1)))
+    # HydGOF_WR1[,year:=2007]
     
     HydGOF_PO1<-data.table(t(gof.default.D(sim = SimBMObs_PO1$DS_day.sim,obs = SimBMObs_PO1$DS_day.obs,norm = "maxmin",digits = 4, j = 1)))
     HydGOF_PO1[,year:=2010]
@@ -1089,7 +796,7 @@ read.optim.DS<- function(ind, obs ,wdDir, OutDir, interval,year,sensitivity,cali
     HydGOF_SB4<-data.table(t(gof.default.D(sim = SimBMObs_SB4$DS_day.sim,obs = SimBMObs_SB4$DS_day.obs,norm = "maxmin",digits = 4, j = 1)))
     HydGOF_SB4[,year:=2012]
     
-    HydGOF <- rbind(HydGOF_MA1,HydGOF_WW1,HydGOF_WR1,HydGOF_PO1,HydGOF_SB1,HydGOF_SB2,HydGOF_SB3,HydGOF_SB4)
+    HydGOF <- rbind(HydGOF_MA1,HydGOF_WW1,HydGOF_PO1,HydGOF_SB1,HydGOF_SB2,HydGOF_SB3,HydGOF_SB4)#,HydGOF_WR1
     
     GOFMean <- HydGOF[,lapply(.SD,mean, na.rm=F)]
     GOFMean[,year:=0000]
@@ -1137,13 +844,13 @@ read.optim.HV.y <- function(ind, obs ,wdDir, OutDir, interval,year,sensitivity,c
     setnames(simOut, make.names(names(simOut)))
     simOut[, date := dmy(paste(day, month, year,sep="-"))]
     
-    SimHRVObs <- merge(simOut[,.SD, .SDcols=c("date", "stem_DM",	"leaf_DM",	"sorg_DM")],
-                       HRVHobs[,.SD, .SDcols=c("date", "Total_yield","crop")], all.y =T )
-    SimHRVObs[,Total_Sim:= stem_DM+leaf_DM+sorg_DM]
-    SimHRVObs[,Total_yield:= Total_yield/1000]
+    SimHRVObs <- merge(simOut[,.SD, .SDcols=c("date", "sorg_DM")],
+                       HRVHobs[,.SD, .SDcols=c("date", "grain_DM_yield","crop")], all.y =T )
+    SimHRVObs[,Total_Sim:= sorg_DM]
+    SimHRVObs[,Total_Obs:= grain_DM_yield/1000]
     
     
-    HydGOF<-data.table(t(gof.default.D(sim = SimHRVObs$Total_Sim,obs = SimHRVObs$Total_yield,norm = "maxmin",digits = 4, j = 1)))
+    HydGOF<-data.table(t(gof.default.D(sim = SimHRVObs$Total_Sim,obs = SimHRVObs$Total_Obs,norm = "maxmin",digits = 4, j = 1)))
     
     HydGOF[,year:=0000]
     return(HydGOF)
@@ -1183,12 +890,12 @@ read.optim.HV.N <- function(ind, obs ,wdDir, OutDir, interval,year,sensitivity,c
     setnames(simOut, make.names(names(simOut)))
     simOut[, date := dmy(paste(day, month, year,sep="-"))]
     
-    SimHRVObs <- merge(simOut[,.SD, .SDcols=c("date", "stem_N",	"leaf_N",	"sorg_N")],
-                       HRVHobs[,.SD, .SDcols=c("date", "Total_N","crop")], all.y =T )
-    SimHRVObs[,Total_Sim:= stem_N+leaf_N+sorg_N]
-    SimHRVObs[,Total_N:= Total_N]
+    SimHRVObs <- merge(simOut[,.SD, .SDcols=c("date", "sorg_N")],
+                       HRVHobs[,.SD, .SDcols=c("date", "Ngrain","crop")], all.y =T )
+    SimHRVObs[,Total_Sim:= sorg_N]
+    SimHRVObs[,Total_Obs:= Ngrain]
     
-    HydGOF<-data.table(t(gof.default.D(sim = SimHRVObs$Total_Sim,obs = SimHRVObs$Total_N,na.rm = T,norm = "maxmin",digits = 4, j = 1)))
+    HydGOF<-data.table(t(gof.default.D(sim = SimHRVObs$Total_Sim,obs = SimHRVObs$Total_Obs,na.rm = T,norm = "maxmin",digits = 4, j = 1)))
     
     HydGOF[,year:=0000]
     return(HydGOF)
@@ -1208,19 +915,19 @@ read.optim <- function(ind, obs,wdDir, OutDir, interval,year,sensitivity,calib,A
 
   S210<-read.optim.210.swct(ind, obs ,wdDir, OutDir, interval,year,sensitivity,calib,All)
 
-  # SC1.N<-read.optim.SC1.N(ind, obs ,wdDir, OutDir, interval,year,sensitivity,calib,All)
-  # 
-  # SC2.N<-read.optim.SC2.N(ind, obs ,wdDir, OutDir, interval,year,sensitivity,calib,All)
-  
-  # DS<-read.optim.DS(ind, obs ,wdDir, OutDir, interval,year,sensitivity,calib,All)
-  
+  SC1.N<-read.optim.SC1.N(ind, obs ,wdDir, OutDir, interval,year,sensitivity,calib,All)
+
+  SC2.N<-read.optim.SC2.N(ind, obs ,wdDir, OutDir, interval,year,sensitivity,calib,All)
+
+  #DS<-read.optim.DS(ind, obs ,wdDir, OutDir, interval,year,sensitivity,calib,All)
+
   HV.y<-read.optim.HV.y(ind, obs ,wdDir, OutDir, interval,year,sensitivity,calib,All)
 
   HV.N<-read.optim.HV.N(ind, obs ,wdDir, OutDir, interval,year,sensitivity,calib,All)
 
-  nMAE<- S25$nMAE+S60$nMAE+S90$nMAE+S110$nMAE+S190$nMAE+S210$nMAE+HV.y$nMAE+HV.N$nMAE #SC1.N$nMAE+SC2.N$nMAE
+  nMAE<- S25$nMAE+S60$nMAE+S90$nMAE+S110$nMAE+S190$nMAE+S210$nMAE+HV.y$nMAE+HV.N$nMAE+SC1.N$nMAE+SC2.N$nMAE
   
-  # nMAE<-DS$nMAE
+  #nMAE<-DS$nMAE
   
   return(nMAE)
 }
