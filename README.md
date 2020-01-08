@@ -6,8 +6,9 @@ The package can be downloaded by running the following code:
 devtools::install_github(repo="nagydavid/RDaisy",subdir = "RDaisy")
 ```
 
-
-![alt text](https://raw.githubusercontent.com/nagydavid/RDaisy/RDAISY_workflow.png)
+# RDaisy workflow
+![GitHub Logo](/RDAISY_workflow.png)
+Format: ![Alt Text](url)
 
 
 # How to report errors
