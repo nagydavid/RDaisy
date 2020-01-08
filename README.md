@@ -7,7 +7,7 @@ devtools::install_github(repo="nagydavid/RDaisy",subdir = "RDaisy")
 ```
 
 
-![alt text](https://raw.githubusercontent.com/nagydavid/RDaisy/RDAISY workflow.png)
+![alt text](https://raw.githubusercontent.com/nagydavid/RDaisy/RDAISY_workflow.png)
 
 
 # How to report errors
