@@ -7,8 +7,7 @@ devtools::install_github(repo="nagydavid/RDaisy",subdir = "RDaisy")
 ```
 
 # RDaisy workflow
-![GitHub Logo](/RDAISY_workflow.png)
-Format: ![Alt Text](url)
+![RDAISY](/RDAISY_workflow.png)
 
 
 # How to report errors
