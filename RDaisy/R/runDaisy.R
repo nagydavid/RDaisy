@@ -73,11 +73,11 @@ runDaisy <- function(RunFile, showLogFile = TRUE, PathToDaisy = "C:/Program File
     
     #run it
 
-    processx::run(command = PathToDaisy,
-                  args = RunFile,
-                  echo = showLogFile,
-                  error_on_status = TRUE,
-                  stderr_to_stdout = TRUE)
+    dproc <-   processx::run(command = PathToDaisy,
+                             args = RunFile,
+                             echo = showLogFile,
+                             error_on_status = TRUE,
+                             stderr_to_stdout = TRUE)
     
   } else {
     
@@ -86,18 +86,18 @@ runDaisy <- function(RunFile, showLogFile = TRUE, PathToDaisy = "C:/Program File
     
     #run it
     tryCatch({
-      processx::run(command = PathToDaisy,
-                    args = RunFile,
-                    echo = showLogFile,
-                    timeout = timeout,
-                    error_on_status = TRUE,
-                    stderr_to_stdout = TRUE)
+      dproc <- processx::run(command = PathToDaisy,
+                             args = RunFile,
+                             echo = showLogFile,
+                             timeout = timeout,
+                             error_on_status = TRUE,
+                             stderr_to_stdout = TRUE)
       
     }, error = function(e) {
       #Timed Out ?
       return(TRUE)
-  
-      })
+      
+    })
   }
 }
 
