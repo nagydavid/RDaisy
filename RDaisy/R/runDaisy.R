@@ -1,6 +1,6 @@
 #'@title Function to run the Daisy model
 #'
-#'@author JWM Pullens, M Jabloun, D Nagy
+#'@author D Nagy, JWM Pullens, M Jabloun
 #'
 #'@description This function runs the Daisy model.
 #'
@@ -16,8 +16,7 @@
 #'PathToDaisy = "C:/Program Files/Daisy 5.59/bin/daisy.exe"
 #'runDaisy(RunFile=RunFile, showLogFile = FALSE, PathToDaisy = PathToDaisy)
 #'}
-#'@import data.table
-#'@import stringr
+#'@import data.table processx stringr
 #' @export
 
 runDaisy <- function(RunFile, showLogFile = TRUE, PathToDaisy = "C:/Program Files/Daisy 5.49/bin/daisy.exe",ctrldaisy=Daisy.control()){
@@ -36,6 +35,7 @@ runDaisy <- function(RunFile, showLogFile = TRUE, PathToDaisy = "C:/Program File
   p.config <- control$p.config
   p <- control$p
   ind <- control$ind
+  timeout <- control$timeout
 
     
   if(sensitivity==TRUE & calib ==TRUE & dflt==TRUE){
@@ -71,17 +71,40 @@ runDaisy <- function(RunFile, showLogFile = TRUE, PathToDaisy = "C:/Program File
     RunFile<-paste(paste((strsplit(RunFile,"/")[[1]][1:length(strsplit(RunFile,"/")[[1]])-1]),collapse ="/"),
                    "input",paste0(Sys.getpid(),"_",stringr::str_sub(strsplit(RunFile,"/")[[1]][length(strsplit(RunFile,"/")[[1]])],0,-5),"_opt.dai"),sep = "/")
     
-    #build the command
-    cmdToRun <- paste("\"", PathToDaisy, "\"", " \"", RunFile, "\"", sep="")
     #run it
-    system(cmdToRun, show.output.on.console = showLogFile  )
+
+    processx::run(command = PathToDaisy,
+                  args = RunFile,
+                  echo = showLogFile,
+                  error_on_status = TRUE,
+                  stderr_to_stdout = TRUE)
+    
   } else {
     
     RunFile<-paste(paste((strsplit(RunFile,"/")[[1]][1:length(strsplit(RunFile,"/")[[1]])-1]),collapse ="/"),
                    "input",paste0(Sys.getpid(),"_",stringr::str_sub(strsplit(RunFile,"/")[[1]][length(strsplit(RunFile,"/")[[1]])],0,-5),"_opt.dai"),sep = "/")
-    #build the command
-    cmdToRun <- paste("\"", PathToDaisy, "\"", " \"", RunFile, "\"", sep="")
+    
     #run it
-    system(cmdToRun, show.output.on.console = showLogFile  )}
+    tryCatch({
+      processx::run(command = PathToDaisy,
+                    args = RunFile,
+                    echo = showLogFile,
+                    timeout = timeout,
+                    error_on_status = TRUE,
+                    stderr_to_stdout = TRUE)
+      
+    }, error = function(e) {
+      #Timed Out ?
+      return(TRUE)
   
+      })
+  }
 }
+
+
+
+
+
+
+
+

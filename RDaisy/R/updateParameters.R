@@ -13,6 +13,8 @@
 #'@param dflt Specify if you run Daisy for default values
 #'@param ind index
 #'@param param_sens sensitive parameters
+#'@param timeout time out parameter, if Daisy does not finish on time out, the process will be killed
+
 
 #'
 #'@examples
@@ -23,7 +25,7 @@
 #' @export
 
 #read parameter settings
-updateParameters<- function(p, p.config,RunFile,wdDir, sensitivity, calib, dflt, ind,param_sens) {
+updateParameters<- function(p, p.config,RunFile,wdDir, sensitivity, calib, dflt, ind,param_sens,timeout) {
   if(file.exists(p.config)==TRUE){p.config <- data.table::fread(p.config)}
   CheckParameters(p.config) #Here we check for any duplicates in the p.config file
   RunFile=RunFile

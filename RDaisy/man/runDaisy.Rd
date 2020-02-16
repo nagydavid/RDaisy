@@ -4,9 +4,12 @@
 \alias{runDaisy}
 \title{Function to run the Daisy model}
 \usage{
-runDaisy(RunFile, showLogFile = TRUE,
+runDaisy(
+  RunFile,
+  showLogFile = TRUE,
   PathToDaisy = "C:/Program Files/Daisy 5.49/bin/daisy.exe",
-  ctrldaisy = Daisy.control())
+  ctrldaisy = Daisy.control()
+)
 }
 \arguments{
 \item{RunFile}{The complete path to the file with extension ".dai". This file is the setup file of the model.}
@@ -28,5 +31,5 @@ runDaisy(RunFile=RunFile, showLogFile = FALSE, PathToDaisy = PathToDaisy)
 }
 }
 \author{
-JWM Pullens, M Jabloun, D Nagy
+D Nagy, JWM Pullens, M Jabloun
 }

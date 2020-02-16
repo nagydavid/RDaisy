@@ -4,18 +4,19 @@ Title: R package to run the Daisy model
 Version: 1.0
 Authors@R: c(person("J.W.M.","Pullens",email="jeroenpullens@gmail.com",role=c("aut","cre")),
  person("M.", "Jabloun",email="Mohamed.Jabloun@nottingham.ac.uk",role=c("aut")),
- person("D.", "Nagy",email="davidnagy@agro.au.dk",role=c("aut")))
-Maintainer: "J.W.M. Pullens <jeroenpullens@gmail.com>
+ person("D.", "Nagy",email="hello@davidnagy.dk",role=c("aut")))
+Maintainer: "J.W.M. Pullens <jeroenpullens@gmail.com> & "David Nagy <hello@davidnagy.dk>
 Description: This package integrates the Daisy model with the R environment. The daisy model is a mechanistic simulation model of the physical and biological processes in an agricultural field. The model is produced and maintained by the university of COpenhagen. This R package is a standalone, and there are no conficts of interest.
 License: GPL-3
 Encoding: UTF-8
 LazyData: true
-Imports: data.table,stringr
+Imports: data.table,stringr,processx
 suggests: 
   lubridate,
   hydroGOF,
   DEoptim,
   ggplot2
-URL: https://github.com/jeroenpullens/RDaisy
-BugReports: https://github.com/jeroenpullens/RDaisy/issues
-RoxygenNote: 6.1.1
+  processx
+URL: https://github.com/nagydavid/RDaisy
+BugReports: https://github.com/nagydavid/RDaisy/issues
+RoxygenNote: 7.0.2

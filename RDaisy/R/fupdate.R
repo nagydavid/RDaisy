@@ -16,8 +16,7 @@
 #'\dontrun{
 #'f.update(file)
 #'}
-#'@import data.table
-#'@import stringr
+#'@import data.table processx stringr
 # This function is not exported and it will not be visible for the users. Teh function is internally used in updateParameters.R
 #' @export
 

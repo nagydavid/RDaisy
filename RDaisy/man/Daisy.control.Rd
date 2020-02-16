@@ -4,10 +4,23 @@
 \alias{Daisy.control}
 \title{Control various aspects of the RDAISY implementation}
 \usage{
-Daisy.control(sensitivity = FALSE, calib = FALSE, dflt = FALSE,
-  costfunction = NULL, obs = NULL, wdDir = NULL, OutDir = NULL,
-  interval = NULL, year = NULL, All = NULL, param_sens = NULL,
-  p.config = NULL, ind = NULL, p = NULL)
+Daisy.control(
+  sensitivity = FALSE,
+  calib = FALSE,
+  dflt = FALSE,
+  costfunction = NULL,
+  obs = NULL,
+  wdDir = NULL,
+  OutDir = NULL,
+  interval = NULL,
+  year = FALSE,
+  All = FALSE,
+  param_sens = NULL,
+  p.config = NULL,
+  ind = NULL,
+  p = NULL,
+  timeout = Inf
+)
 }
 \arguments{
 \item{sensitivity}{Specify if a sensitivity analylis is needed}
@@ -37,6 +50,8 @@ Daisy.control(sensitivity = FALSE, calib = FALSE, dflt = FALSE,
 \item{ind}{index}
 
 \item{p}{parameters}
+
+\item{timeout}{time out parameter, if Daisy does not finish on time out, the process will be killed}
 }
 \description{
 Allow the user to set some characteristics of the functions in RDaisy, such as calibration and sensitivity analysis

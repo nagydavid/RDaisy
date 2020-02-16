@@ -4,8 +4,18 @@
 \alias{updateParameters}
 \title{update Parameters}
 \usage{
-updateParameters(p, p.config, RunFile, wdDir, sensitivity, calib, dflt,
-  ind, param_sens)
+updateParameters(
+  p,
+  p.config,
+  RunFile,
+  wdDir,
+  sensitivity,
+  calib,
+  dflt,
+  ind,
+  param_sens,
+  timeout
+)
 }
 \arguments{
 \item{p}{The vector of parameter values that will be used to update the input files}
@@ -25,6 +35,8 @@ updateParameters(p, p.config, RunFile, wdDir, sensitivity, calib, dflt,
 \item{ind}{index}
 
 \item{param_sens}{sensitive parameters}
+
+\item{timeout}{time out parameter, if Daisy does not finish on time out, the process will be killed}
 }
 \description{
 This function reads the parameter settings

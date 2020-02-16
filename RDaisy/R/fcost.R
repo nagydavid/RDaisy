@@ -12,13 +12,23 @@
 #'@examples
 #'\dontrun{
 #'f.cost(p, p.config, RunFile,showLogFile,PathToDaisy,Morris,DEoptim,
-#'dflt,costfunction,obs,wdDir,OutDir,interval,year,All,ind,param_sens)
+#'dflt,costfunction,obs,wdDir,OutDir,interval,year,All,ind,param_sens,timeout)
 #'}
 #' @export
 
 f.cost <- function(RunFile,showLogFile,PathToDaisy,ctrldaisy){
   sub <- do.call(Daisy.control, as.list(ctrldaisy))
-  updateParameters(p = sub$p, p.config = sub$p.config,RunFile = RunFile,wdDir = sub$wdDir, sensitivity = sub$sensitivity, calib = sub$calib,dflt = sub$dflt, ind = sub$ind,param_sens = sub$param_sens)
+  updateParameters(p = sub$p,
+                   p.config = sub$p.config,
+                   RunFile = RunFile,
+                   wdDir = sub$wdDir, 
+                   sensitivity = sub$sensitivity,
+                   calib = sub$calib,
+                   dflt = sub$dflt, 
+                   ind = sub$ind,
+                   param_sens = sub$param_sens,
+                   timeout = sub$timeout)
+  
   #2. Run Daisy with the new input files
   runDaisy(RunFile,showLogFile ,PathToDaisy,ctrldaisy = Daisy.control(sensitivity=F,
                                                                     calib=F,
@@ -32,5 +42,6 @@ f.cost <- function(RunFile,showLogFile,PathToDaisy,ctrldaisy){
                                                                     All=sub$All,
                                                                     param_sens = sub$param_sens,
                                                                     p.config = sub$p.config,
-                                                                    ind = sub$ind))
+                                                                    ind = sub$ind,
+                                                                    timeout = sub$timeout))
 }

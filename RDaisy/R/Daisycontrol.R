@@ -19,15 +19,15 @@
 #'@param p.config This argument will provide the makes om the p-config data table. This argument can either be a file or a data table already loaded in the R environment.
 #'@param ind index
 #'@param p parameters
-
+#'@param timeout time out parameter, if Daisy does not finish on time out, the process will be killed
 #'@export
 
 
 
 
 
-Daisy.control <- function(sensitivity=FALSE,calib=FALSE,dflt=FALSE,costfunction=NULL,obs=NULL,wdDir=NULL,OutDir=NULL,interval=NULL,year=NULL, All=NULL,param_sens=NULL,p.config=NULL,ind=NULL,p=NULL){
+Daisy.control <- function(sensitivity=FALSE,calib=FALSE,dflt=FALSE,costfunction=NULL,obs=NULL,wdDir=NULL,OutDir=NULL,interval=NULL,year=FALSE, All=FALSE,param_sens=NULL,p.config=NULL,ind=NULL,p=NULL,timeout=Inf){
   
-end=list(sensitivity=sensitivity,calib=calib,dflt=dflt,costfunction=costfunction,obs=obs,wdDir=wdDir,OutDir=OutDir,interval=interval,year=year, All=All,param_sens=param_sens,p.config=p.config,ind=ind,p=p)
+end=list(sensitivity=sensitivity,calib=calib,dflt=dflt,costfunction=costfunction,obs=obs,wdDir=wdDir,OutDir=OutDir,interval=interval,year=year, All=All,param_sens=param_sens,p.config=p.config,ind=ind,p=p,timeout=timeout)
 return(end)
 }

@@ -21,7 +21,7 @@ This function updates the parameters, runs the model with the new parameters and
 \examples{
 \dontrun{
 f.cost(p, p.config, RunFile,showLogFile,PathToDaisy,Morris,DEoptim,
-dflt,costfunction,obs,wdDir,OutDir,interval,year,All,ind,param_sens)
+dflt,costfunction,obs,wdDir,OutDir,interval,year,All,ind,param_sens,timeout)
 }
 }
 \author{
