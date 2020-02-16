@@ -16,7 +16,6 @@ suggests:
   hydroGOF,
   DEoptim,
   ggplot2
-  processx
 URL: https://github.com/nagydavid/RDaisy
 BugReports: https://github.com/nagydavid/RDaisy/issues
 RoxygenNote: 7.0.2
