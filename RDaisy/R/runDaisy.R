@@ -52,13 +52,13 @@ runDaisy <- function(RunFile, showLogFile = TRUE, PathToDaisy = "C:/Program File
   }
   else if(sensitivity==TRUE){
     costfunction<-as.function(costfunction)
-    MR<-costfunction(RunFile, showLogFile, PathToDaisy, ctrluser = control.user, ctrldaisy = control.daisy)
+    MR<-costfunction(RunFile = RunFile, showLogFile = showLogFile, PathToDaisy = PathToDaisy, ctrluser = control.user, ctrldaisy = control.daisy)
     return(MR)
   }
   
   else if(calib ==TRUE){
     costfunction<-as.function(costfunction)
-    DE<-costfunction(RunFile, showLogFile, PathToDaisy, ctrluser = control.user, ctrldaisy = control.daisy)
+    DE<-costfunction(RunFile = RunFile, showLogFile = showLogFile, PathToDaisy = PathToDaisy, ctrluser = control.user, ctrldaisy = control.daisy)
     return(DE)
   }
   else if(dflt == TRUE){
