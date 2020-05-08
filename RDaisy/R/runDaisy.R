@@ -65,11 +65,12 @@ runDaisy <- function(RunFile, showLogFile = TRUE, PathToDaisy = "C:/Program File
     if(file.exists(p.config)==TRUE){p.config <- data.table::fread(p.config)}
     CheckParameters(p.config) #Here we check for any duplicates in the p.config file
     
-    ind<-NULL
+    ind<-"default"
+    
     p.config[, f.update(p.config, RunFile, wdDir, sensitivity, calib, dflt, ind)]
     
     RunFile<-paste(paste((strsplit(RunFile,"/")[[1]][1:length(strsplit(RunFile,"/")[[1]])-1]),collapse ="/"),
-                   "input",paste0(Sys.getpid(),"_",stringr::str_sub(strsplit(RunFile,"/")[[1]][length(strsplit(RunFile,"/")[[1]])],0,-5),"_opt.dai"),sep = "/")
+                   "input",paste0(ind,"_",stringr::str_sub(strsplit(RunFile,"/")[[1]][length(strsplit(RunFile,"/")[[1]])],0,-5),"_opt.dai"),sep = "/")
     
     #run it
     tryCatch({
@@ -91,7 +92,7 @@ runDaisy <- function(RunFile, showLogFile = TRUE, PathToDaisy = "C:/Program File
   else {
     
     RunFile<-paste(paste((strsplit(RunFile,"/")[[1]][1:length(strsplit(RunFile,"/")[[1]])-1]),collapse ="/"),
-                   "input",paste0(Sys.getpid(),"_",stringr::str_sub(strsplit(RunFile,"/")[[1]][length(strsplit(RunFile,"/")[[1]])],0,-5),"_opt.dai"),sep = "/")
+                   "input",paste0(ind,"_",stringr::str_sub(strsplit(RunFile,"/")[[1]][length(strsplit(RunFile,"/")[[1]])],0,-5),"_opt.dai"),sep = "/")
     
     #run it
     tryCatch({

@@ -24,7 +24,7 @@ f.update <- function(file,RunFile,wdDir,sensitivity,calib,dflt,ind){
   index="$ind"
   setwd(wdDir)
   
-  file$to.file <- paste0("input/",Sys.getpid(),"_",file[,strsplit(file$to.file,"/")][2])
+  file$to.file <- paste0("input/",ind,"_",file[,strsplit(file$to.file,"/")][2])
   
   for (i in 1:length(file$name)){
     
@@ -54,20 +54,14 @@ f.update <- function(file,RunFile,wdDir,sensitivity,calib,dflt,ind){
       cat(txt, file = file$to.file[i], sep="\n")}
   }
   
-  if(calib==TRUE){
-    txt2 <- readLines(RunFile,warn=FALSE)
-    txt2 <- gsub(index, Sys.getpid(), txt2, fixed = TRUE)}
-  if(sensitivity==TRUE){
-    txt2 <- readLines(RunFile,warn=FALSE)
-    txt2 <- gsub(index, ind, txt2, fixed = TRUE)}
-  if(dflt==TRUE){
-    txt2 <- readLines(RunFile,warn=FALSE)
-    txt2 <- gsub(index, "default", txt2, fixed = TRUE)}
+  txt2 <- readLines(RunFile,warn=FALSE)
+  txt2 <- gsub(index, ind, txt2, fixed = TRUE)
+  
   for (j in 1:length(unique(file$to.file))){
     txt2 <- gsub(unique(file$origin)[j], unique(file$to.file)[j], txt2, fixed = TRUE)}
   
   cat(txt2, file = paste(paste(strsplit(RunFile,"/")[[1]][1:length(strsplit(RunFile,"/")[[1]])-1],collapse ="/"),
                          "input",
-                         paste0(Sys.getpid(),"_",stringr::str_sub(strsplit(RunFile,"/")[[1]][length(strsplit(RunFile,"/")[[1]])],0,-5),"_opt.dai"),sep = "/"),
+                         paste0(ind,"_",stringr::str_sub(strsplit(RunFile,"/")[[1]][length(strsplit(RunFile,"/")[[1]])],0,-5),"_opt.dai"),sep = "/"),
       sep="\n")
 }
