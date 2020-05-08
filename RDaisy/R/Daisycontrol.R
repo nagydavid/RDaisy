@@ -12,9 +12,6 @@
 #'@param obs  observation data with date and measurement, same dimension of the simulation
 #'@param wdDir working environment path
 #'@param OutDir  output path
-#'@param interval is the interval of the calibration period, in our case the from 1992 and 1993 drainage year.
-#'@param year if is TRUE than user gets the all output objectives of the years, if it FALSE, it gives the mean of all calculated annual objective.
-#'@param All If TRUE Giving all performance measure, if FALSE giving the specified performance measure in the script
 #'@param param_sens sensitive parameters
 #'@param p.config This argument will provide the makes om the p-config data table. This argument can either be a file or a data table already loaded in the R environment.
 #'@param ind index
@@ -26,8 +23,9 @@
 
 
 
-Daisy.control <- function(sensitivity=FALSE,calib=FALSE,dflt=FALSE,costfunction=NULL,obs=NULL,wdDir=NULL,OutDir=NULL,interval=NULL,year=FALSE, All=FALSE,param_sens=NULL,p.config=NULL,ind=NULL,p=NULL,timeout=Inf){
+Daisy.control <- function(sensitivity=FALSE,calib=FALSE,dflt=FALSE,costfunction=NULL,obs=NULL,wdDir=NULL,OutDir=NULL,param_sens=NULL,p.config=NULL,ind=NULL,p=NULL,timeout=Inf){
   
-end=list(sensitivity=sensitivity,calib=calib,dflt=dflt,costfunction=costfunction,obs=obs,wdDir=wdDir,OutDir=OutDir,interval=interval,year=year, All=All,param_sens=param_sens,p.config=p.config,ind=ind,p=p,timeout=timeout)
+end=list(sensitivity=sensitivity,calib=calib,dflt=dflt,costfunction=costfunction,obs=obs,wdDir=wdDir,
+         OutDir=OutDir,param_sens=param_sens,p.config=p.config,ind=ind,p=p,timeout=timeout)
 return(end)
 }

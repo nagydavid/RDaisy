@@ -2,6 +2,7 @@
 
 export(CheckParameters)
 export(Daisy.control)
+export(User.control)
 export(copyinternaldata)
 export(copytestdata)
 export(f.cost)

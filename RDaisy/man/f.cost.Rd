@@ -4,7 +4,7 @@
 \alias{f.cost}
 \title{Cost function}
 \usage{
-f.cost(RunFile, showLogFile, PathToDaisy, ctrldaisy)
+f.cost(RunFile, showLogFile, PathToDaisy, ctrluser = NULL, ctrldaisy)
 }
 \arguments{
 \item{RunFile}{The complete path to the file with extension ".dai". This file is the setup file of the model.}
@@ -12,6 +12,8 @@ f.cost(RunFile, showLogFile, PathToDaisy, ctrldaisy)
 \item{showLogFile}{Either True or False to show the log file. (default = FALSE)}
 
 \item{PathToDaisy}{Specify the path to the Daisy executable}
+
+\item{ctrluser}{Extra arguments that are needed for user designed Cost function (see  \code{\link{User.control}}. Do not add it when only a single simple run is neded)}
 
 \item{ctrldaisy}{Extra arguments that are needed for Optimization/Calibration and Sensitivity analysis (see  \code{\link{Daisy.control}})}
 }

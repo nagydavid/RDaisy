@@ -7,6 +7,7 @@
 #'@param RunFile The complete path to the file with extension ".dai". This file is the setup file of the model.
 #'@param showLogFile Either True or False to show the log file. (default = FALSE)
 #'@param PathToDaisy Specify the path to the Daisy executable
+#'@param ctrluser Extra arguments that are needed for user designed Cost function (see  \code{\link{User.control}}. Do not add it when only a single simple run is neded)
 #'@param ctrldaisy Extra arguments that are needed for Optimization/Calibration and Sensitivity analysis (see  \code{\link{Daisy.control}})
 #'
 #'@examples
@@ -16,32 +17,34 @@
 #'}
 #' @export
 
-f.cost <- function(RunFile,showLogFile,PathToDaisy,ctrldaisy){
-  sub <- do.call(Daisy.control, as.list(ctrldaisy))
-  updateParameters(p = sub$p,
-                   p.config = sub$p.config,
+f.cost <- function(RunFile, showLogFile, PathToDaisy, ctrluser = NULL, ctrldaisy){
+
+
+  updateParameters(p = ctrldaisy$p,
+                   p.config = ctrldaisy$p.config,
                    RunFile = RunFile,
-                   wdDir = sub$wdDir, 
-                   sensitivity = sub$sensitivity,
-                   calib = sub$calib,
-                   dflt = sub$dflt, 
-                   ind = sub$ind,
-                   param_sens = sub$param_sens,
-                   timeout = sub$timeout)
+                   wdDir = ctrldaisy$wdDir, 
+                   sensitivity = ctrldaisy$sensitivity,
+                   calib = ctrldaisy$calib,
+                   dflt = ctrldaisy$dflt, 
+                   ind = ctrldaisy$ind,
+                   param_sens = ctrldaisy$param_sens,
+                   timeout = ctrldaisy$timeout)
   
   #2. Run Daisy with the new input files
-  runDaisy(RunFile,showLogFile ,PathToDaisy,ctrldaisy = Daisy.control(sensitivity=F,
-                                                                    calib=F,
-                                                                    dflt = F,
-                                                                    costfunction=NULL,
-                                                                    obs = sub$obs,
-                                                                    wdDir = sub$wdDir,
-                                                                    OutDir = sub$OutDir,
-                                                                    interval=sub$interval,
-                                                                    year=sub$year,
-                                                                    All=sub$All,
-                                                                    param_sens = sub$param_sens,
-                                                                    p.config = sub$p.config,
-                                                                    ind = sub$ind,
-                                                                    timeout = sub$timeout))
+  runDaisy(RunFile,
+           showLogFile, 
+           PathToDaisy,
+           ctrluser = ctrluser,
+           ctrldaisy = Daisy.control(sensitivity=F,
+                                     calib=F,
+                                     dflt = F,
+                                     costfunction=NULL,
+                                     obs = ctrldaisy$obs,
+                                     wdDir = ctrldaisy$wdDir,
+                                     OutDir = ctrldaisy$OutDir,
+                                     param_sens = ctrldaisy$param_sens,
+                                     p.config = ctrldaisy$p.config,
+                                     ind = ctrldaisy$ind,
+                                     timeout = ctrldaisy$timeout))
 }

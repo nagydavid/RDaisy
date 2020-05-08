@@ -8,7 +8,8 @@ runDaisy(
   RunFile,
   showLogFile = TRUE,
   PathToDaisy = "C:/Program Files/Daisy 5.49/bin/daisy.exe",
-  ctrldaisy = Daisy.control()
+  ctrldaisy = Daisy.control(),
+  ctrluser = NULL
 )
 }
 \arguments{
@@ -19,6 +20,8 @@ runDaisy(
 \item{PathToDaisy}{Define where Daisy is installed. NOTE: This user should have admin rights to this folder.}
 
 \item{ctrldaisy}{Extra arguments that are needed for Optimization/Calibration and Sensitivity analysis (see  \code{\link{Daisy.control}}. Do not add it when only a single simple run is neded)}
+
+\item{ctrluser}{Extra arguments that are needed for user designed Cost function (see  \code{\link{User.control}}. Do not add it when only a single simple run is neded)}
 }
 \description{
 This function runs the Daisy model.

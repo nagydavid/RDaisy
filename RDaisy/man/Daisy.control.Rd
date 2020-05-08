@@ -12,9 +12,6 @@ Daisy.control(
   obs = NULL,
   wdDir = NULL,
   OutDir = NULL,
-  interval = NULL,
-  year = FALSE,
-  All = FALSE,
   param_sens = NULL,
   p.config = NULL,
   ind = NULL,
@@ -36,12 +33,6 @@ Daisy.control(
 \item{wdDir}{working environment path}
 
 \item{OutDir}{output path}
-
-\item{interval}{is the interval of the calibration period, in our case the from 1992 and 1993 drainage year.}
-
-\item{year}{if is TRUE than user gets the all output objectives of the years, if it FALSE, it gives the mean of all calculated annual objective.}
-
-\item{All}{If TRUE Giving all performance measure, if FALSE giving the specified performance measure in the script}
 
 \item{param_sens}{sensitive parameters}
 
