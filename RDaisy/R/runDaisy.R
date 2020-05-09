@@ -81,6 +81,8 @@ runDaisy <- function(RunFile, showLogFile = TRUE, PathToDaisy = "C:/Program File
                              error_on_status = TRUE,
                              stderr_to_stdout = TRUE)
       
+      return(FALSE)
+      
     }, error = function(e) {
       #Timed Out ?
       print("Timed out")
@@ -102,6 +104,8 @@ runDaisy <- function(RunFile, showLogFile = TRUE, PathToDaisy = "C:/Program File
                              timeout = timeout,
                              error_on_status = TRUE,
                              stderr_to_stdout = TRUE)
+      
+      return(FALSE)
       
     }, error = function(e) {
       #Timed Out ?
