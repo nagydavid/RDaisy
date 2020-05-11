@@ -9,6 +9,7 @@ updateParameters(
   p.config,
   RunFile,
   wdDir,
+  OutDir,
   sensitivity,
   calib,
   dflt,
@@ -25,6 +26,8 @@ updateParameters(
 \item{RunFile}{The complete path to the file with extension ".dai". This file is the setup file of the model.}
 
 \item{wdDir}{working environment path}
+
+\item{OutDir}{output path}
 
 \item{sensitivity}{Specify if you run Daisy for Morris}
 

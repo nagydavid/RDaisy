@@ -4,7 +4,7 @@
 \alias{f.update}
 \title{Function to update the parameters}
 \usage{
-f.update(file, RunFile, wdDir, sensitivity, calib, dflt, ind)
+f.update(file, RunFile, wdDir, OutDir, sensitivity, calib, dflt, ind)
 }
 \arguments{
 \item{file}{The name of the file with the parameters to be calibrated}
@@ -12,6 +12,8 @@ f.update(file, RunFile, wdDir, sensitivity, calib, dflt, ind)
 \item{RunFile}{The complete path to the file with extension ".dai". This file is the setup file of the model.}
 
 \item{wdDir}{working environment path}
+
+\item{OutDir}{output path}
 
 \item{sensitivity}{Specify if you run Daisy for Morris}
 

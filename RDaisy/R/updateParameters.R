@@ -8,6 +8,7 @@
 #'@param p.config This argument will provide the ma,es om the p-config data table. This argument can either be a file or a data table already loaded in the R environment.
 #'@param RunFile The complete path to the file with extension ".dai". This file is the setup file of the model.
 #'@param wdDir working environment path
+#'@param OutDir  output path
 #'@param sensitivity Specify if you run Daisy for Morris
 #'@param calib Specify if you run Daisy for DEOptim
 #'@param dflt Specify if you run Daisy for default values
@@ -25,7 +26,7 @@
 #' @export
 
 #read parameter settings
-updateParameters<- function(p, p.config,RunFile,wdDir, sensitivity, calib, dflt, ind,param_sens,timeout) {
+updateParameters<- function(p, p.config,RunFile,wdDir, OutDir, sensitivity, calib, dflt, ind,param_sens,timeout) {
   if(file.exists(p.config)==TRUE){p.config <- data.table::fread(p.config)}
   CheckParameters(p.config) #Here we check for any duplicates in the p.config file
   RunFile=RunFile
@@ -41,7 +42,7 @@ updateParameters<- function(p, p.config,RunFile,wdDir, sensitivity, calib, dflt,
     
   }
 
-  p.config[, f.update(file = p.config, RunFile = RunFile,wdDir = wdDir,sensitivity = sensitivity,calib =  calib, dflt = dflt,ind = ind)]
+  p.config[, f.update(file = p.config, RunFile = RunFile,wdDir = wdDir, OutDir = OutDir ,sensitivity = sensitivity,calib =  calib, dflt = dflt,ind = ind)]
   
   return("Input Files successfully updated")
 }

@@ -9,6 +9,7 @@
 #'@param sensitivity Specify if you run Daisy for Morris
 #'@param calib Specify if you run Daisy for DEOptim
 #'@param wdDir working environment path
+#'@param OutDir  output path
 #'@param dflt Specify if you run Daisy for default values
 #'@param ind Index (only use internally for Morris function)
 #'
@@ -20,9 +21,12 @@
 # This function is not exported and it will not be visible for the users. Teh function is internally used in updateParameters.R
 #' @export
 
-f.update <- function(file,RunFile,wdDir,sensitivity,calib,dflt,ind){
+f.update <- function(file,RunFile,wdDir,OutDir,sensitivity,calib,dflt,ind){
   index="$ind"
-  setwd(wdDir)
+  wdDir_txt="$wdDir"
+  OutDir_txt="$OutDir"
+  
+  if(dir.exists(file.path(wdDir,"input"))==F){dir.create(file.path(wdDir,"input"))}
   
   file$to.file <- paste0("input/",ind,"_",file[,strsplit(file$to.file,"/")][2])
   
@@ -59,6 +63,12 @@ f.update <- function(file,RunFile,wdDir,sensitivity,calib,dflt,ind){
   
   for (j in 1:length(unique(file$to.file))){
     txt2 <- gsub(unique(file$origin)[j], unique(file$to.file)[j], txt2, fixed = TRUE)}
+  
+  txt2 <- gsub(wdDir_txt, wdDir, txt2, fixed = TRUE)
+  
+  if(dir.exists(file.path(wdDir,OutDir))==F){dir.create(file.path(wdDir,"output"))}
+  if(dir.exists(file.path(wdDir,OutDir))==F){dir.create(file.path(wdDir,OutDir))}
+  txt2 <- gsub(OutDir_txt, file.path(wdDir,OutDir), txt2, fixed = TRUE)
   
   cat(txt2, file = paste(paste(strsplit(RunFile,"/")[[1]][1:length(strsplit(RunFile,"/")[[1]])-1],collapse ="/"),
                          "input",
