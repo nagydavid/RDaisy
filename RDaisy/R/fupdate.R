@@ -68,7 +68,7 @@ f.update <- function(file,RunFile,wdDir,OutDir,sensitivity,calib,dflt,ind){
   
   if(dir.exists(file.path(wdDir,OutDir))==F){dir.create(file.path(wdDir,"output"))}
   if(dir.exists(file.path(wdDir,OutDir))==F){dir.create(file.path(wdDir,OutDir))}
-  txt2 <- gsub(OutDir_txt, file.path(wdDir,OutDir), txt2, fixed = TRUE)
+  txt2 <- gsub(OutDir_txt, paste0(file.path(wdDir,OutDir),"/"), txt2, fixed = TRUE)
   
   cat(txt2, file = paste(paste(strsplit(RunFile,"/")[[1]][1:length(strsplit(RunFile,"/")[[1]])-1],collapse ="/"),
                          "input",
