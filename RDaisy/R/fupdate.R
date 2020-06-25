@@ -28,7 +28,7 @@ f.update <- function(file,RunFile,wdDir,OutDir,sensitivity,calib,dflt,ind){
   
   if(dir.exists(file.path(wdDir,"input"))==F){dir.create(file.path(wdDir,"input"))}
   
-  file$to.file <- paste0("input/",ind,"_",file[,strsplit(file$to.file,"/")][2])
+  file$to.file <- paste0("input/",ind,"_",file[,file$to.file])
   
   for (i in 1:length(file$name)){
     
@@ -64,11 +64,19 @@ f.update <- function(file,RunFile,wdDir,OutDir,sensitivity,calib,dflt,ind){
   for (j in 1:length(unique(file$to.file))){
     txt2 <- gsub(unique(file$origin)[j], unique(file$to.file)[j], txt2, fixed = TRUE)}
   
-  txt2 <- gsub(wdDir_txt, wdDir, txt2, fixed = TRUE)
+  wdDir_daisy <- if(.Platform$OS.type == "unix") { wdDir
+  } else { 
+    gsub("/","\\\\",wdDir)}
+  
+  OutDir_daisy <- if(.Platform$OS.type == "unix") { paste0(file.path(wdDir,OutDir),"/")
+  } else { 
+    gsub("/","\\\\",paste0(file.path(wdDir,OutDir),"/"))}
+  
+  txt2 <- gsub(wdDir_txt, wdDir_daisy, txt2, fixed = TRUE)
   
   if(dir.exists(file.path(wdDir,OutDir))==F){dir.create(file.path(wdDir,"output"), showWarnings = FALSE)}
   if(dir.exists(file.path(wdDir,OutDir))==F){dir.create(file.path(wdDir,OutDir), showWarnings = FALSE)}
-  txt2 <- gsub(OutDir_txt, paste0(file.path(wdDir,OutDir),"/"), txt2, fixed = TRUE)
+  txt2 <- gsub(OutDir_txt, OutDir_daisy, txt2, fixed = TRUE)
   
   cat(txt2, file = paste(paste(strsplit(RunFile,"/")[[1]][1:length(strsplit(RunFile,"/")[[1]])-1],collapse ="/"),
                          "input",
