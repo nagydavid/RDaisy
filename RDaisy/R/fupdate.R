@@ -66,11 +66,11 @@ f.update <- function(file,RunFile,wdDir,OutDir,sensitivity,calib,dflt,ind){
   
   wdDir_daisy <- if(.Platform$OS.type == "unix") { wdDir
   } else { 
-    gsub("/","//",wdDir)}
+    gsub("/","/",wdDir)}
   
   OutDir_daisy <- if(.Platform$OS.type == "unix") { paste0(file.path(wdDir,OutDir),"/")
   } else { 
-    gsub("/","//",paste0(file.path(wdDir,OutDir),"/"))}
+    gsub("/","/",paste0(file.path(wdDir,OutDir),"/"))}
   
   txt2 <- gsub(wdDir_txt, wdDir_daisy, txt2, fixed = TRUE)
   
